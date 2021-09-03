@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="GreyishWhite">#F1F2F4</color>
+    <color name="GreyishBlue">#ABE3FB</color>
+    <color name="GreyishSand">#BEBBB6</color>
+    <color name="GreyGrey">#f5f5f5</color>
+    <color name="GreyishGrey">#3A3636</color>
+    <color name="OriginalDark">#212121</color>
+
+    <color name="grey_focused">#333333</color>
+    <color name="stroke_edit_text_focused">#597FFF</color>
+    <color name="grey_enabled">#252525</color>
+    <color name="stroke_edit_text_enabled">#444444</color>
+    <color name="signInButtonColor">#597FFF</color>
+    <color name="divider_color">#444444</color>
+    <color name="text_color_dark">#CFCFCF</color>
+    <color name="theme_purple">#597FFF</color>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/Splashscreen">
+
+    <fragment
+        android:id="@+id/Splashscreen"
+        android:name="my.edu.tarc.okuappg11.SplashScreenFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_splashscreen">
+
+        <action
+            android:id="@+id/action_SplashscreenFragment_to_SignInFragment"
+            app:destination="@id/SignInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SignInFragment"
+        android:name="my.edu.tarc.okuappg11.SignInFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_signin"/>
+</navigation>
