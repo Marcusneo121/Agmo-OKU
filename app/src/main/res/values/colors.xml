@@ -23,4 +23,8 @@
     <color name="divider_color">#444444</color>
     <color name="text_color_dark">#CFCFCF</color>
     <color name="theme_purple">#597FFF</color>
+    <color name="greyLabel">#929292</color>
+
+    <color name="spinner_bg">#626262</color>
+    <color name="spinner_border">#252525</color>
 </resources>

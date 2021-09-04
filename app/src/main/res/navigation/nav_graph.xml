@@ -19,5 +19,18 @@
         android:id="@+id/SignInFragment"
         android:name="my.edu.tarc.okuappg11.SignInFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_signin"/>
+        tools:layout="@layout/fragment_signin">
+        <action
+            android:id="@+id/action_SignInFragment_to_registerFragment"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="my.edu.tarc.okuappg11.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_RegisterFragment_to_SignInFragment"
+            app:destination="@id/SignInFragment" />
+    </fragment>
 </navigation>
