@@ -26,7 +26,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:autofillHints="email"
@@ -75,6 +75,7 @@
         android:layout_height="64dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:text="@string/login_text"
@@ -85,8 +86,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        app:layout_constraintVertical_bias="0.064" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPass_hyplink"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/divider"
@@ -127,5 +128,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelReg" />
+
+    <TextView
+        android:id="@+id/forgotPass_hyplink"
+        style="@style/inputDesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/forgot_pass"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

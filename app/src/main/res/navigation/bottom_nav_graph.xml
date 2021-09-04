@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_graph"
+    app:startDestination="@id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="my.edu.tarc.okuappg11.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="my.edu.tarc.okuappg11.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/NearMeFragment"
+        android:name="my.edu.tarc.okuappg11.NearMeFragment"
+        android:label="Near Me"
+        tools:layout="@layout/fragment_near_me" />
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="my.edu.tarc.okuappg11.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

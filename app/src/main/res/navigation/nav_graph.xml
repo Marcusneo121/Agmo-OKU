@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_SignInFragment_to_registerFragment"
             app:destination="@id/RegisterFragment" />
+        <action
+            android:id="@+id/action_SignInFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"
@@ -33,4 +36,9 @@
             android:id="@+id/action_RegisterFragment_to_SignInFragment"
             app:destination="@id/SignInFragment" />
     </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="my.edu.tarc.okuappg11.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
 </navigation>

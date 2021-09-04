@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="inputDesign">
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textColorHint">#929292</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

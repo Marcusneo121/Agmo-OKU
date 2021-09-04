@@ -14,11 +14,15 @@
     <string name="email_hint">E-mail</string>
     <string name="password_hint">Password</string>
     <string name="login_text">Login</string>
+    <string name="forgot_pass">Forgot Password?</string>
+
     <string name="register_text">Register</string>
+    <string name="label_create_account">Create An Account</string>
     <string name="don_hav_account">Don\'t have an account?</string>
     <string name="already_hav_account">Already Registered?</string>
     <string name="reg_hyperlink">Register here</string>
     <string name="login_hyperlink">Login here</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reg_name_hint">Full Name</string>
@@ -26,6 +30,10 @@
     <string name="reg_password_hint">Password</string>
     <string name="reg_confirmpassword_hint">Confirm Password</string>
     <string name="regAsLabel">Register As : </string>
+    <string name="home_nav">Home</string>
+    <string name="search_nav">Search</string>
+    <string name="events_nav">Events</string>
+    <string name="user_nav">User</string>
 
     <string-array name="userList">
         <item>OKU</item>

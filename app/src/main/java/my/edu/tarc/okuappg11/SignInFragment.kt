@@ -1,6 +1,7 @@
 package my.edu.tarc.okuappg11
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -78,9 +79,16 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(activity, HomeActivity::class.java)
+            activity?.startActivity(intent)
+            //findNavController().navigate(R.id.action_SignInFragment_to_homeActivity)
+        }
+
         binding.btnRegisterScreen.setOnClickListener {
             findNavController().navigate(R.id.action_SignInFragment_to_registerFragment)
         }
+
     }
 
     override fun onDestroyView() {
