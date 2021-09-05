@@ -5,7 +5,7 @@
     android:id="@+id/ConstraintLayoutNearMe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NearMeFragment">
+    tools:context=".fragments.NearMeFragment">
 
     <TextView
         android:id="@+id/NearMe"

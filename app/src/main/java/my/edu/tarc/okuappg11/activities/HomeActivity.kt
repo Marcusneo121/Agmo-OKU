@@ -1,16 +1,14 @@
-package my.edu.tarc.okuappg11
+package my.edu.tarc.okuappg11.activities
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {

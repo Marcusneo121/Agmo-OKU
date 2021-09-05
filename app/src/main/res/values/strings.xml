@@ -34,6 +34,10 @@
     <string name="search_nav">Search</string>
     <string name="events_nav">Events</string>
     <string name="user_nav">User</string>
+    <string name="create_acc">Creating Account...</string>
+    <string name="press_outside_to_dismiss">Press outside to dismiss</string>
+    <string name="please_verify_email_before_login">Please verify email before login</string>
+    <string name="account_created">Account Created</string>
 
     <string-array name="userList">
         <item>OKU</item>

@@ -1,4 +1,4 @@
-package my.edu.tarc.okuappg11
+package my.edu.tarc.okuappg11.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

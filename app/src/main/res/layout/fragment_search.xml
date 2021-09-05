@@ -5,7 +5,7 @@
     android:id="@+id/ConstraintLayoutSearch"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment" >
+    tools:context=".fragments.SearchFragment" >
 
     <TextView
         android:id="@+id/Search"

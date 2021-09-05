@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import my.edu.tarc.okuappg11.activities.HomeActivity
 import my.edu.tarc.okuappg11.databinding.FragmentSigninBinding
 
 /**
@@ -86,7 +87,7 @@ class SignInFragment : Fragment() {
         }
 
         binding.btnRegisterScreen.setOnClickListener {
-            findNavController().navigate(R.id.action_SignInFragment_to_registerFragment)
+            findNavController().navigate(R.id.action_SignInFragment_to_RegisterFragment)
         }
 
     }

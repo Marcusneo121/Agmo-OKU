@@ -21,11 +21,11 @@
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_signin">
         <action
-            android:id="@+id/action_SignInFragment_to_registerFragment"
-            app:destination="@id/RegisterFragment" />
-        <action
             android:id="@+id/action_SignInFragment_to_homeActivity"
             app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_SignInFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"
@@ -38,7 +38,7 @@
     </fragment>
     <activity
         android:id="@+id/homeActivity"
-        android:name="my.edu.tarc.okuappg11.HomeActivity"
+        android:name="my.edu.tarc.okuappg11.activities.HomeActivity"
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
 </navigation>
