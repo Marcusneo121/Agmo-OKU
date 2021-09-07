@@ -29,4 +29,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Home" />
 
+    <Button
+        android:id="@+id/btnLogout"
+        style="@style/inputDesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Logout"
+        android:textColor="#000000"
+        app:backgroundTint="@color/GreyishBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTestActivity" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

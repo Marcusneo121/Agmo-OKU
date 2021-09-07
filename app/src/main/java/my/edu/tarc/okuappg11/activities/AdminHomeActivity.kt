@@ -1,16 +1,16 @@
 package my.edu.tarc.okuappg11.activities
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import my.edu.tarc.okuappg11.databinding.ActivityTestBinding
+import android.os.Bundle
+import my.edu.tarc.okuappg11.databinding.ActivityAdminHomeBinding
 
-class testActivity : AppCompatActivity() {
+class AdminHomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTestBinding
+    private lateinit var binding: ActivityAdminHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTestBinding.inflate(layoutInflater)
+        binding = ActivityAdminHomeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 

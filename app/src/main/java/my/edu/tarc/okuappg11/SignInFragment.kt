@@ -12,19 +12,29 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import my.edu.tarc.okuappg11.activities.AdminHomeActivity
 import my.edu.tarc.okuappg11.activities.HomeActivity
 import my.edu.tarc.okuappg11.databinding.FragmentSigninBinding
+import my.edu.tarc.okuappg11.progressdialog.EmailSentDialog
+import my.edu.tarc.okuappg11.progressdialog.EmailVerifyDialog
+import my.edu.tarc.okuappg11.progressdialog.SignInDialog
+import my.edu.tarc.okuappg11.progressdialog.SignInErrorDialog
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class SignInFragment : Fragment() {
 
     private var _binding: FragmentSigninBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var fAuth: FirebaseAuth
+    private lateinit var fStore: FirebaseFirestore
+    private var userID: String? = null
+    private var userRole: String? = null
+
+    private val dialogSignIn = SignInDialog(this)
+    private val dialogEmailNotVerified = EmailVerifyDialog(this)
+    private val dialogSignInError = SignInErrorDialog(this)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +66,6 @@ class SignInFragment : Fragment() {
                             finish(context)
                         }
                     }, 1000)
-
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -75,14 +84,110 @@ class SignInFragment : Fragment() {
 //        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 //    }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+
+        val password = binding.etPassword
+        val email = binding.etEmail
+
+
         binding.btnLogin.setOnClickListener {
-            val intent = Intent(activity, HomeActivity::class.java)
-            activity?.startActivity(intent)
+            if(email.text.isEmpty()){
+                email.error = "Please enter email."
+                return@setOnClickListener
+            }
+
+            if(password.text.isEmpty()){
+                password.error = "Please enter password."
+                return@setOnClickListener
+            }
+
+            if(password.text.toString().length < 6){
+                password.error = "Password must more than 5 characters."
+            }
+
+            dialogSignIn.startLoading()
+
+            fAuth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        if(fAuth.currentUser?.isEmailVerified == true){
+                            userID = fAuth.currentUser?.uid
+                            fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
+                                userRole = it.get("userType").toString()
+                                if(userRole == "OKU" || userRole == "Normal"){
+
+                                    val intent = Intent(activity, HomeActivity::class.java)
+                                    activity?.startActivity(intent)
+                                    dialogSignIn.isDismiss()
+                                    Toast.makeText(this.context, "Logged In", Toast.LENGTH_SHORT).show()
+
+                                } else if (userRole == "Admin"){
+
+                                    val intent = Intent(activity, AdminHomeActivity::class.java)
+                                    activity?.startActivity(intent)
+                                    dialogSignIn.isDismiss()
+                                    Toast.makeText(this.context, "Admin Logged In", Toast.LENGTH_SHORT).show()
+
+                                } else {
+                                    dialogSignIn.isDismiss()
+                                    dialogSignInError.startLoading()
+
+                                    val handler = Handler()
+                                    handler.postDelayed(object: Runnable{
+                                        override fun run() {
+                                            dialogSignInError.isDismiss()
+                                        }
+                                    }, 6000)
+                                }
+                            }.addOnFailureListener {
+                                dialogSignIn.isDismiss()
+                                dialogSignInError.startLoading()
+
+                                val handler = Handler()
+                                handler.postDelayed(object: Runnable{
+                                    override fun run() {
+                                        dialogSignInError.isDismiss()
+                                    }
+                                }, 6000)
+                            }
+                        } else {
+                            dialogSignIn.isDismiss()
+                            dialogEmailNotVerified.startLoading()
+
+                            val handler = Handler()
+                            handler.postDelayed(object: Runnable{
+                                override fun run() {
+                                    dialogEmailNotVerified.isDismiss()
+                                }
+                            }, 6000)
+                        }
+                    } else {
+                        dialogSignIn.isDismiss()
+                        dialogSignInError.startLoading()
+
+                        val handler = Handler()
+                        handler.postDelayed(object: Runnable{
+                            override fun run() {
+                                dialogSignInError.isDismiss()
+                            }
+                        }, 6000)
+                    }
+                }.addOnFailureListener { e->
+                    dialogSignIn.isDismiss()
+                    dialogSignInError.startLoading()
+
+                    val handler = Handler()
+                    handler.postDelayed(object: Runnable{
+                        override fun run() {
+                            dialogSignInError.isDismiss()
+                        }
+                    }, 6000)
+                    //Toast.makeText(this.context, "$e", Toast.LENGTH_LONG).show()
+                }
             //findNavController().navigate(R.id.action_SignInFragment_to_homeActivity)
         }
 
