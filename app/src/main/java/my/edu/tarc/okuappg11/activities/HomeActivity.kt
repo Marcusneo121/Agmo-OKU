@@ -89,8 +89,9 @@ class HomeActivity : AppCompatActivity() {
         locationRequest = LocationRequest.create()
         locationRequest.apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 3000
-            fastestInterval = 1000
+            interval = 5000
+            fastestInterval = 2000
+            maxWaitTime = 10 * 1000
         }
 
         val builder = LocationSettingsRequest.Builder()
