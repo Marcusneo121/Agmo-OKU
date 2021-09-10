@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.activities.AdminHomeActivity
 import my.edu.tarc.okuappg11.activities.HomeActivity
 import my.edu.tarc.okuappg11.databinding.FragmentSigninBinding
-import my.edu.tarc.okuappg11.progressdialog.EmailSentDialog
 import my.edu.tarc.okuappg11.progressdialog.EmailVerifyDialog
 import my.edu.tarc.okuappg11.progressdialog.SignInDialog
 import my.edu.tarc.okuappg11.progressdialog.SignInErrorDialog
@@ -141,7 +140,7 @@ class SignInFragment : Fragment() {
                                         override fun run() {
                                             dialogSignInError.isDismiss()
                                         }
-                                    }, 6000)
+                                    }, 3000)
                                 }
                             }.addOnFailureListener {
                                 dialogSignIn.isDismiss()
@@ -152,7 +151,7 @@ class SignInFragment : Fragment() {
                                     override fun run() {
                                         dialogSignInError.isDismiss()
                                     }
-                                }, 6000)
+                                }, 3000)
                             }
                         } else {
                             dialogSignIn.isDismiss()
@@ -163,7 +162,7 @@ class SignInFragment : Fragment() {
                                 override fun run() {
                                     dialogEmailNotVerified.isDismiss()
                                 }
-                            }, 6000)
+                            }, 3000)
                         }
                     } else {
                         dialogSignIn.isDismiss()
@@ -174,7 +173,7 @@ class SignInFragment : Fragment() {
                             override fun run() {
                                 dialogSignInError.isDismiss()
                             }
-                        }, 6000)
+                        }, 3000)
                     }
                 }.addOnFailureListener { e->
                     dialogSignIn.isDismiss()
@@ -185,7 +184,7 @@ class SignInFragment : Fragment() {
                         override fun run() {
                             dialogSignInError.isDismiss()
                         }
-                    }, 6000)
+                    }, 3000)
                     //Toast.makeText(this.context, "$e", Toast.LENGTH_LONG).show()
                 }
             //findNavController().navigate(R.id.action_SignInFragment_to_homeActivity)

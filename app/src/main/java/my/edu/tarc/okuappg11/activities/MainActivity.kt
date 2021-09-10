@@ -1,12 +1,20 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityMainBinding
 
@@ -14,6 +22,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    val TAG = "MainTag"
+
+    private lateinit var locationRequest: LocationRequest
+    private val REQUEST_CHECK_SETTING = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +38,70 @@ class MainActivity : AppCompatActivity() {
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 
+        //checkLocationSetting()
     }
+
+    private fun checkLocationSetting() {
+        locationRequest = LocationRequest.create()
+        locationRequest.apply {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = 3000
+            fastestInterval = 1000
+        }
+
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+
+        val result: Task<LocationSettingsResponse> =
+            LocationServices.getSettingsClient(applicationContext)
+                .checkLocationSettings(builder.build())
+
+        result.addOnCompleteListener {
+            try {
+                val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
+                Toast.makeText(this@MainActivity, "GPS is On", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "checkSetting: GPS On")
+            } catch (e: ApiException) {
+
+                when (e.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                        val resolvableApiException = e as ResolvableApiException
+                        resolvableApiException.startResolutionForResult(
+                            this@MainActivity,
+                            REQUEST_CHECK_SETTING
+                        )
+                        Log.d(TAG, "checkSetting: RESOLUTION_REQUIRED")
+                    }
+
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                        // USER DEVICE DOES NOT HAVE LOCATION OPTION
+                    }
+                }
+            }
+        }
+    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        when (requestCode) {
+//            REQUEST_CHECK_SETTING -> {
+//                when (resultCode) {
+//                    Activity.RESULT_OK -> {
+//                        Toast.makeText(this@MainActivity, "GPS is Turned on", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                    Activity.RESULT_CANCELED -> {
+//                        Toast.makeText(
+//                            this@MainActivity,
+//                            "GPS is Required to use this app",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
