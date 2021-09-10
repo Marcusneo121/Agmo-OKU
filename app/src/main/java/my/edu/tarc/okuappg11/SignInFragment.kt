@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.activities.AddEventActivity
 import my.edu.tarc.okuappg11.activities.AdminHomeActivity
+import my.edu.tarc.okuappg11.activities.HomeActivity
 import my.edu.tarc.okuappg11.databinding.FragmentSigninBinding
 import my.edu.tarc.okuappg11.progressdialog.EmailVerifyDialog
 import my.edu.tarc.okuappg11.progressdialog.SignInDialog
@@ -119,7 +120,7 @@ class SignInFragment : Fragment() {
                                 userRole = it.get("userType").toString()
                                 if(userRole == "OKU" || userRole == "Normal"){
 
-                                    val intent = Intent(activity, AddEventActivity::class.java)
+                                    val intent = Intent(activity, HomeActivity::class.java)
                                     activity?.startActivity(intent)
                                     dialogSignIn.isDismiss()
                                     Toast.makeText(this.context, "Logged In", Toast.LENGTH_SHORT).show()

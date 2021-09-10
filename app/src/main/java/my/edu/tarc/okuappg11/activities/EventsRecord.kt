@@ -23,31 +23,25 @@ class EventsRecord : AppCompatActivity() {
 
     }
 
-    private fun EventChangeListener(){
-        fAuth = FirebaseAuth.getInstance()
-        fStore = FirebaseFirestore.getInstance()
-
-        fStore.collection("events")
-            .addSnapshotListener(object: EventListener<QuerySnapshot>){
-                override fun onEvent(value:QuerySnapshot?,error: FirebaseFirestoreException){
-                    if (error != null) {
-                        Log.e("Firestore Error", error.message.toString())
-                        return
-                    }
-
-                    for(dc: DocumentChange in value?.documentChanges!!){
-                        if ( dc.type == DocumentChange.Type.ADDED){
-                                eventsRecordList.add(dc.document.toObject())
-                            }
-                    }
-
-                }
-        }
-
-
-
-    }
-
-
-
+//    private fun EventChangeListener() {
+//        fAuth = FirebaseAuth.getInstance()
+//        fStore = FirebaseFirestore.getInstance()
+//
+//        fStore.collection("events")
+//            .addSnapshotListener(object : EventListener<QuerySnapshot>) {
+//                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException) {
+//                    if (error != null) {
+//                        Log.e("Firestore Error", error.message.toString())
+//                        return
+//                    }
+//
+//                    for (dc: DocumentChange in value?.documentChanges!!) {
+//                        if (dc.type == DocumentChange.Type.ADDED) {
+//                            eventsRecordList.add(dc.document.toObject())
+//                        }
+//                    }
+//
+//                }
+//            }
+//    }
 }
