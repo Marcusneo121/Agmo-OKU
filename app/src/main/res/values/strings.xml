@@ -6,6 +6,9 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="location">Location</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -38,6 +41,30 @@
     <string name="press_outside_to_dismiss">Press outside to dismiss</string>
     <string name="please_verify_email_before_login">Please verify email before login</string>
     <string name="account_created">Account Created</string>
+
+
+    <string name="event_name_text">Event Name</string>
+    <string name="event_description_text">Event Description</string>
+    <string name="event_thumbnail_text">Event Thumbnail</string>
+    <string name="event_organizer_name_text">Event Organizer Name</string>
+    <string name="event_information_text">Event Information</string>
+    <string name="event_setting_text">Event Setting</string>
+    <string name="singleday_event_text">Single day event</string>
+    <string name="multiday_event_text">Multi-day event</string>
+    <string name="allow_volunteer_text">Allow Volunteer</string>
+    <string name="free_event_text">Free Event</string>
+    <string name="select_time">Select Time</string>
+    <string name="select_date">Select Date</string>
+    <string name="start_date">Start Date</string>
+    <string name="time_text">Time</string>
+
+    <string name="event_validation_error">Please fill in all field.</string>
+    <string name="select_duration_event">Please select duration of event.</string>
+    <string name="storage_permission_denied">Storage permission denied. You can also allow it at settings.</string>
+    <string name="image_selection_fail">Failed to select image</string>
+
+
+    <string name="submit">Submit</string>
 
     <string-array name="userList">
         <item>OKU</item>
