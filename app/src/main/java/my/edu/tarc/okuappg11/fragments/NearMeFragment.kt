@@ -24,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.EventDetailsActivity
 import my.edu.tarc.okuappg11.activities.HomeActivity
 import my.edu.tarc.okuappg11.activities.testActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
@@ -165,14 +166,14 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 
             //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this.context, testActivity::class.java)
+            val intent = Intent(this.context, EventDetailsActivity::class.java)
             val snippet = marker.snippet
-            intent.putExtra("eventID", snippet)
+            intent.putExtra("EventUID", snippet)
 
             if (marker.title == "Current Location"){
                 Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
             } else {
-                this.startActivity(intent)
+                startActivity(intent)
             }
     }
 

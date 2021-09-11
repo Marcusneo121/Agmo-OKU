@@ -29,8 +29,14 @@ class EventDetailsActivity : AppCompatActivity() {
         binding = ActivityEventDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
+
         val eventId = intent.getStringExtra("EventUID")
 
         readData(eventId)
@@ -74,5 +80,9 @@ class EventDetailsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
 }
