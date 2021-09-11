@@ -14,10 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import my.edu.tarc.okuappg11.activities.AddEventActivity
-import my.edu.tarc.okuappg11.activities.AdminHomeActivity
-import my.edu.tarc.okuappg11.activities.HomeActivity
-import my.edu.tarc.okuappg11.activities.MapAutocompleteActivity
+import my.edu.tarc.okuappg11.activities.*
 import my.edu.tarc.okuappg11.databinding.FragmentSigninBinding
 import my.edu.tarc.okuappg11.progressdialog.EmailVerifyDialog
 import my.edu.tarc.okuappg11.progressdialog.SignInDialog
@@ -94,6 +91,10 @@ class SignInFragment : Fragment() {
         val password = binding.etPassword
         val email = binding.etEmail
 
+        binding.forgotPassHyplink.setOnClickListener {
+            val intent = Intent(activity, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.btnLogin.setOnClickListener {
             if(email.text.isEmpty()){

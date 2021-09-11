@@ -7,7 +7,7 @@
     tools:context=".activities.testActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvSpaces"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="284dp"
@@ -25,5 +25,5 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSpaces" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,4 +74,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="something_went_wrong">Oops! Something Went Wrong</string>
     <string name="logging_in">Verifying...</string>
+    <string name="locationSearch">Fetching current location...</string>
+    <string name="forgot_pass_msg1">Did someone forget their password?</string>
+    <string name="thatOk">That\'s ok... Just enter the email address</string>
+    <string name="enter_email2">you\'ve used to register with us</string>
+    <string name="enter_email3">We\'ll send you a reset link!</string>
+    <string name="submit_text">Submit</string>
 </resources>

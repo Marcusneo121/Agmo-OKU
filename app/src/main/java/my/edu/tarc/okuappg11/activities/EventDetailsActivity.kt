@@ -54,6 +54,7 @@ class EventDetailsActivity : AppCompatActivity() {
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
 
+                    supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate
                     binding.tvEventTime.text = startTime
                     binding.tvEventDescription.text = eventDescription
@@ -75,8 +76,6 @@ class EventDetailsActivity : AppCompatActivity() {
         }.addOnFailureListener{
             Log.d("CHECK", it.message.toString())
             Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
-
-
         }
     }
 
