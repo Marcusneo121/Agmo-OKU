@@ -78,7 +78,7 @@ class HomeActivity : AppCompatActivity() {
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION),
                 permissionCode
             )
             return

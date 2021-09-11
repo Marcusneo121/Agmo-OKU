@@ -1,6 +1,7 @@
 package my.edu.tarc.okuappg11.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -20,16 +21,16 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.HomeActivity
+import my.edu.tarc.okuappg11.activities.testActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
 import my.edu.tarc.okuappg11.databinding.FragmentNearMeBinding
+import my.edu.tarc.okuappg11.models.CustomInfoWindow
 
-class NearMeFragment : Fragment(), OnMapReadyCallback {
+class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private var _binding: FragmentNearMeBinding? = null
     private val binding get() = _binding!!
@@ -91,7 +92,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION),
                 permissionCode
             )
             return
@@ -122,7 +123,11 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
 
             for(i in allEventsArrayList.indices){
                 latLngValue = LatLng(allEventsArrayList[i].latitude, allEventsArrayList[i].longitude)
-                googleMap.addMarker(MarkerOptions().position(latLngValue).title(allEventsArrayList[i].name)).setIcon(bitmapDescriptorFromVector(requireContext(), R.drawable.ic_round_emoji_events_24))
+                googleMap.setOnInfoWindowClickListener(this)
+                googleMap.setInfoWindowAdapter(CustomInfoWindow(requireContext()))
+                googleMap.addMarker(MarkerOptions().position(latLngValue)
+                    .title(allEventsArrayList[i].eventName).snippet(allEventsArrayList[i].eventID))
+                    .setIcon(bitmapDescriptorFromVector(requireContext(), R.drawable.ic_round_emoji_events_24))
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLngValue))
             }
@@ -156,10 +161,25 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    override fun onInfoWindowClick(marker: Marker) {
+
+            //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this.context, testActivity::class.java)
+            val snippet = marker.snippet
+            intent.putExtra("eventID", snippet)
+
+            if (marker.title == "Current Location"){
+                Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+            } else {
+                this.startActivity(intent)
+            }
+    }
+
     fun getAllEvents(){
         Toast.makeText(context, "It runs here", Toast.LENGTH_LONG).show()
         fStore = FirebaseFirestore.getInstance()
-        val collectionReference = fStore.collection("testingEventOnly")
+        val collectionReference = fStore.collection("events")
 
         collectionReference.addSnapshotListener{ snapshot, e->
             if(e!=null){
@@ -172,7 +192,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
                 document.forEach{
                     val mapDetails = it.toObject(AllEventsArrayList::class.java)
                     if(mapDetails != null){
-                        //mapDetails.event = it.id
+                        mapDetails.eventID = it.id
                         allEventsArrayList.add(mapDetails)
                     }
                 }
@@ -181,7 +201,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            if(allEventsArrayList?.isEmpty()){
+            if(allEventsArrayList.isEmpty()){
                 Toast.makeText(context, "Array is empty", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(context, "Array is not empty", Toast.LENGTH_LONG).show()
@@ -191,12 +211,10 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
         }, 2000)
     }
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNearMeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -206,3 +224,5 @@ class NearMeFragment : Fragment(), OnMapReadyCallback {
         getAllEvents()
     }
 }
+
+
