@@ -9,6 +9,7 @@ import android.webkit.MimeTypeMap
 object Constants {
     const val READ_STORAGE_PERMISSION_CODE  = 2
     const val PICK_IMAGE_REQUEST_CODE = 1
+    const val PLACE_PICKER_REQUEST =1
     const val USER_PROFILE_IMAGE:String = "EVENT_THUMBNAIL"
 
 
