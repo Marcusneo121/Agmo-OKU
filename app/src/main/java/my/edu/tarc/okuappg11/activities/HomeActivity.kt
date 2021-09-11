@@ -2,10 +2,13 @@ package my.edu.tarc.okuappg11.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -26,6 +29,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var locationRequest: LocationRequest
     private val REQUEST_CHECK_SETTING = 1001
+    private val permissionCode = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +63,35 @@ class HomeActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
         checkLocationSetting()
+        askPermission()
+    }
+
+    private fun askPermission(){
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION),
+                permissionCode
+            )
+            return
+        }
     }
 
     private fun checkLocationSetting() {
         locationRequest = LocationRequest.create()
         locationRequest.apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 3000
-            fastestInterval = 1000
+            interval = 5000
+            fastestInterval = 2000
+            maxWaitTime = 10 * 1000
         }
 
         val builder = LocationSettingsRequest.Builder()
