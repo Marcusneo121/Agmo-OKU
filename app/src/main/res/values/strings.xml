@@ -57,6 +57,7 @@
     <string name="select_date">Select Date</string>
     <string name="start_date">Start Date</string>
     <string name="time_text">Time</string>
+    <string name="location_text">Location</string>
 
     <string name="event_validation_error">Please fill in all field.</string>
     <string name="select_duration_event">Please select duration of event.</string>
@@ -85,4 +86,7 @@
         <item>OKU</item>
         <item>Normal User</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="something_went_wrong">Oops! Something Went Wrong</string>
+    <string name="logging_in">Verifying...</string>
 </resources>

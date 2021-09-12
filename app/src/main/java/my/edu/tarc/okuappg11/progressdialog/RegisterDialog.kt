@@ -19,7 +19,7 @@ class RegisterDialog(val fragment: RegisterFragment) {
         isDialog = builder.create()
         isDialog.show()
         //isDialog.setCanceledOnTouchOutside(true)
-        isDialog.window?.setLayout(990,600) //Controlling width and height.
+        isDialog.window?.setLayout(700,550) //Controlling width and height.
     }
 
     fun isDismiss(){

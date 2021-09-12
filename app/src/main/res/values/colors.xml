@@ -30,6 +30,9 @@
 
     <color name="bottom_nav_bar_bg">#262626</color>
 
-    <color name="bottom_nav_bar_disabled">#5C5C5C</color>
-    <color name="bottom_nav_bar_enabled">#CFCFCF</color>
+    <color name="bottom_nav_bar_disabled">#3C3C3C</color>
+    <color name="bottom_nav_bar_enabled">#FFFFFF</color>
+
+    <color name="events_icon">#DC0D21</color>
+    <color name="human_me">#007CFF</color>
 </resources>
