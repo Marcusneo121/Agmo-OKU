@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3D3D3D"
+    tools:context=".activities.VolunteerRegisterActivity">
+
+    <TextView
+        android:id="@+id/tvVR1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvVR1"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etVName"
+        style="@style/volunteerRegisterDesign"
+        android:layout_width="360dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/et_bg_white"
+        android:ems="10"
+        android:hint="@string/etVNameHint"
+        android:inputType="textPersonName"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:textColorHint="#B5ACAC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvVR1"
+        app:layout_constraintTop_toBottomOf="@+id/tvVR1" />
+
+    <EditText
+        android:id="@+id/etVEmail"
+        style="@style/volunteerRegisterDesign"
+        android:layout_width="360dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/et_bg_white"
+        android:ems="10"
+        android:hint="@string/etVEmailHint"
+        android:inputType="textPersonName"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:textColorHint="#B5ACAC"
+        app:layout_constraintEnd_toEndOf="@+id/etVName"
+        app:layout_constraintStart_toStartOf="@+id/etVName"
+        app:layout_constraintTop_toBottomOf="@+id/etVName" />
+
+    <EditText
+        android:id="@+id/etVPhone"
+        style="@style/volunteerRegisterDesign"
+        android:layout_width="360dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/et_bg_white"
+        android:ems="10"
+        android:hint="@string/etVPhoneHint"
+        android:inputType="textPersonName"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:textColorHint="#B5ACAC"
+        app:layout_constraintEnd_toEndOf="@+id/etVEmail"
+        app:layout_constraintStart_toStartOf="@+id/etVEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etVEmail" />
+
+    <CheckBox
+        android:id="@+id/vcheckBox"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/checkBoxV"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/etVPhone"
+        app:layout_constraintStart_toStartOf="@+id/etVPhone"
+        app:layout_constraintTop_toBottomOf="@+id/etVPhone" />
+
+    <LinearLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="409dp"
+        android:layout_height="80dp"
+        android:background="#000000"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnVReset"
+            style="@style/volunteerRegisterButton"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:text="@string/btnVReset"
+            android:textColor="@color/theme_purple"
+            app:backgroundTint="#000000"
+            app:strokeColor="@color/theme_purple"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/btnVSubmit"
+            style="@style/volunteerRegisterButton"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:text="@string/btnVSubmit"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/theme_purple" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

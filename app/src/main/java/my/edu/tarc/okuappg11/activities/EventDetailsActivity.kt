@@ -2,11 +2,13 @@ package my.edu.tarc.okuappg11.activities
 
 import android.app.ActionBar
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -24,6 +26,7 @@ class EventDetailsActivity : AppCompatActivity() {
     private var startDate:String? = null
     private var startTime:String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEventDetailsBinding.inflate(layoutInflater)
@@ -34,6 +37,19 @@ class EventDetailsActivity : AppCompatActivity() {
         val eventId = intent.getStringExtra("EventUID")
 
         readData(eventId)
+
+
+        binding.btnTest.setOnClickListener(){
+            val intent = Intent(this@EventDetailsActivity, VolunteerRegisterActivity::class.java)
+            intent.putExtra("EventUID","${eventId.toString()}")
+            startActivity(intent)
+        }
+
+        binding.btnTest2.setOnClickListener(){
+            val intent = Intent(this@EventDetailsActivity, VolunteerRequestActivity::class.java)
+            intent.putExtra("EventUID","${eventId.toString()}")
+            startActivity(intent)
+        }
 
 
     }

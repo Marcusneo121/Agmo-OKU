@@ -65,6 +65,21 @@
 
 
     <string name="submit">Submit</string>
+    <string name="tvVR1">Contact Information</string>
+    <string name="etVNameHint">Full Name</string>
+    <string name="etVEmailHint">Email Address</string>
+    <string name="etVPhoneHint">Phone Number</string>
+    <string name="checkBoxV">I agree to share my contact infomation to event organizer and I am being serious on volunteering to the event.</string>
+    <string name="btnVSubmit">Submit</string>
+    <string name="btnVReset">Reset</string>
+    <string name="vNameTitle">VOLUNTEER NAME</string>
+    <string name="vEmailTitle">VOLUNTEER EMAIL</string>
+    <string name="vPhoneTitle">VOLUNTEER PHONE NO.</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="contact">Contact</string>
+    <string name="vcancel">Cancel</string>
+
 
     <string-array name="userList">
         <item>OKU</item>

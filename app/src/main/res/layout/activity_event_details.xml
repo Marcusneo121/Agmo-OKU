@@ -185,5 +185,31 @@
             android:text="event description test" />
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="161dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="32dp"
+        android:text="request volunteer"
+        app:backgroundTint="#E2EDF3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/btnTest2"
+        android:layout_width="161dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:text="View volunteer"
+        app:backgroundTint="#E2EDF3"
+        app:layout_constraintBottom_toTopOf="@+id/btnTest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
