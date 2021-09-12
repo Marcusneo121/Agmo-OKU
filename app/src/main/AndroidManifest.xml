@@ -44,7 +44,10 @@
         <activity android:name=".activities.MapAutocompleteActivity" />
         <activity android:name=".activities.AddEventActivity" />
         <activity android:name=".activities.EventDetailsActivity" />
-        <activity android:name=".activities.AdminHomeActivity" />
+        <activity
+            android:name=".activities.AdminHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.testActivity"
             android:label="Testing Fragment"
@@ -60,7 +63,6 @@
             android:theme="@style/Theme.OKUAPPG11.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

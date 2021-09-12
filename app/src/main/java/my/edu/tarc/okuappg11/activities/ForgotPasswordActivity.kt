@@ -21,6 +21,7 @@ private lateinit var binding: ActivityForgotPasswordBinding
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Forgot Password"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
+
         var fAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val email = binding.etForgotEmail
         var emailAddressInput: String

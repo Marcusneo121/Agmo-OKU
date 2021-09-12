@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLay2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bottom_nav_bar_bg"
+    tools:context=".fragments.AdminHomeFragment">
+
+    <Button
+        android:id="@+id/btnAdd"
+        style="@style/ToggleButtonWithIconOnly"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_round_add_24"
+        app:iconSize="33dp"
+        app:iconTint="@color/greyLabel"
+        app:layout_constraintBottom_toBottomOf="@+id/btnNotification"
+        app:layout_constraintEnd_toStartOf="@+id/btnNotification"
+        app:layout_constraintTop_toTopOf="@+id/btnNotification"
+        app:rippleColor="@color/theme_purple" />
+
+    <Button
+        android:id="@+id/btnNotification"
+        style="@style/ToggleButtonWithIconOnly"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_round_notifications_24"
+        app:iconSize="30dp"
+        app:iconTint="@color/greyLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/theme_purple" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEventAdmin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAdd"
+        app:layout_constraintVertical_bias="0.666" />
+</androidx.constraintlayout.widget.ConstraintLayout>

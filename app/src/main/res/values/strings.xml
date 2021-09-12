@@ -82,4 +82,7 @@
     <string name="submit_text">Submit</string>
     <string name="search_hint">Event name, City... </string>
     <string name="search_label">Search</string>
+
+    <string name="admin_home">Events</string>
+    <string name="admin_profile">Profile</string>
 </resources>

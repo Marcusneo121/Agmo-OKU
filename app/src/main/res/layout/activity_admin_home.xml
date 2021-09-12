@@ -6,15 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".activities.AdminHomeActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        style="@style/inputDesign"
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/adminContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/bottom_nav_graph_admin"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is Admin Home"
-        android:textColor="@color/grey_enabled"
+        android:background="@color/bottom_nav_bar_bg"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:menu="@menu/bottom_nav_menu_admin" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

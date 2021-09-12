@@ -130,7 +130,7 @@ class SignInFragment : Fragment() {
                                 } else if (userRole == "Admin"){
 
                                     val intent = Intent(activity, AdminHomeActivity::class.java)
-                                    activity?.startActivity(intent)
+                                    startActivity(intent)
                                     dialogSignIn.isDismiss()
                                     Toast.makeText(this.context, "Admin Logged In", Toast.LENGTH_SHORT).show()
 

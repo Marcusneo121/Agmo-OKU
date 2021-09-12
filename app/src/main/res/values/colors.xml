@@ -37,4 +37,6 @@
     <color name="human_me">#007CFF</color>
 
     <color name="search_bg">#262626</color>
+
+    <color name="transparent">#0000ffff</color>
 </resources>
