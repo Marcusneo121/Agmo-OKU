@@ -23,7 +23,7 @@ class EventsRecord : AppCompatActivity() {
 
     }
 
-    private fun EventChangeListener(){
+/*    private fun EventChangeListener(){
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
@@ -46,7 +46,7 @@ class EventsRecord : AppCompatActivity() {
 
 
 
-    }
+    }*/
 
 
 
