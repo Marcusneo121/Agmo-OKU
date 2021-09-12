@@ -65,12 +65,9 @@
 
 
     <string name="submit">Submit</string>
-    <string name="btnBookmark">BOOKMARK</string>
-    <string name="btnJoinEvent">JOIN EVENT</string>
 
     <string-array name="userList">
         <item>OKU</item>
         <item>Normal User</item>
     </string-array>
-    <string name="title_activity_likes">Likes</string>
 </resources>

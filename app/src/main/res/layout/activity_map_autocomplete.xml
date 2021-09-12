@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal"
+    tools:context=".activities.MapAutocompleteActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etSearchLocation"
+        android:hint="@string/location_text"
+        android:padding="16dp"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_baseline_location_on_24"
+        android:gravity="center_vertical"
+        android:background="@android:drawable/editbox_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLocation"
+       />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLocation2"
+        android:textSize="23sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finish" />
+
+
+</LinearLayout>

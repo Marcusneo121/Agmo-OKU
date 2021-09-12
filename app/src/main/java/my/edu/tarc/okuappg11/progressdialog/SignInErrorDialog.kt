@@ -17,7 +17,7 @@ class SignInErrorDialog(val fragment: SignInFragment) {
         isDialog = builder.create()
         isDialog.show()
         isDialog.setCanceledOnTouchOutside(true)
-        isDialog.window?.setLayout(1200,1400) //Controlling width and height.
+        isDialog.window?.setLayout(1000,1100) //Controlling width and height.
     }
 
     fun isDismiss(){

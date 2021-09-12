@@ -3,7 +3,9 @@ package my.edu.tarc.okuappg11.activities
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -48,17 +51,22 @@ class AddEventActivity: AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
     private var eventOrganizer:String? = null
+    private var eventOrganizerUID:String? =null
+    private var eventLocation:String? = null
+    private var latitude:Double?= null
+    private var longitude:Double?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddEventBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        //loadData()
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         getDisplayName()
-
-
+        val ref:DocumentReference = fStore.collection("events").document()
+        eventId = ref.id
 
         binding.textFieldEventOrganizerName.editText!!.isEnabled = false
         binding.textFieldDateStart.editText!!.isEnabled = false
@@ -148,7 +156,15 @@ class AddEventActivity: AppCompatActivity() {
                     Constants.READ_STORAGE_PERMISSION_CODE
                 )
             }
+        }   
+
+        binding.btnPickPlace.setOnClickListener{
+            //saveData()
+            val intent = Intent(this@AddEventActivity, MapAutocompleteActivity::class.java)
+            startActivityForResult(intent, 3)
         }
+
+
 
         binding.btnSubmit.setOnClickListener{
             if (validateEventDetails()) {
@@ -156,32 +172,18 @@ class AddEventActivity: AppCompatActivity() {
                 eventDescription = binding.textFieldEventDescription.editText!!.text.toString()
                 startDate = binding.textFieldDateStart.editText!!.text.toString()
                 startTime = binding.textFieldTime.editText!!.text.toString()
+                val dateNow = Calendar.getInstance().time
+                val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
-                val hashMapEvents = hashMapOf(
-                    "eventName" to eventName,
-                    "eventDescription" to eventDescription,
-                    "startDate" to startDate,
-                    "startTime" to startTime,
-                    "eventDuration" to eventDuration,
-                    "eventOrganizerName" to eventOrganizer
-                )
+
 
                 dialogAddEvent.startLoading()
 
-                val ref:DocumentReference = fStore.collection("events").document()
 
-                ref.set(hashMapEvents)
-                    .addOnSuccessListener {
-                        Log.d(ContentValues.TAG, "Added Document")
-                        firestoreCheck=true
-                    }
-                    .addOnFailureListener {
-                        Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
-                    }
 
-                eventId = ref.id
+
                 Log.d("check", eventId.toString())
-                val sRef:StorageReference = FirebaseStorage.getInstance().reference.child(
+                val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
                     Constants.USER_PROFILE_IMAGE + eventId + "."
                             + Constants.getFileExtension(
                                 this,
@@ -195,6 +197,31 @@ class AddEventActivity: AppCompatActivity() {
                     taskSnapshot.metadata!!.reference!!.downloadUrl
                         .addOnSuccessListener { uri ->
                             Log.e("Downloadable Image URL",uri.toString())
+                            val hashMapEvents = hashMapOf(
+                                "eventName" to eventName,
+                                "eventDescription" to eventDescription,
+                                "startDate" to startDate,
+                                "startTime" to startTime,
+                                "eventDuration" to eventDuration,
+                                "eventOrganizerName" to eventOrganizer,
+                                "eventOrganizerUID" to eventOrganizerUID,
+                                "eventLocation" to eventLocation,
+                                "eventCreatedDate" to formattedDateNow,
+                                "status" to "pending",
+                                "latitude" to latitude,
+                                "longitude" to longitude,
+                                "eventThumbnailURL" to uri.toString()
+
+                            )
+
+                            ref.set(hashMapEvents)
+                                .addOnSuccessListener {
+                                    Log.d(ContentValues.TAG, "Added Document")
+                                    firestoreCheck=true
+                                }
+                                .addOnFailureListener {
+                                    Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
+                                }
                             storageCheck=true
                         }
                         .addOnFailureListener{exception ->
@@ -205,6 +232,10 @@ class AddEventActivity: AppCompatActivity() {
                 val handler = Handler()
                 handler.postDelayed(object: Runnable{
                     override fun run() {
+                      //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+                      //  val editor = sharedPreferences.edit()
+                       // editor.clear()
+                       // editor.apply()
                         val intent = Intent(this@AddEventActivity, EventDetailsActivity::class.java)
                         intent.putExtra("EventUID","${eventId.toString()}")
                         startActivity(intent)
@@ -231,11 +262,39 @@ class AddEventActivity: AppCompatActivity() {
 
     }
 
+//    //private fun saveData() {
+//        val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+//        eventName = binding.textFieldEventName.editText.toString()
+//        eventDescription = binding.textFieldEventDescription.editText.toString()
+//        val editor = sharedPreferences.edit()
+//        editor.apply{
+//            putString("eventName",eventName)
+//            putString("eventDescription",eventDescription)
+//            putString("eventStartDate",startDate)
+//            putString("eventStartTime", startTime)
+//        }.apply()
+//
+//
+//        Toast.makeText(this,"DATA SAVED",Toast.LENGTH_SHORT).show()
+//
+//    }
+//
+//    //private fun loadData(){
+//        val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+//
+//        val savedString = sharedPreferences.getString("eventName", "DEFAULT")
+//        val eventLocation = sharedPreferences.getString("eventLocality","DEFAULT")
+//
+//        binding.textFieldEventName.editText!!.setText(savedString)
+//        binding.textFieldLocation.editText!!.setText(eventLocation)
+//    }
+
     private fun getDisplayName() {
         val docRef = fStore.collection("users").document(fAuth.currentUser!!.uid)
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
+                    eventOrganizerUID=document.id
                     eventOrganizer = document.getString("name")
                     binding.textFieldEventOrganizerName.editText!!.setText(eventOrganizer)
 
@@ -268,13 +327,16 @@ class AddEventActivity: AppCompatActivity() {
             }
         }
 
+
+
     }
 
     @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == Constants.PICK_IMAGE_REQUEST_CODE){
         if (resultCode== Activity.RESULT_OK){
-            if(requestCode == Constants.PICK_IMAGE_REQUEST_CODE){
+
                 if (data !=null){
                     try{
                         //uri of image
@@ -289,7 +351,15 @@ class AddEventActivity: AppCompatActivity() {
             Log.e("REQUEST CANCELLED", "Image selection cancelled")
         }
 
+        if(requestCode == 3){
+            if(resultCode == RESULT_OK){
+                eventLocation = data!!.getStringExtra("eventLocation")
+                latitude = data!!.getStringExtra("latitude")?.toDouble()
+                longitude = data!!.getStringExtra("longitude")?.toDouble()
+                binding.textFieldLocation.editText!!.setText(eventLocation)
 
+            }
+        }
 
     }
 

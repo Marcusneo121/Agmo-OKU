@@ -12,13 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.Bookmark"></activity>
-        <activity android:name=".activities.Likes" />
-        <activity
-            android:name=".Likes"
-            android:label="@string/title_activity_likes"
-            android:theme="@style/Theme.OKUAPPG11.NoActionBar" />
-        <activity android:name=".activities.eventsRecord" />
+        <activity android:name=".activities.eventsRecord"></activity>
         <activity android:name=".activities.AddEventActivity" />
         <activity android:name=".activities.EventDetailsActivity" />
         <activity android:name=".activities.AdminHomeActivity" />
