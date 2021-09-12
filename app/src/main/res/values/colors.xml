@@ -35,4 +35,6 @@
 
     <color name="events_icon">#DC0D21</color>
     <color name="human_me">#007CFF</color>
+
+    <color name="search_bg">#262626</color>
 </resources>

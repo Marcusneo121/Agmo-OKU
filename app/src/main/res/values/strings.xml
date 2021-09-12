@@ -80,4 +80,6 @@
     <string name="enter_email2">you\'ve used to register with us</string>
     <string name="enter_email3">We\'ll send you a reset link!</string>
     <string name="submit_text">Submit</string>
+    <string name="search_hint">Event name, City... </string>
+    <string name="search_label">Search</string>
 </resources>
