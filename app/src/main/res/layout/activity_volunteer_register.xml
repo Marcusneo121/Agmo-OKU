@@ -114,9 +114,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:text="@string/btnVReset"
-            android:textColor="@color/theme_purple"
+            android:textColor="#3D70FF"
             app:backgroundTint="#000000"
-            app:strokeColor="@color/theme_purple"
+            app:strokeColor="#3D70FF"
             app:strokeWidth="2dp" />
 
         <Button
@@ -130,7 +130,7 @@
             android:layout_marginRight="24dp"
             android:text="@string/btnVSubmit"
             android:textColor="@color/white"
-            app:backgroundTint="@color/theme_purple" />
+            app:backgroundTint="#3D70FF" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

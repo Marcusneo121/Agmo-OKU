@@ -93,5 +93,15 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, AddEventActivity::class.java)
             activity?.startActivity(intent)
         }
+
+        binding.btnMyVolunteers.setOnClickListener(){
+            val intent = Intent(activity, MyVolunteerEventActivity::class.java)
+            activity?.startActivity(intent)
+        }
+
+        binding.btnMyPostedEvents.setOnClickListener(){
+            val intent = Intent(activity, MyPostedEventActivity::class.java)
+            activity?.startActivity(intent)
+        }
     }
 }

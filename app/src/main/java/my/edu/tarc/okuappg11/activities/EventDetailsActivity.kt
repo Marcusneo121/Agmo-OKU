@@ -66,6 +66,12 @@ class EventDetailsActivity : AppCompatActivity() {
                 }
 
         }
+
+        binding.btnVolunteer.setOnClickListener(){
+            val intent = Intent(this@EventDetailsActivity, VolunteerRegisterActivity::class.java)
+            intent.putExtra("EventUID","${eventId.toString()}")
+            startActivity(intent)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

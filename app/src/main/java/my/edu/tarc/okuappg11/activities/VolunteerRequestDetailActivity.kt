@@ -43,6 +43,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
         Log.d("checkVolunteer", vid.toString())
 
         fStore = FirebaseFirestore.getInstance()
+        fAuth = FirebaseAuth.getInstance()
 
         getData(eventId.toString(), vid.toString())
 
@@ -59,6 +60,25 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                 .collection("volunteer")
                 .document(vid.toString())
                 .set(hashMapStatus, SetOptions.merge())
+                .addOnSuccessListener {
+                    Log.d("TAG", "onSuccess: Status has updated")
+                }
+                .addOnFailureListener {
+                    Log.w(
+                        ContentValues.TAG,
+                        "Error adding document ${it.suppressedExceptions}"
+                    )
+                }
+
+            val hashMapVolunteerEvent = hashMapOf(
+                "eventId" to eventId.toString()
+            )
+
+            fStore.collection("users")
+                .document(vid.toString())
+                .collection("volunteerEvent")
+                .document(eventId.toString())
+                .set(hashMapVolunteerEvent)
                 .addOnSuccessListener {
                     Log.d("TAG", "onSuccess: Status has updated")
                 }

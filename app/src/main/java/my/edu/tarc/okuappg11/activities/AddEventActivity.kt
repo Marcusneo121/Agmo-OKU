@@ -249,7 +249,7 @@ class AddEventActivity: AppCompatActivity() {
 
             }
 
-
+            addPostedEvent()
         }
 
 
@@ -372,6 +372,22 @@ class AddEventActivity: AppCompatActivity() {
         }else{
             return true
         }
+    }
+
+    private fun addPostedEvent(){
+        val hashMapPostedEvent = hashMapOf(
+            "eventId" to eventId.toString(),
+            "eventName" to eventName.toString()
+        )
+
+        fStore.collection("users").document(fAuth.currentUser!!.uid).collection("postedEvent")
+            .document(eventId!!)
+            .set(hashMapPostedEvent)
+            .addOnSuccessListener {
+                Log.d("HEY", "Document is successfully added")
+            }.addOnFailureListener {
+                Log.d("HEY", "No such document")
+            }
     }
 
 

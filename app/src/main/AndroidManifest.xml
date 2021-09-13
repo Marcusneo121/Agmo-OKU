@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="my.edu.tarc.okuappg11">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -10,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -42,10 +41,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activities.MapAutocompleteActivity"/>
+        <activity android:name=".activities.MapAutocompleteActivity" />
         <activity android:name=".activities.AddEventActivity" />
         <activity android:name=".activities.EventDetailsActivity" />
         <activity android:name=".activities.AdminHomeActivity" />
+        <activity android:name=".activities.Bookmark" />
+        <activity android:name=".activities.VolunteerActivity" />
+        <activity android:name=".activities.VolunteerDetailActivity" />
+        <activity android:name=".activities.VolunteerRequestDetailActivity" />
+        <activity android:name=".activities.VolunteerRequestActivity" />
+        <activity android:name=".activities.VolunteerRegisterActivity" />
+        <activity android:name=".activities.ViewEventOrganizeDetailsActivity" />
+        <activity android:name=".activities.MyPostedEventActivity"/>
+        <activity android:name=".activities.MyVolunteerEventActivity" />
         <activity
             android:name=".activities.testActivity"
             android:label="Testing Fragment"
