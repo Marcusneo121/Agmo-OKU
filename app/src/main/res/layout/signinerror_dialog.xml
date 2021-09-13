@@ -7,7 +7,7 @@
     android:background="@color/grey_focused">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvSpaces"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="206dp"

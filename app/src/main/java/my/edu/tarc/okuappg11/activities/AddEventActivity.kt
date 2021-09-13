@@ -156,7 +156,7 @@ class AddEventActivity: AppCompatActivity() {
                     Constants.READ_STORAGE_PERMISSION_CODE
                 )
             }
-        }   
+        }
 
         binding.btnPickPlace.setOnClickListener{
             //saveData()
@@ -186,9 +186,9 @@ class AddEventActivity: AppCompatActivity() {
                 val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
                     Constants.USER_PROFILE_IMAGE + eventId + "."
                             + Constants.getFileExtension(
-                                this,
-                                mSelectedImageFileUri
-                            )
+                        this,
+                        mSelectedImageFileUri
+                    )
                 )
 
                 sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
@@ -232,10 +232,10 @@ class AddEventActivity: AppCompatActivity() {
                 val handler = Handler()
                 handler.postDelayed(object: Runnable{
                     override fun run() {
-                      //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
-                      //  val editor = sharedPreferences.edit()
-                       // editor.clear()
-                       // editor.apply()
+                        //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+                        //  val editor = sharedPreferences.edit()
+                        // editor.clear()
+                        // editor.apply()
                         val intent = Intent(this@AddEventActivity, EventDetailsActivity::class.java)
                         intent.putExtra("EventUID","${eventId.toString()}")
                         startActivity(intent)
@@ -335,7 +335,7 @@ class AddEventActivity: AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == Constants.PICK_IMAGE_REQUEST_CODE){
-        if (resultCode== Activity.RESULT_OK){
+            if (resultCode== Activity.RESULT_OK){
 
                 if (data !=null){
                     try{
