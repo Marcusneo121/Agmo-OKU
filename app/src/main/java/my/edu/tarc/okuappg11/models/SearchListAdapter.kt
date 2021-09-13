@@ -1,15 +1,18 @@
 package my.edu.tarc.okuappg11.models
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_search.view.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.EventDetailsActivity
+import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Adapter<SearchListAdapter.SearchListViewHolder>() {
 
@@ -25,6 +28,10 @@ class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Ad
         val searchListItem: SearchModel = searchList[position]
         holder.name.text = searchListItem.eventName
         holder.id.text = searchListItem.eventID
+        holder.eventDate.text = searchListItem.startDate
+        holder.eventTime.text = searchListItem.startTime
+        holder.eventLocation.text = searchListItem.eventLocation
+        GlideLoader(holder.ivSearch.context).loadUserPicture(Uri.parse(searchListItem.eventThumbnailURL),holder.ivSearch)
 
         val eventIDNumber: String = searchListItem.eventID
 
@@ -40,8 +47,12 @@ class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Ad
 //        fun bind(searchModel: SearchModel){
 //            itemView.tvNameSearch.text = searchModel.eventName
 //        }
-        val name : TextView = itemView.findViewById(R.id.tvNameSearch)
+        val name : TextView = itemView.findViewById(R.id.showTopicNameSearch)
         val id : TextView = itemView.findViewById(R.id.tvIDSearch)
+        val eventDate: TextView = itemView.findViewById(R.id.showTopicDescriptionSearch)
+        val eventTime: TextView = itemView.findViewById(R.id.showTimeSearch)
+        val eventLocation: TextView = itemView.findViewById(R.id.showLocationSearch)
+        val ivSearch: ImageView = itemView.findViewById(R.id.ivSearch)
     }
 
     override fun getItemCount(): Int {
