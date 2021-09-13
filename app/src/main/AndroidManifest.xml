@@ -48,6 +48,10 @@
         <activity android:name=".activities.AdminHomeActivity" />
         <activity android:name=".activities.Bookmark" />
         <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:label="Forgot Password"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.testActivity"
             android:label="Testing Fragment"
             android:screenOrientation="portrait" />
