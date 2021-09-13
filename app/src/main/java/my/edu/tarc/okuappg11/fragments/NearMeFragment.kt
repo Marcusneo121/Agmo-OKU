@@ -24,11 +24,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.EventDetailsActivity
 import my.edu.tarc.okuappg11.activities.HomeActivity
 import my.edu.tarc.okuappg11.activities.testActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
 import my.edu.tarc.okuappg11.databinding.FragmentNearMeBinding
 import my.edu.tarc.okuappg11.models.CustomInfoWindow
+import my.edu.tarc.okuappg11.progressdialog.LocationSearchingDialog
+import my.edu.tarc.okuappg11.progressdialog.SignInDialog
 
 class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
@@ -36,6 +39,8 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
     private val binding get() = _binding!!
     private lateinit var googleMap: GoogleMap
     private var latLngValue: LatLng? = null
+
+    private val dialogLocationFetch = LocationSearchingDialog(this)
 
     private lateinit var fStore: FirebaseFirestore
     private var currentLocation: Location? = null
@@ -136,7 +141,8 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
                 .title("Current Location").icon(bitmapDescriptorFromVector(requireContext(), R.drawable.human_me))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f))
             googleMap.addMarker(markerOptions)
-        }, 2000)
+            dialogLocationFetch.isDismiss()
+        }, 1000)
     }
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
@@ -165,14 +171,14 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 
             //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this.context, testActivity::class.java)
+            val intent = Intent(this.context, EventDetailsActivity::class.java)
             val snippet = marker.snippet
-            intent.putExtra("eventID", snippet)
+            intent.putExtra("EventUID", snippet)
 
             if (marker.title == "Current Location"){
                 Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
             } else {
-                this.startActivity(intent)
+                startActivity(intent)
             }
     }
 
@@ -221,6 +227,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialogLocationFetch.startLoading()
         getAllEvents()
     }
 }
