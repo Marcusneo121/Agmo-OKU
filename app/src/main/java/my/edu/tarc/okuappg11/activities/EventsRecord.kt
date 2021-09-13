@@ -53,13 +53,10 @@ class EventsRecord : AppCompatActivity() {
 
                     }
 
-                    }
                 }
             }
         }
-
-
     }
 
 
-
+}

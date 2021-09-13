@@ -10,6 +10,11 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
     </style>
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

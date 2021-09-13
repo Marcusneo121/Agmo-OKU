@@ -74,6 +74,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="something_went_wrong">Oops! Something Went Wrong</string>
     <string name="logging_in">Verifying...</string>
+    <string name="btnBookmark">BOOKMARK</string>
+    <string name="btnJoinEvent">JOIN EVENT</string>
+    <string name="btnVolunteer">VOLUNTEER</string>
+    <string name="btnLikes">LIKES</string>
     <string name="locationSearch">Fetching current location...</string>
     <string name="forgot_pass_msg1">Did someone forget their password?</string>
     <string name="thatOk">That\'s ok... Just enter the email address</string>
@@ -82,7 +86,12 @@
     <string name="submit_text">Submit</string>
     <string name="search_hint">Event name, City... </string>
     <string name="search_label">Search</string>
-
     <string name="admin_home">Events</string>
     <string name="admin_profile">Profile</string>
+    <string name="btnAllUpcomingEvent">All Upcoming Events</string>
+    <string name="btnUpcomingEvent">Your Upcoming Event</string>
+    <string name="btnMyVolunteers">My Volunteers</string>
+    <string name="btnMyPostedEvents">My Posted Events</string>
+    <string name="btnMyEventHistory">My Event History</string>
+    <string name="btnApplyAsVolunteer">Apply As Volunteer</string>
 </resources>
