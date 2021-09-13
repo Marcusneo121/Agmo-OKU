@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_profile.*
 import my.edu.tarc.okuappg11.activities.*
 import my.edu.tarc.okuappg11.databinding.FragmentProfileBinding
 
@@ -19,6 +17,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
+    private var userRole: String? = null
     private var eventName:String? = null
     private var eventDescription:String? = null
     private var eventLocation:String? = null
@@ -63,6 +62,29 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // On think is that go to the Design there put the Username, Email and Role Type's text all put blank
+        // Cuz it looks weird at the first glance that user will see the default text you set.
+        // So just make the text blank and let you coding to assign the all the text according to all the user details
+
+        fStore = FirebaseFirestore.getInstance()
+        fAuth = FirebaseAuth.getInstance()
+        userID = fAuth.currentUser?.uid
+        fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
+            userRole = it.get("userType").toString()
+            if(userRole == "Normal" ){
+                binding.tvUserType.text = "Normal User"
+                // at here enable those button for Normal User, and disable those for OKU
+
+            } else {
+                binding.tvUserType.text = "OKU User"
+                // at here enable those button for OKU User, and disable those for Normal
+
+            }
+        }.addOnFailureListener {
+            //Here see u wanna put hamik, in case any failure
+        }
+
         //checkUserType()
         binding.btnBookmarks.setOnClickListener {
             val intent = Intent(activity, Bookmark::class.java)
