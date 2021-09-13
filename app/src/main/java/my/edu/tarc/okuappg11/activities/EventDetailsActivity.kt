@@ -4,16 +4,19 @@ import android.app.ActionBar
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color.blue
 import android.graphics.Insets.add
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_event_details.*
 import my.edu.tarc.okuappg11.databinding.ActivityEventDetailsBinding
 import my.edu.tarc.okuappg11.models.Constants
 import java.io.File
@@ -33,6 +36,7 @@ class EventDetailsActivity : AppCompatActivity() {
     private var userID: String? = null
     private var eventID: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEventDetailsBinding.inflate(layoutInflater)
@@ -49,6 +53,7 @@ class EventDetailsActivity : AppCompatActivity() {
         readData(eventId)
 
         binding.btnBookmark.setOnClickListener {
+            //btnBookmark.setBackgroundColor(ContextCompat.getColor(this,R.blue))
 
             val hashmapBookmark = hashMapOf(
                 "eventUID" to eventId,
@@ -59,8 +64,9 @@ class EventDetailsActivity : AppCompatActivity() {
                 .document(eventId!!)
                 .set(hashmapBookmark)
                 .addOnSuccessListener {
-                    val intent = Intent(this@EventDetailsActivity, Bookmark::class.java)
-                    startActivity(intent)
+
+                    //val intent = Intent(this@EventDetailsActivity, Bookmark::class.java)
+                    //startActivity(intent)
                 }.addOnFailureListener {
 
                 }

@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.activities
 
 import android.net.Uri
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.DocumentReference
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
@@ -20,6 +22,10 @@ class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
    // private val binding get() = _binding!!
     private lateinit var reference2: DatabaseReference
     private lateinit var fStore: FirebaseFirestore
+    private var eventId:String? = null
+
+
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,6 +37,8 @@ class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
     }
 
     override fun onBindViewHolder(holder: BookmarkAdapter.ViewHolder, position: Int) {
+        fStore = FirebaseFirestore.getInstance()
+
         val bookmarkArrayListItem: BookmarkArrayList = bookmarkList[position]
         holder.eventName.text = bookmarkArrayListItem.eventName.toString()
         holder.eventDate.text = bookmarkArrayListItem.startDate
@@ -38,8 +46,12 @@ class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
         holder.eventLocation.text = bookmarkArrayListItem.location.toString()
         GlideLoader(holder.ivBookmark.context).loadUserPicture(Uri.parse(bookmarkArrayListItem.eventThumbnailURL),holder.ivBookmark)
 
-        //val url: Uri? = Uri.parse(bookmarkArrayListItem.eventThumbnailURL)
-        //this.context?.let { Glide.with(it).load(url).into(holder.eventThumbnailURL)}
+
+        holder.itemView.setOnClickListener(){
+            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
+            intent.putExtra("EventUID","${bookmarkArrayListItem.eventID.toString()}")
+            holder.itemView.context.startActivity(intent)
+        }
 
     }
 
