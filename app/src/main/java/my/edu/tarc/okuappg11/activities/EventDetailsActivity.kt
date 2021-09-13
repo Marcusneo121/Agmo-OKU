@@ -45,9 +45,21 @@ class EventDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.btnTest2.setOnClickListener(){
+        /*binding.btnTest2.setOnClickListener(){
             val intent = Intent(this@EventDetailsActivity, VolunteerRequestActivity::class.java)
-            intent.putExtra("EventUID","${eventId.toString()}")
+            intent.putExtra("EventUID",eventId)
+            startActivity(intent)
+        }*/
+
+       /* binding.btnTest3.setOnClickListener(){
+            val intent = Intent(this@EventDetailsActivity, VolunteerActivity::class.java)
+            intent.putExtra("EventUID",eventId)
+            startActivity(intent)
+        }*/
+
+        binding.btnTest4.setOnClickListener(){
+            val intent = Intent(this@EventDetailsActivity, ViewEventOrganizeDetailsActivity::class.java)
+            intent.putExtra("EventUID",eventId)
             startActivity(intent)
         }
 
