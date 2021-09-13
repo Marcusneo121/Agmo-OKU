@@ -65,7 +65,7 @@
                 android:id="@+id/ivEventDetailsThumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="158dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -95,6 +95,7 @@
                     android:layout_marginRight="32dp"
                     android:background="#3D3D3D"
                     android:columnCount="2"
+                    android:paddingLeft="8dp"
                     android:rowCount="2">
 
                     <LinearLayout
@@ -115,10 +116,10 @@
 
                         <TextView
                             android:id="@+id/tvEventLocation"
-                            android:layout_width="12dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textAlignment="center"
+                            android:layout_width="161dp"
+                            android:layout_height="32dp"
+                            android:gravity="left"
+                            android:textAlignment="gravity"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
@@ -141,10 +142,10 @@
 
                         <TextView
                             android:id="@+id/tvEventDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textAlignment="center"
+                            android:layout_width="147dp"
+                            android:layout_height="30dp"
+                            android:gravity="left"
+                            android:textAlignment="gravity"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
@@ -167,10 +168,10 @@
 
                         <TextView
                             android:id="@+id/tvEventTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textAlignment="center"
+                            android:layout_width="161dp"
+                            android:layout_height="31dp"
+                            android:gravity="left"
+                            android:textAlignment="gravity"
                             android:textColor="@color/white" />
                     </LinearLayout>
 

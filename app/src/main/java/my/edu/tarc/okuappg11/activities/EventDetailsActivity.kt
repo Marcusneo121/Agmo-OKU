@@ -25,11 +25,13 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEventDetailsBinding
     private var eventName:String? = null
     private var eventDescription:String? = null
+    private var eventLocation:String? = null
     private var startDate:String? = null
     private var startTime:String? = null
     private lateinit var bmArrayList: ArrayList<BookmarkArrayList>
     private lateinit var bmAdapter: BookmarkAdapter
     private var userID: String? = null
+    private var eventID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,54 +44,27 @@ class EventDetailsActivity : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         val eventId = intent.getStringExtra("EventUID")
+        userID = fAuth.currentUser!!.uid
 
         readData(eventId)
 
         binding.btnBookmark.setOnClickListener {
-            userID = fAuth.currentUser?.uid
-            fStore.collection("users")
-                .document(eventId.toString())
-                .collection("Bookmarks")
-                .addSnapshotListener(object : EventListener<QuerySnapshot> {
-                    override fun onEvent(
-                        value: QuerySnapshot?,
-                        error: FirebaseFirestoreException?
-                    ) {
-                        if (error != null) {
-                            Log.e("Firestore Error", error.message.toString())
-                            return
-                        }
 
-                        value?.forEach{
-                            val bmDetails = it.toObject(BookmarkArrayList::class.java)
-                            if (bmDetails != null) {
-                                //bmDetails.userID = it.id
-                                bmArrayList.add(bmDetails)
-                            }
-                        }
-                        bmAdapter.notifyDataSetChanged()
-                        /*if (bmArrayList.isEmpty()) {
-                            viewStub.visibility = View.VISIBLE
-                        } else {
-                            viewStub.visibility = View.GONE
-                        }*/
-                    }
-                })
+            val hashmapBookmark = hashMapOf(
+                "eventUID" to eventId,
+                "eventName" to eventName
+            )
 
-            if(bmArrayList.isEmpty()){
-                Log.d("try again","empty array list")
-            }else{
-                Log.d("ok","not empty")
-            }
-
-            /*val handler = Handler()
-            handler.postDelayed(object: Runnable{
-                override fun run() {
+            fStore.collection("users").document(userID!!).collection("bookmarks")
+                .document(eventId!!)
+                .set(hashmapBookmark)
+                .addOnSuccessListener {
                     val intent = Intent(this@EventDetailsActivity, Bookmark::class.java)
-                    intent.putExtra("EventUID","${eventId.toString()}")
                     startActivity(intent)
+                }.addOnFailureListener {
+
                 }
-            }, 6000)*/
+
         }
     }
 
@@ -107,11 +82,13 @@ class EventDetailsActivity : AppCompatActivity() {
                     eventDescription = document.getString("eventDescription")
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
+                    eventLocation = document.getString("eventLocation")
 
                     supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate
                     binding.tvEventTime.text = startTime
                     binding.tvEventDescription.text = eventDescription
+                    binding.tvEventLocation.text = eventLocation
                 } else {
                     Log.d("HEY", "No such document")
                 }

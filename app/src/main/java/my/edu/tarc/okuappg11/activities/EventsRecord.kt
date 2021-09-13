@@ -1,12 +1,17 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.recyclerview.EventCardArrayList
+import java.io.File
 
 class EventsRecord : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
@@ -20,34 +25,38 @@ class EventsRecord : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
+        getData()
 
     }
 
-    private fun EventChangeListener(){
-        fAuth = FirebaseAuth.getInstance()
+    private fun getData() {
+        Toast.makeText(this, "It runs here", Toast.LENGTH_LONG).show()
         fStore = FirebaseFirestore.getInstance()
+        val collectionReference = fStore.collection("events")
 
-        fStore.collection("events")
-            .addSnapshotListener(object: EventListener<QuerySnapshot>){
-                override fun onEvent(value:QuerySnapshot?,error: FirebaseFirestoreException){
-                    if (error != null) {
-                        Log.e("Firestore Error", error.message.toString())
-                        return
-                    }
+        collectionReference.addSnapshotListener{ snapshot, e->
+            if(e!=null){
+                Toast.makeText(this, "$e", Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+            if(snapshot != null){
+                eventsRecordList = arrayListOf()
+                val document = snapshot.documents
+                document.forEach{
+                    val eventDetails = it.toObject(EventCardArrayList::class.java)
+                    if(eventDetails != null){
+                        eventDetails.eventId=it.getString("eventId")
+                        eventDetails.eventDescription= it.getString("eventDescription")
+                        eventDetails.eventTitle = it.getString("eventName")
+                        eventsRecordList.add(eventDetails)
 
-                    for(dc: DocumentChange in value?.documentChanges!!){
-                        if ( dc.type == DocumentChange.Type.ADDED){
-                                eventsRecordList.add(dc.document.toObject())
-                            }
+
                     }
 
                 }
+            }
         }
-
-
-
     }
-
 
 
 }
