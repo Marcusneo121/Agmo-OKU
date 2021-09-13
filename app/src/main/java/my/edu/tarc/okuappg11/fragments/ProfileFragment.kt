@@ -10,9 +10,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_profile.*
-import my.edu.tarc.okuappg11.activities.Bookmark
-import my.edu.tarc.okuappg11.activities.BookmarkAdapter
-import my.edu.tarc.okuappg11.activities.BookmarkArrayList
+import my.edu.tarc.okuappg11.activities.*
 import my.edu.tarc.okuappg11.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -33,35 +31,12 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ProfileFragment.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-        fAuth = FirebaseAuth.getInstance()
-        fStore = FirebaseFirestore.getInstance()
-        val eventId = intent.getStringExtra("EventUID")
-        userID = fAuth.currentUser!!.uid
-
-        binding.btnBookmarks.setOnClickListener {
-
-            val hashmapBookmark = hashMapOf(
-                "eventUID" to eventId,
-                "eventName" to eventName
-            )
-
-            fStore.collection("users").document(userID!!).collection("bookmarks")
-                .document(eventId!!)
-                .set(hashmapBookmark)
-                .addOnSuccessListener {
-                    val intent = Intent(this@ProfileFragment, Bookmark::class.java)
-                    startActivity(intent)
-                }.addOnFailureListener {
-
-                }
-
+        arguments?.let {
         }
+
     }
 
-    private fun checkUserType(){
+    /*private fun checkUserType(){
         if (user == "Normal User"){
             btnMyPostedEvents.visibility = View.VISIBLE
             btnMyVolunteers.visibility = View.VISIBLE
@@ -77,7 +52,7 @@ class ProfileFragment : Fragment() {
 
             binding.tvUserType.text = "OKU"
         }
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,6 +63,15 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        checkUserType()
+        //checkUserType()
+        binding.btnBookmarks.setOnClickListener {
+            val intent = Intent(activity, Bookmark::class.java)
+            activity?.startActivity(intent)
+        }
+
+        binding.btnAddevent.setOnClickListener {
+            val intent = Intent(activity, AddEventActivity::class.java)
+            activity?.startActivity(intent)
+        }
     }
 }
