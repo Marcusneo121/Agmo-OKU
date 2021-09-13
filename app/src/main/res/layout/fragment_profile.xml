@@ -55,7 +55,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Michael Jackson"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -66,7 +65,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="michaeljackson@gmail.com"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -75,7 +73,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Normal User"
                     android:textColor="#3D70FF"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -229,8 +226,8 @@
         app:backgroundTint="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:strokeWidth="2dp"
-        tools:strokeColor="#3D70FF" />
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/btnAllUpcomingEvents"
