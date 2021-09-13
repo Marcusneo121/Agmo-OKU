@@ -12,10 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.eventsRecord"></activity>
+        <activity android:name=".activities.EventsRecord" />
+        <activity android:name=".activities.MapAutocompleteActivity" />
         <activity android:name=".activities.AddEventActivity" />
         <activity android:name=".activities.EventDetailsActivity" />
         <activity android:name=".activities.AdminHomeActivity" />
+        <activity android:name=".activities.VolunteerActivity" />
+        <activity android:name=".activities.VolunteerDetailActivity" />
+        <activity android:name=".activities.VolunteerRequestDetailActivity" />
+        <activity android:name=".activities.VolunteerRequestActivity" />
+        <activity android:name=".activities.VolunteerRegisterActivity" />
+        <activity android:name=".activities.ViewEventOrganizeDetailsActivity"/>
+
         <activity
             android:name=".activities.testActivity"
             android:label="Testing Fragment"

@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvVName"
+                android:id="@+id/tvVAName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
@@ -41,7 +41,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvVId"
+                android:id="@+id/tvVAId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -49,12 +49,13 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/tvVEventId"
+                android:id="@+id/tvVAEventId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textSize="0sp"
                 android:visibility="visible" />
+
         </LinearLayout>
 
         <ImageView

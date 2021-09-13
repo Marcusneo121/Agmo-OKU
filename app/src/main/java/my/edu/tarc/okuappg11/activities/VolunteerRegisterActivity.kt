@@ -2,9 +2,11 @@ package my.edu.tarc.okuappg11.activities
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -17,10 +19,14 @@ class VolunteerRegisterActivity : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
 
-    private lateinit var vName: EditText
+   private lateinit var vName: EditText
     private lateinit var vEmail: EditText
     private lateinit var vPhone : EditText
-    private var volId:String? = null
+    private var volunteerUID:String? =null
+    private var volunteerName:String? = null
+
+
+   // private var volId:String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +34,11 @@ class VolunteerRegisterActivity : AppCompatActivity() {
         binding = ActivityVolunteerRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Volunteer Registration"
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
+
 
         val eventId = intent.getStringExtra("EventUID")
 
@@ -37,6 +48,8 @@ class VolunteerRegisterActivity : AppCompatActivity() {
         vName = binding.etVName
         vEmail = binding.etVEmail
         vPhone = binding.etVPhone
+
+        getDisplayName()
 
 
         binding.btnVSubmit.setOnClickListener(){
@@ -65,13 +78,18 @@ class VolunteerRegisterActivity : AppCompatActivity() {
         }
 
         binding.btnVReset.setOnClickListener(){
-            binding.etVName.setText("")
+            //binding.etVName.setText("")
             binding.etVEmail.setText("")
             binding.etVPhone.setText("")
             binding.vcheckBox.isChecked = false
 
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun sendVolunteerRequest(eventId: String?){
@@ -85,7 +103,8 @@ class VolunteerRegisterActivity : AppCompatActivity() {
         fStore.collection("events")
             .document(eventId.toString())
             .collection("volunteer")
-            .add(hashMapVol)
+            .document(fAuth.currentUser!!.uid)
+            .set(hashMapVol)
             .addOnSuccessListener {
                     Log.d("TAG", "onSuccess: Volunteer is created")
             }
@@ -96,6 +115,24 @@ class VolunteerRegisterActivity : AppCompatActivity() {
                 )
             }
 
+    }
+
+    private fun getDisplayName() {
+        val docRef = fStore.collection("users").document(fAuth.currentUser!!.uid)
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    volunteerUID=document.id
+                    volunteerName = document.getString("name")
+                    binding.etVName.setText(volunteerName)
+
+                } else {
+                    Log.d("HEY", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
     }
 
 }

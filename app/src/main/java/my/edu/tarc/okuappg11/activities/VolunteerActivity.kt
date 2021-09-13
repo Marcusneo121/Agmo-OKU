@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import my.edu.tarc.okuappg11.databinding.ActivityVolunteerRequestBinding
+import my.edu.tarc.okuappg11.databinding.ActivityVolunteerBinding
 
-class VolunteerRequestActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityVolunteerRequestBinding
+class VolunteerActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityVolunteerBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var volunteerRequestArrayList: ArrayList<VolunteerRequestArrayList>
-    private lateinit var volunteerRequestAdapter: VolunteerRequestAdapter
+    private lateinit var volunteerArrayList: ArrayList<VolunteerArrayList>
+    private lateinit var volunteerAdapter: VolunteerAdapter
 
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
@@ -28,12 +28,12 @@ class VolunteerRequestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVolunteerRequestBinding.inflate(layoutInflater)
+        binding = ActivityVolunteerBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Volunteer Requests"
+        supportActionBar?.title = "Volunteer List"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         fAuth = FirebaseAuth.getInstance()
@@ -42,14 +42,14 @@ class VolunteerRequestActivity : AppCompatActivity() {
         Log.d("checkEvent", eventId.toString())
 
 
-        recyclerView = binding.recyclerViewRequest
+        recyclerView = binding.recyclerViewVolunteer
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
-        volunteerRequestArrayList = arrayListOf()
-        volunteerRequestAdapter = VolunteerRequestAdapter(volunteerRequestArrayList)
+        volunteerArrayList = arrayListOf()
+        volunteerAdapter = VolunteerAdapter(volunteerArrayList)
 
-        recyclerView.adapter = volunteerRequestAdapter
+        recyclerView.adapter = volunteerAdapter
 
         //var adapter = VolunteerRequestAdapter(volunteerRequestArrayList)
         //recyclerView.adapter = adapter
@@ -93,20 +93,20 @@ class VolunteerRequestActivity : AppCompatActivity() {
                         return
                     }
 
-                    volunteerRequestArrayList.clear()
+                    volunteerArrayList.clear()
                     value?.forEach{
-                        val volunteerDetails = it.toObject(VolunteerRequestArrayList::class.java)
+                        val volunteerDetails = it.toObject(VolunteerArrayList::class.java)
                         if(volunteerDetails != null){
-                            if(it.getString("vstatus").toString() == "Pending")
-                            volunteerDetails.eventId=eventId.toString()
-                            volunteerDetails.vid = it.id
+                            if(it.getString("vstatus").toString() == "Accepted")
+                                volunteerDetails.eventId=eventId.toString()
+                                volunteerDetails.vid = it.id
 
-                            volunteerRequestArrayList.add(volunteerDetails)
+                            volunteerArrayList.add(volunteerDetails)
 
                             Log.d("text", volunteerDetails.eventId)
                         }
-                        volunteerRequestArrayList.removeAll{
-                            it.vstatus == "Accepted"
+                        volunteerArrayList.removeAll{
+                            it.vstatus == "Pending"
                         }
                     }
 
@@ -119,9 +119,9 @@ class VolunteerRequestActivity : AppCompatActivity() {
 //                        }
 //                    }
 
-                    volunteerRequestAdapter.notifyDataSetChanged()
+                    volunteerAdapter.notifyDataSetChanged()
 
-                    if(volunteerRequestArrayList.isEmpty()){
+                    if(volunteerArrayList.isEmpty()){
                         Log.d("try again","Array list is empty")
                     } else {
                         Log.d("Got array","Array list is not empty")

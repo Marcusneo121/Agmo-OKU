@@ -89,4 +89,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="something_went_wrong">Oops! Something Went Wrong</string>
     <string name="logging_in">Verifying...</string>
+    <string name="btnViewEditEventDetails">View and Edit Event Details</string>
+    <string name="btnViewVolunteerDetails">View Volunteer Details</string>
+    <string name="btnPendingVolunteerRequest">Pending Volunteer Request</string>
 </resources>

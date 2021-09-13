@@ -30,14 +30,14 @@ class VolunteerRequestAdapter(private val volunteerRequestArrayListList : ArrayL
 
         val vid = holder.tvVId.text.toString()
         val eventId = holder.tvVEventId.text.toString()
-        holder.tvVId.visibility= View.GONE
-        holder.tvVEventId.visibility= View.GONE
+        //holder.tvVId.visibility= View.GONE
+        //holder.tvVEventId.visibility= View.GONE
 
 
         holder.itemView.setOnClickListener(){
                  //Log.d("checktvVId", vid)
 
-           val intent = Intent(holder.itemView.context, VolunteerRequestDetailActivity::class.java)
+            val intent = Intent(holder.itemView.context, VolunteerRequestDetailActivity::class.java)
             intent.putExtra("VolunteerID","${vid.toString()}")
             intent.putExtra("EventUID","${eventId.toString()}")
             holder.itemView.context.startActivity(intent)

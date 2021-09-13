@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.activities
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,6 +33,10 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Pending Volunteer Details"
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
+
         val vid = intent.getStringExtra("VolunteerID")
         val eventId = intent.getStringExtra("EventUID")
         Log.d("checkEvent", eventId.toString())
@@ -39,7 +44,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
 
         fStore = FirebaseFirestore.getInstance()
 
-        getData(eventId, vid)
+        getData(eventId.toString(), vid.toString())
 
         binding.btnAccept.setOnClickListener() {
 
@@ -66,25 +71,38 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
 
         }
 
-        binding.btnDecline.setOnClickListener(){
+        binding.btnDecline.setOnClickListener() {
 
-            email()
-            fStore.collection("events")
-                .document(eventId.toString())
-                .collection("volunteer")
-                .document(vid.toString())
-                .delete()
-                .addOnSuccessListener {
-                    Log.d("TAG", "The volunteer data is deleted.")
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Alert")
+                .setMessage("Do you want to decline this request?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    email()
+                    fStore.collection("events")
+                        .document(eventId.toString())
+                        .collection("volunteer")
+                        .document(vid.toString())
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d("TAG", "The volunteer data is deleted.")
+                        }
+                        .addOnFailureListener {
+                            Log.w(
+                                ContentValues.TAG,
+                                "Error adding document ${it.suppressedExceptions}"
+                            )
+                        }
                 }
-                .addOnFailureListener {
-                    Log.w(
-                        ContentValues.TAG,
-                        "Error adding document ${it.suppressedExceptions}"
-                    )
-                }
-
+                .setNegativeButton("No"){ dialog, which ->
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                 }
+                .setNeutralButton("Cancel") { dialog, which ->
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                }.show()
         }
+
+
+
 
         binding.btnEmail.setOnClickListener(){
             email()
@@ -94,6 +112,11 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
            phone()
 
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun getData(eventId: String?, vid: String?) {
@@ -136,7 +159,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
         var option = selection[index]
 
         MaterialAlertDialogBuilder(this)
-            .setTitle("Contact us through:")
+            .setTitle("Contact through:")
             .setSingleChoiceItems(selection, index) { dialog, which ->
                 index = which
                 option = selection[which]
