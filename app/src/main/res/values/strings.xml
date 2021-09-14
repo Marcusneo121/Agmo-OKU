@@ -118,4 +118,13 @@
     <string name="settings">Settings</string>
     <string name="about_us">About the app</string>
     <string name="logout">Logout</string>
+    <string name="aboutUslbl">About the app</string>
+    <string name="story">Our app gather all the events and activities around the globe and allow OKU to join on the
+        platform. OKU LIVES MATTER</string>
+    <string name="devs">The Developers</string>
+    <string name="url_ig_marcus">https://www.instagram.com/cheeseburger.extrapickle/</string>
+    <string name="url_ig_kj">https://www.instagram.com/teohkjet/</string>
+    <string name="url_ig_van">https://www.instagram.com/vanessakoay/</string>
+    <string name="url_ig_ly">https://www.instagram.com/liyinggg7/</string>
+
 </resources>

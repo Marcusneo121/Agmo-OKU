@@ -2,13 +2,9 @@ package my.edu.tarc.okuappg11.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.SignInFragment
 import my.edu.tarc.okuappg11.databinding.ActivitySettingBinding
 
 
@@ -38,6 +34,11 @@ class SettingActivity : AppCompatActivity() {
         binding.btnBackSetting.setOnClickListener {
             finish()
             onBackPressed()
+        }
+
+        binding.lyAboutUs.setOnClickListener {
+            val intent = Intent(this, AboutUsActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -28,7 +28,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.SettingActivity"
+        <activity android:name=".activities.AboutUsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -53,7 +56,7 @@
         <activity android:name=".activities.VolunteerRequestActivity" />
         <activity android:name=".activities.VolunteerRegisterActivity" />
         <activity android:name=".activities.ViewEventOrganizeDetailsActivity" />
-        <activity android:name=".activities.MyPostedEventActivity"/>
+        <activity android:name=".activities.MyPostedEventActivity" />
         <activity android:name=".activities.MyVolunteerEventActivity" />
         <activity
             android:name=".activities.ForgotPasswordActivity"
