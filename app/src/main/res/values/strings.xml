@@ -96,4 +96,23 @@
     <string name="btnApplyAsVolunteer">Apply As Volunteer</string>
     <string name="topics">Topics</string>
     <string name="seeAll">See All</string>
+
+    <string name="tvVR1">Contact Information</string>
+    <string name="etVNameHint">Full Name</string>
+    <string name="etVEmailHint">Email Address</string>
+    <string name="etVPhoneHint">Phone Number</string>
+    <string name="checkBoxV">I agree to share my contact infomation to event organizer and I am being serious on volunteering to the event.</string>
+    <string name="btnVSubmit">Submit</string>
+    <string name="btnVReset">Reset</string>
+    <string name="vNameTitle">VOLUNTEER NAME</string>
+    <string name="vEmailTitle">VOLUNTEER EMAIL</string>
+    <string name="vPhoneTitle">VOLUNTEER PHONE NO.</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="contact">Contact</string>
+    <string name="vcancel">Cancel</string>
+    <string name="btnViewEditEventDetails">View and Edit Event Details</string>
+    <string name="btnViewVolunteerDetails">View Volunteer Details</string>
+    <string name="btnPendingVolunteerRequest">Pending Volunteer Request</string>
+    <string name="tvStatus">Status</string>
 </resources>
