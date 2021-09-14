@@ -59,8 +59,8 @@ class AboutUsActivity : AppCompatActivity() {
         }
 
         val imageListLY = ArrayList<SlideModel>()
-        imageListLY.add(SlideModel("https://i.ibb.co/23y3rpG/marcus11.jpg", ScaleTypes.FIT))
-        imageListLY.add(SlideModel("https://i.ibb.co/308Vhph/marcus22.jpg", ScaleTypes.FIT))
+        imageListLY.add(SlideModel("https://i.ibb.co/chdrBg0/ly1.jpg", ScaleTypes.FIT))
+        imageListLY.add(SlideModel("https://i.ibb.co/8PXv5tW/ly2.jpg", ScaleTypes.FIT))
         val imageSliderLY = binding.isLY
         imageSliderLY.setImageList(imageListLY)
         btnInstaLY.setOnClickListener {
