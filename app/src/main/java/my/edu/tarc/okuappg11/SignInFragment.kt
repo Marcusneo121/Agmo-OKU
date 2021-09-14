@@ -127,6 +127,10 @@ class SignInFragment : Fragment() {
                                     dialogSignIn.isDismiss()
                                     Toast.makeText(this.context, "Logged In", Toast.LENGTH_SHORT).show()
 
+                                //Sign In -> Home -> User (use KJ part) -> View Posted event -> A list of Event -> Enter a particular Event
+                                   // -> View Volunteer -> A list of Volunteer(save volunteer ID in arrayList, volunteer) ->
+
+
                                 } else if (userRole == "Admin"){
 
                                     val intent = Intent(activity, AdminHomeActivity::class.java)

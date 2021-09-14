@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#545454"
+    tools:context=".activities.ViewEventOrganizeDetailsActivity">
+
+    <ImageView
+        android:id="@+id/ivEventImg"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <Button
+        android:id="@+id/btnViewEditEventDetails"
+        style="@style/volunteerRegisterButton"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/btnViewEditEventDetails"
+        app:backgroundTint="#3D70FF"
+        app:layout_constraintEnd_toEndOf="@+id/ivEventImg"
+        app:layout_constraintStart_toStartOf="@+id/ivEventImg"
+        app:layout_constraintTop_toBottomOf="@+id/ivEventImg" />
+
+    <Button
+        android:id="@+id/btnViewVolunteerDetails"
+        style="@style/volunteerRegisterButton"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btnViewVolunteerDetails"
+        app:backgroundTint="#3D70FF"
+        app:layout_constraintStart_toStartOf="@+id/btnViewEditEventDetails"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewEditEventDetails" />
+
+    <Button
+        android:id="@+id/btnPendingVolunteerRequest"
+        style="@style/volunteerPendingButton"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btnPendingVolunteerRequest"
+        app:backgroundTint="#545454"
+        app:layout_constraintEnd_toEndOf="@+id/btnViewVolunteerDetails"
+        app:layout_constraintStart_toStartOf="@+id/btnViewVolunteerDetails"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewVolunteerDetails"
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

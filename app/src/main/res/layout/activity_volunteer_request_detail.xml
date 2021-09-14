@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#545454"
+    tools:context=".activities.VolunteerRequestDetailActivity">
+
+    <TextView
+        android:id="@+id/tvRPhone"
+        style="@style/volunteerRequestDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/volunteerRequestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/vNameTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRVname"
+        style="@style/volunteerRequestDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView9"
+        style="@style/volunteerRequestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/vEmailTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvRVname"
+        app:layout_constraintTop_toBottomOf="@+id/tvRVname" />
+
+    <TextView
+        android:id="@+id/tvREmail"
+        style="@style/volunteerRequestDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView11"
+        style="@style/volunteerRequestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/vPhoneTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvREmail"
+        app:layout_constraintTop_toBottomOf="@+id/tvREmail" />
+
+    <Button
+        android:id="@+id/btnPhone"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/telephone"
+        android:text="Button"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvRPhone" />
+
+    <Button
+        android:id="@+id/btnEmail"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/email"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/tvREmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvREmail" />
+
+    <Button
+        android:id="@+id/btnAccept"
+        style="@style/volunteerRegisterButton"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/accept"
+        app:backgroundTint="#3D70FF"
+        app:layout_constraintBottom_toTopOf="@+id/btnDecline"
+        app:layout_constraintEnd_toEndOf="@+id/btnPhone"
+        app:layout_constraintStart_toStartOf="@+id/tvRPhone" />
+
+    <Button
+        android:id="@+id/btnDecline"
+        style="@style/volunteerDecline"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/decline"
+        app:backgroundTint="#545454"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnAccept"
+        app:layout_constraintStart_toStartOf="@+id/btnAccept"
+        app:strokeColor="#EA4335"
+        app:strokeWidth="2dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

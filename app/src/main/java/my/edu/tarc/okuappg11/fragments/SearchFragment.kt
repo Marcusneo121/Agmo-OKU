@@ -27,7 +27,6 @@ class SearchFragment : Fragment() {
 
     private var searchList: ArrayList<SearchModel> = ArrayList()
     private var searchListAdapter = SearchListAdapter(searchList)
-    private var readAlready: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
