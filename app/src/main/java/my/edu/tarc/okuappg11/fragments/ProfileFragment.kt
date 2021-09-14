@@ -54,6 +54,12 @@ class ProfileFragment : Fragment() {
         fStore = FirebaseFirestore.getInstance()
         fAuth = FirebaseAuth.getInstance()
         userID = fAuth.currentUser?.uid
+
+        btnMyPostedEvents.visibility = View.INVISIBLE
+        btnMyVolunteers.visibility = View.INVISIBLE
+        btnMyEventHistory.visibility = View.INVISIBLE
+        btnAllUpcomingEvents.visibility = View.INVISIBLE
+
         fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
             userRole = it.get("userType").toString()
             if(userRole == "Normal" ){

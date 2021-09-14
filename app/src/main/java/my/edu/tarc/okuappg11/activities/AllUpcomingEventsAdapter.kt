@@ -13,10 +13,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
-class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
-    RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
-   // private var _binding: Fragment? = null
-   // private val binding get() = _binding!!
+class AllUpcomingEventsAdapter(private val allUpcomingEventsList: ArrayList<AllUpcomingEventsArrayList>) :
+    RecyclerView.Adapter<AllUpcomingEventsAdapter.ViewHolder>() {
+    // private var _binding: Fragment? = null
+    // private val binding get() = _binding!!
     private lateinit var reference2: DatabaseReference
     private lateinit var fStore: FirebaseFirestore
     private var eventId:String? = null
@@ -27,26 +27,26 @@ class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BookmarkAdapter.ViewHolder {
+    ): AllUpcomingEventsAdapter.ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_bookmark, parent, false)
+            .inflate(R.layout.list_item_all_upcoming_events, parent, false)
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: BookmarkAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AllUpcomingEventsAdapter.ViewHolder, position: Int) {
         fStore = FirebaseFirestore.getInstance()
 
-        val bookmarkArrayListItem: BookmarkArrayList = bookmarkList[position]
-        holder.eventName.text = bookmarkArrayListItem.eventName.toString()
-        holder.eventDate.text = bookmarkArrayListItem.startDate
-        holder.eventTime.text = bookmarkArrayListItem.startTime
-        holder.eventLocation.text = bookmarkArrayListItem.location.toString()
-        GlideLoader(holder.ivBookmark.context).loadUserPicture(Uri.parse(bookmarkArrayListItem.eventThumbnailURL),holder.ivBookmark)
+        val allUpcomingEventsArrayListItem: AllUpcomingEventsArrayList = allUpcomingEventsList[position]
+        holder.eventName.text = allUpcomingEventsArrayListItem.eventName.toString()
+        holder.eventDate.text = allUpcomingEventsArrayListItem.startDate
+        holder.eventTime.text = allUpcomingEventsArrayListItem.startTime
+        holder.eventLocation.text = allUpcomingEventsArrayListItem.location.toString()
+        GlideLoader(holder.ivAllUpcomingEvents.context).loadUserPicture(Uri.parse(allUpcomingEventsArrayListItem.eventThumbnailURL),holder.ivAllUpcomingEvents)
 
 
         holder.itemView.setOnClickListener(){
             val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
-            intent.putExtra("EventUID","${bookmarkArrayListItem.eventID.toString()}")
+            intent.putExtra("EventUID","${allUpcomingEventsArrayListItem.eventID.toString()}")
             holder.itemView.context.startActivity(intent)
         }
 
@@ -54,7 +54,7 @@ class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
 
 
     override fun getItemCount(): Int {
-        return bookmarkList.size
+        return allUpcomingEventsList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -62,7 +62,10 @@ class BookmarkAdapter(private val bookmarkList: ArrayList<BookmarkArrayList>) :
         val eventDate: TextView = itemView.findViewById(R.id.showTopicDescription)
         val eventTime: TextView = itemView.findViewById(R.id.showTime)
         val eventLocation: TextView = itemView.findViewById(R.id.showLocation)
-        val ivBookmark: ImageView = itemView.findViewById(R.id.ivBookmark)
+        val ivAllUpcomingEvents: ImageView = itemView.findViewById(R.id.ivAllUpcomingEvents)
 
     }
+
+
+
 }
