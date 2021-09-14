@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
-        tools:context=".activities.AddStoryActivity">
+        tools:context=".activities.AdminUpdateStoryActivity">
 
 
         <ImageView
-            android:id="@+id/ivStoryThumbnail"
+            android:id="@+id/ivUpdateStoryThumbnail"
             android:layout_width="329dp"
             android:layout_height="188dp"
             android:layout_marginStart="43dp"
@@ -56,10 +56,10 @@
             android:text="@string/story_information"
             android:textColor="#ffff"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivStoryThumbnail" />
+            app:layout_constraintTop_toBottomOf="@+id/ivUpdateStoryThumbnail" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldStoryTitle"
+            android:id="@+id/textFieldUpdateStoryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -81,7 +81,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
 
-            android:id="@+id/textFieldStoryThumbnailDescription"
+            android:id="@+id/textFieldUpdateStoryThumbnailDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -92,7 +92,7 @@
             android:hint="@string/topic_thumbnail_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldStoryTitle">
+            app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateStoryTitle">
             app:counterEnabled="true"
             app:counterMaxLength="20
             >
@@ -104,7 +104,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
 
-            android:id="@+id/textFieldStoryDescription"
+            android:id="@+id/textFieldUpdateStoryDescription"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
@@ -115,7 +115,7 @@
             android:hint="@string/topic_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldStoryThumbnailDescription">
+            app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateStoryThumbnailDescription">
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -124,7 +124,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnPost"
+            android:id="@+id/btnUpdateStory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -132,7 +132,7 @@
             app:backgroundTint="@color/signInButtonColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldStoryDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateStoryDescription" />
 
         <Button
             android:id="@+id/btnCancel"
@@ -143,7 +143,7 @@
             app:backgroundTint="#FF002E"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnPost" />
+            app:layout_constraintTop_toBottomOf="@+id/btnUpdateStory" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -24,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
 import my.edu.tarc.okuappg11.databinding.FragmentNearMeBinding
 import my.edu.tarc.okuappg11.models.CustomInfoWindow

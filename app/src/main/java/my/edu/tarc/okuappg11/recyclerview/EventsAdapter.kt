@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class EventsAdapter(private val eventCardArrayListList: ArrayList<EventCardArrayList>):RecyclerView.Adapter<EventsAdapter.ViewHolder>() {

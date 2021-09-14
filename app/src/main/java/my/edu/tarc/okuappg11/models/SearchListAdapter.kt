@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
 
 class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Adapter<SearchListAdapter.SearchListViewHolder>() {
 

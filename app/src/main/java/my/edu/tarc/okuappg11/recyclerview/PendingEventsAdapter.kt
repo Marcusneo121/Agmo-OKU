@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class PendingEventsAdapter(private val pendingEventCardArrayListList: ArrayList<PendingEventCardArrayList>):RecyclerView.Adapter<PendingEventsAdapter.ViewHolder>() {
