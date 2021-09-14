@@ -1,7 +1,9 @@
 package my.edu.tarc.okuappg11.recyclerview
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,21 @@ class EventsAdapter(private val eventCardArrayListList: ArrayList<EventCardArray
         holder.itemDescription.text = eventCardArrayListItem.eventDate
         holder.itemLocation.text = eventCardArrayListItem.eventLocation
         holder.itemTime.text = eventCardArrayListItem.eventTime
+        if(eventCardArrayListItem.eventStatus == "pending"){
+            holder.itemStatus.setTextColor(Color.WHITE)
+            holder.itemStatus.text = "Pending"
+        }else if (eventCardArrayListItem.eventStatus == "accepted"){
+            holder.itemStatus.setTextColor(Color.GREEN)
+            holder.itemStatus.text = "Accepted"
+
+        }else if (eventCardArrayListItem.eventStatus == "rejected"){
+            holder.itemStatus.setTextColor(Color.RED)
+            holder.itemStatus.text = "Rejected"
+
+        }
+
+        Log.d("check",eventCardArrayListItem.eventStatus)
+
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.itemView.context, AdminEventDetailsActivity::class.java)
             intent.putExtra("EventUID","${eventCardArrayListItem.eventId}")
@@ -52,7 +69,7 @@ class EventsAdapter(private val eventCardArrayListList: ArrayList<EventCardArray
         var itemDescription : TextView
         var itemTime : TextView
         var itemLocation : TextView
-
+        var itemStatus : TextView
 
         init{
             itemImage = itemView.findViewById(R.id.ivBookmark)
@@ -60,6 +77,7 @@ class EventsAdapter(private val eventCardArrayListList: ArrayList<EventCardArray
             itemDescription = itemView.findViewById(R.id.showTopicDescription)
             itemTime = itemView.findViewById(R.id.showTime)
             itemLocation = itemView.findViewById(R.id.showLocation)
+            itemStatus = itemView.findViewById(R.id.showStatus)
 
 
 

@@ -1,32 +1,34 @@
 package my.edu.tarc.okuappg11.activities
 
-import android.app.ActionBar
-import android.app.ProgressDialog
 import android.graphics.BitmapFactory
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import my.edu.tarc.okuappg11.databinding.ActivityEventDetailsBinding
-import my.edu.tarc.okuappg11.models.Constants
+import kotlinx.android.synthetic.main.activity_admin_story_details.*
+import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.databinding.ActivityAdminEventDetailsBinding
+import my.edu.tarc.okuappg11.databinding.ActivityAdminStoryDetailsBinding
 import java.io.File
 
-class EventDetailsActivity : AppCompatActivity() {
+class AdminStoryDetails : AppCompatActivity() {
 
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
-    private lateinit var binding: ActivityEventDetailsBinding
-    private var eventName:String? = null
-    private var eventDescription:String? = null
-    private var startDate:String? = null
-    private var startTime:String? = null
+    private lateinit var binding: ActivityAdminStoryDetailsBinding
+    private var storyTitle:String? = null
+    private var storyDescription:String? = null
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEventDetailsBinding.inflate(layoutInflater)
+        binding = ActivityAdminStoryDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -37,27 +39,26 @@ class EventDetailsActivity : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
-        val eventId = intent.getStringExtra("EventUID")
+        val storyId = intent.getStringExtra("StoryUID")
+        linearLayout5.visibility = View.GONE
 
-        readData(eventId)
-
+        readData(storyId)
 
     }
 
-    private fun readData(eventId: String?) {
-        val docRef = fStore.collection("events").document(eventId.toString())
+    private fun readData(storyId: String?) {
+        val docRef = fStore.collection("stories").document(storyId.toString())
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    eventName = document.getString("eventName")
-                    eventDescription = document.getString("eventDescription")
-                    startDate = document.getString("startDate")
-                    startTime = document.getString("startTime")
+                    storyTitle =  document.getString("storyTitle")
+                    storyDescription = document.getString("storyDescription")
 
-                    supportActionBar?.title = eventName
-                    binding.tvEventDate.text = startDate
-                    binding.tvEventTime.text = startTime
-                    binding.tvEventDescription.text = eventDescription
+
+                    supportActionBar?.title = storyTitle
+                    binding.tvAdminStoryTitle.text = storyTitle
+                    binding.tvAdminStoryDescription.text = storyDescription
+
                 } else {
                     Log.d("HEY", "No such document")
                 }
@@ -67,21 +68,15 @@ class EventDetailsActivity : AppCompatActivity() {
             }
 
 
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
+        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("STORY_THUMBNAIL${storyId}.jpg")
         val localfile = File.createTempFile("tempImage","jpg")
         sRef.getFile(localfile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.ivEventDetailsThumbnail.setImageBitmap(bitmap)
+            binding.ivAdminStoryDetailsThumbnail.setImageBitmap(bitmap)
             Log.d("CHECK", " IMAGE LOADED")
         }.addOnFailureListener{
             Log.d("CHECK", it.message.toString())
-            Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
+            Log.d("CHECK", "STORY_THUMBNAIL${storyId}.jpg")
         }
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
 }

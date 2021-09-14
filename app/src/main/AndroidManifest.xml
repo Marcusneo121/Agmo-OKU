@@ -41,6 +41,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".activities.AdminUpdateStory"/>
+        <activity android:name=".activities.AdminStoryDetails"/>
+        <activity android:name=".activities.AddStoryActivity"/>
+        <activity android:name=".activities.AdminPendingEvents"/>
+        <activity android:name=".activities.AdminEventDetailsActivity"/>
         <activity android:name=".activities.MapAutocompleteActivity" />
         <activity android:name=".activities.AddEventActivity" />
         <activity android:name=".activities.EventDetailsActivity" />

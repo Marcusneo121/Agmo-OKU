@@ -110,7 +110,7 @@ class AdminPendingEvents : AppCompatActivity() {
                                 eventDetails.eventTime = it.getString("startTime").toString()
                                 eventDetails.eventLocation = it.getString("eventLocation").toString()
                                 eventDetails.eventDate = it.getString("startDate").toString()
-
+                                eventDetails.eventStatus = it.getString("status").toString()
                                 pendingEventsRecordList.add(eventDetails)
                             }
                            pendingEventsRecordList.removeAll{
