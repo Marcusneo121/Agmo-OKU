@@ -45,7 +45,7 @@ class AllUpcomingEventsAdapter(private val allUpcomingEventsList: ArrayList<AllU
 
 
         holder.itemView.setOnClickListener(){
-            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
+            val intent = Intent(holder.itemView.context, QuitEventActivity::class.java)
             intent.putExtra("EventUID","${allUpcomingEventsArrayListItem.eventID.toString()}")
             holder.itemView.context.startActivity(intent)
         }

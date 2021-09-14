@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".activities.QuitEventActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="3dp"
+        android:background="#262626"
+        android:orientation="horizontal"
+        android:padding="30px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <Button
+            android:id="@+id/btnBookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:drawableLeft="@drawable/ic_baseline_bookmark_border_24"
+            android:text="@string/btnBookmark"
+            android:textColor="#3D70FF"
+            app:backgroundTint="@android:color/transparent"
+            app:strokeColor="#3D70FF"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/btnQuitEvent"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:text="@string/btnQuitEvent"
+            android:textColor="@color/white"
+            app:backgroundTint="#EA4335"
+            app:strokeColor="#EA4335"
+            app:strokeWidth="2dp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivEventDetailsThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="354dp"
+                android:layout_height="146dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:background="#3D3D3D"
+                app:cardCornerRadius="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivEventDetailsThumbnail">
+
+                <GridLayout
+                    android:id="@+id/gridLayout"
+                    android:layout_width="368dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:background="#3D3D3D"
+                    android:columnCount="2"
+                    android:paddingLeft="8dp"
+                    android:rowCount="2">
+
+                    <LinearLayout
+                        android:layout_width="182dp"
+                        android:layout_height="73dp"
+                        android:orientation="vertical"
+                        android:padding="30px">
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/location"
+                            android:textAlignment="center"
+                            android:textColor="#9A9A9A"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvEventLocation"
+                            android:layout_width="161dp"
+                            android:layout_height="32dp"
+                            android:gravity="left"
+                            android:textAlignment="gravity"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="172dp"
+                        android:layout_height="74dp"
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:orientation="vertical"
+                        android:padding="30px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/date"
+                            android:textAlignment="center"
+                            android:textColor="#9A9A9A"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvEventDate"
+                            android:layout_width="147dp"
+                            android:layout_height="30dp"
+                            android:gravity="left"
+                            android:textAlignment="gravity"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="184dp"
+                        android:layout_height="83dp"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:orientation="vertical"
+                        android:padding="30px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/time"
+                            android:textAlignment="center"
+                            android:textColor="#9A9A9A"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvEventTime"
+                            android:layout_width="161dp"
+                            android:layout_height="31dp"
+                            android:gravity="left"
+                            android:textAlignment="gravity"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnVolunteer"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:text="@string/btnApplyAsVolunteer"
+                        android:textColor="#3D70FF"
+                        app:backgroundTint="@android:color/transparent"
+                        app:strokeColor="#3D70FF"
+                        app:strokeWidth="2dp" />
+
+                </GridLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+                <TextView
+                    android:id="@+id/tvEventDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="3dp"
+                    android:paddingLeft="10dp"
+                    android:text="event description test"
+                    android:textColor="#FFFFFF" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

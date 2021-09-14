@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -97,6 +98,11 @@ class ProfileFragment : Fragment() {
 
         binding.btnAddevent.setOnClickListener {
             val intent = Intent(activity, AddEventActivity::class.java)
+            activity?.startActivity(intent)
+        }
+
+        binding.btnAllUpcomingEvents.setOnClickListener {
+            val intent = Intent(activity, AllUpcomingEvents::class.java)
             activity?.startActivity(intent)
         }
     }

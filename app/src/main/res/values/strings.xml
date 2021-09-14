@@ -94,4 +94,5 @@
     <string name="btnMyPostedEvents">My Posted Events</string>
     <string name="btnMyEventHistory">My Event History</string>
     <string name="btnApplyAsVolunteer">Apply As Volunteer</string>
+    <string name="btnQuitEvent">QUIT EVENT</string>
 </resources>

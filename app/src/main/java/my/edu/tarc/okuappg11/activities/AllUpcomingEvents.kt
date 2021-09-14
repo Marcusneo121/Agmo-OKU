@@ -1,6 +1,7 @@
 package my.edu.tarc.okuappg11.activities
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ class AllUpcomingEvents : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private var userID: String? = null
     private var eventID: String? = null
+    //private var eventName:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,7 @@ class AllUpcomingEvents : AppCompatActivity() {
         supportActionBar?.title = "Upcoming Events"
 
         getData()
+
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -67,7 +70,7 @@ class AllUpcomingEvents : AppCompatActivity() {
                         Log.e("Firestore Error", error.message.toString())
                         return
                     }
-
+                    ueArrayList.clear()
                     value?.forEach{
                         fStore.collection("events").document(it.id.toString()).get()
                             .addOnSuccessListener {  dc ->

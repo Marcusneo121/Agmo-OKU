@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.AllUpcomingEvents"></activity>
+        <activity android:name=".activities.QuitEventActivity"></activity>
+        <activity android:name=".activities.AllUpcomingEvents" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,7 +48,6 @@
         <activity android:name=".activities.EventDetailsActivity" />
         <activity android:name=".activities.AdminHomeActivity" />
         <activity android:name=".activities.Bookmark" />
-
         <activity
             android:name=".activities.ForgotPasswordActivity"
             android:label="Forgot Password"

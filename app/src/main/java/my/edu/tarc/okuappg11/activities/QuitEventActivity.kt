@@ -1,32 +1,24 @@
 package my.edu.tarc.okuappg11.activities
 
-import android.app.ActionBar
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.Color.blue
-import android.graphics.Insets.add
-import android.os.Bundle
-import android.os.Handler
-import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_event_details.*
-import my.edu.tarc.okuappg11.databinding.ActivityEventDetailsBinding
-import my.edu.tarc.okuappg11.models.Constants
+import my.edu.tarc.okuappg11.databinding.ActivityQuitEventBinding
 import java.io.File
 
-class EventDetailsActivity : AppCompatActivity() {
-
+class QuitEventActivity : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
-    private lateinit var binding: ActivityEventDetailsBinding
+    private lateinit var binding: ActivityQuitEventBinding
     private var eventName:String? = null
     private var eventDescription:String? = null
     private var eventLocation:String? = null
@@ -40,7 +32,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEventDetailsBinding.inflate(layoutInflater)
+        binding = ActivityQuitEventBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -53,7 +45,6 @@ class EventDetailsActivity : AppCompatActivity() {
         changeBtnColor()
         readData(eventID)
 
-// if doc not equal no, btn on click, del
 
         binding.btnBookmark.setOnClickListener {
 
@@ -69,40 +60,40 @@ class EventDetailsActivity : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     Log.d("check",document.toString()
                     )
-                        if ( document.get("eventUID") != null ){
-                            fStore.collection("users").document(userID!!).collection("bookmarks")
-                                .document(eventID!!)
-                                .delete()
-                                .addOnSuccessListener {
-                                    Log.d("check", "CHECKDELETE")
-                                    bookmarkCheck = false
-                                    binding.btnBookmark.setBackgroundColor(Color.TRANSPARENT)
-                                }.addOnFailureListener {
+                    if ( document.get("eventUID") != null ){
+                        fStore.collection("users").document(userID!!).collection("bookmarks")
+                            .document(eventID!!)
+                            .delete()
+                            .addOnSuccessListener {
+                                Log.d("check", "CHECKDELETE")
+                                bookmarkCheck = false
+                                binding.btnBookmark.setBackgroundColor(Color.TRANSPARENT)
+                            }.addOnFailureListener {
 
 
-                                    Log.e("error",it.message.toString())
-                                }
-                        }else if (document.get("eventUID") == null){
-                            Log.d("check", "CHECK")
+                                Log.e("error",it.message.toString())
+                            }
+                    }else if (document.get("eventUID") == null){
+                        Log.d("check", "CHECK")
 
-                            val hashmapBookmark = hashMapOf(
-                                "eventUID" to eventID,
-                                "eventName" to eventName
-                            )
+                        val hashmapBookmark = hashMapOf(
+                            "eventUID" to eventID,
+                            "eventName" to eventName
+                        )
 
-                            fStore.collection("users").document(userID!!).collection("bookmarks")
-                                .document(eventID!!)
-                                .set(hashmapBookmark)
-                                .addOnSuccessListener {
-                                    Log.d("check", "CHECKADD")
+                        fStore.collection("users").document(userID!!).collection("bookmarks")
+                            .document(eventID!!)
+                            .set(hashmapBookmark)
+                            .addOnSuccessListener {
+                                Log.d("check", "CHECKADD")
 
-                                    binding.btnBookmark.setBackgroundColor(Color.BLUE)
-                                }.addOnFailureListener {
-                                    Log.e("error",it.message.toString())
-                                }
-                        }
-
+                                binding.btnBookmark.setBackgroundColor(Color.BLUE)
+                            }.addOnFailureListener {
+                                Log.e("error",it.message.toString())
+                            }
                     }
+
+                }
                 .addOnFailureListener { exception ->
                     bookmarkCheck = false
                     Log.e("error",exception.message.toString())
@@ -112,25 +103,29 @@ class EventDetailsActivity : AppCompatActivity() {
 
         }
 
-        binding.btnJoinEvent.setOnClickListener {
-            val hashmapUpcomingEvents = hashMapOf(
-                "eventUID" to eventID,
-                "eventName" to eventName,
-                "startDate" to startDate,
-                "startTime" to startTime
-            )
+        binding.btnQuitEvent.setOnClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Alert")
+                .setMessage("Do you want to quit this event?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    fStore.collection("users").document(userID!!).collection("upcoming events")
+                        .document(eventID!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d("check", "CHECKDELETE")
+                            val intent = Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
+                            startActivity(intent)
 
-            fStore.collection("users").document(userID!!).collection("upcoming events")
-                .document(eventID!!)
-                .set(hashmapUpcomingEvents)
-                .addOnSuccessListener {
-                    Log.d("check", "CHECKADD")
-                    val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                    startActivity(intent)
-                }.addOnFailureListener {
-                    Log.e("error",it.message.toString())
+                        }.addOnFailureListener {
+                            Log.e("error",it.message.toString())
+                        }
                 }
-
+                .setNegativeButton("No"){ dialog, which ->
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                }
+                .setNeutralButton("Cancel") { dialog, which ->
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                }.show()
         }
     }
 
@@ -201,6 +196,4 @@ class EventDetailsActivity : AppCompatActivity() {
 
         }
     }
-
-
 }
