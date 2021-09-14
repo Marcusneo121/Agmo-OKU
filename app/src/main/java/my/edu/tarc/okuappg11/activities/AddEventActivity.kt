@@ -3,9 +3,7 @@ package my.edu.tarc.okuappg11.activities
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -29,7 +27,6 @@ import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAddEventBinding
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
-import my.edu.tarc.okuappg11.progressdialog.SignInDialog
 import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.text.SimpleDateFormat
 import java.util.*
@@ -177,7 +174,7 @@ class AddEventActivity: AppCompatActivity() {
 
 
 
-                dialogAddEvent.startLoading()
+
 
 
 
@@ -190,7 +187,7 @@ class AddEventActivity: AppCompatActivity() {
                                 mSelectedImageFileUri
                             )
                 )
-
+                dialogAddEvent.startLoading()
                 sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
                     Log.e("Firebase Image", taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
 
@@ -198,7 +195,7 @@ class AddEventActivity: AppCompatActivity() {
                         .addOnSuccessListener { uri ->
                             Log.e("Downloadable Image URL",uri.toString())
                             val hashMapEvents = hashMapOf(
-                                "eventName" to eventName,
+                                "eventName" to eventName!!.capitalize(),
                                 "eventDescription" to eventDescription,
                                 "startDate" to startDate,
                                 "startTime" to startTime,
@@ -218,6 +215,7 @@ class AddEventActivity: AppCompatActivity() {
                                 .addOnSuccessListener {
                                     Log.d(ContentValues.TAG, "Added Document")
                                     firestoreCheck=true
+
                                 }
                                 .addOnFailureListener {
                                     Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
@@ -232,17 +230,17 @@ class AddEventActivity: AppCompatActivity() {
                 val handler = Handler()
                 handler.postDelayed(object: Runnable{
                     override fun run() {
-                      //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
-                      //  val editor = sharedPreferences.edit()
-                       // editor.clear()
-                       // editor.apply()
-                        val intent = Intent(this@AddEventActivity, EventDetailsActivity::class.java)
+                        //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+                        //  val editor = sharedPreferences.edit()
+                        // editor.clear()
+                        // editor.apply()
+                        val intent = Intent(this@AddEventActivity, AdminEventDetailsActivity::class.java)
                         intent.putExtra("EventUID","${eventId.toString()}")
                         startActivity(intent)
                         dialogAddEvent.isDismiss()
 
                     }
-                }, 6000)
+                }, 5000)
 
             }else{
                 Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()

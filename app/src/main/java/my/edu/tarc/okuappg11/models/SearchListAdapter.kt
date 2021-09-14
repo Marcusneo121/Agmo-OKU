@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_search.view.*
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.activities.EventDetailsActivity
 
 class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Adapter<SearchListAdapter.SearchListViewHolder>() {
 
@@ -30,7 +28,7 @@ class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Ad
 
         holder.itemView.setOnClickListener(){
             Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
+            val intent = Intent(holder.itemView.context, AdminEventDetailsActivity::class.java)
             intent.putExtra("EventUID", eventIDNumber)
             holder.itemView.context.startActivity(intent)
         }

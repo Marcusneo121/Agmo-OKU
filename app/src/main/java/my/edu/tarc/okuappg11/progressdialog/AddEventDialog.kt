@@ -1,11 +1,12 @@
 package my.edu.tarc.okuappg11.progressdialog
 
+import android.app.Activity
 import android.app.AlertDialog
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.SignInFragment
 import my.edu.tarc.okuappg11.activities.AddEventActivity
 
-class AddEventDialog(val fragment: AddEventActivity) {
+class AddEventDialog(val fragment: Activity) {
     private lateinit var isDialog: AlertDialog
     fun startLoading(){
         //Set View
