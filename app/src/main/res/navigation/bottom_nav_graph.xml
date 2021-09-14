@@ -9,11 +9,7 @@
         android:id="@+id/HomeFragment"
         android:name="my.edu.tarc.okuappg11.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_HomeFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/SearchFragment"
         android:name="my.edu.tarc.okuappg11.fragments.SearchFragment"
@@ -29,9 +25,4 @@
         android:name="my.edu.tarc.okuappg11.fragments.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/signInFragment"
-        android:name="my.edu.tarc.okuappg11.SignInFragment"
-        android:label="fragment_signin"
-        tools:layout="@layout/fragment_signin" />
 </navigation>

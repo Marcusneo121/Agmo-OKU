@@ -115,4 +115,7 @@
     <string name="btnViewVolunteerDetails">View Volunteer Details</string>
     <string name="btnPendingVolunteerRequest">Pending Volunteer Request</string>
     <string name="tvStatus">Status</string>
+    <string name="settings">Settings</string>
+    <string name="about_us">About the app</string>
+    <string name="logout">Logout</string>
 </resources>

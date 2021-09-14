@@ -33,7 +33,7 @@
     <color name="bottom_nav_bar_disabled">#3C3C3C</color>
     <color name="bottom_nav_bar_enabled">#FFFFFF</color>
 
-    <color name="events_icon">#DC0D21</color>
+    <color name="events_icon">#B40617</color>
     <color name="human_me">#007CFF</color>
 
     <color name="search_bg">#262626</color>
@@ -41,4 +41,7 @@
     <color name="transparent">#0000ffff</color>
 
     <color name="home_purple">#597FFF</color>
+
+    <color name="logout">#950E0E</color>
+    <color name="logout_ripple">#623C3C3C</color>
 </resources>
