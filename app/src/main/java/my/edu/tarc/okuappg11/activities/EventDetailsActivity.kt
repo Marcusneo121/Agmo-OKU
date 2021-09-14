@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
@@ -46,6 +47,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val eventId = intent.getStringExtra("EventUID")
         userID = fAuth.currentUser!!.uid
 
+
         readData(eventId)
 
         binding.btnBookmark.setOnClickListener {
@@ -67,11 +69,11 @@ class EventDetailsActivity : AppCompatActivity() {
 
         }
 
-        binding.btnVolunteer.setOnClickListener(){
+       /* binding.btnVolunteer.setOnClickListener(){
             val intent = Intent(this@EventDetailsActivity, VolunteerRegisterActivity::class.java)
             intent.putExtra("EventUID","${eventId.toString()}")
             startActivity(intent)
-        }
+        }*/
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -80,6 +82,7 @@ class EventDetailsActivity : AppCompatActivity() {
     }
 
     private fun readData(eventId: String?) {
+
         val docRef = fStore.collection("events").document(eventId.toString())
         docRef.get()
             .addOnSuccessListener { document ->
@@ -114,9 +117,38 @@ class EventDetailsActivity : AppCompatActivity() {
             Log.d("CHECK", it.message.toString())
             Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
 
-
         }
+
+        val dRef = fStore.collection("users").document(userID!!).collection("volunteerEvent").document(eventId.toString())
+        dRef.get()
+            .addOnSuccessListener { document ->
+                if (document.get("eventId") != null) {
+                   // binding.btnVolunteer.visibility=View.INVISIBLE
+                    binding.btnVolunteer.setOnClickListener() {
+                        Toast.makeText(this, "You are a volunteer!", Toast.LENGTH_SHORT).show()
+
+                    }
+                } else if(document.get("eventId") == null) {
+                    //binding.btnVolunteer.visibility=View.VISIBLE
+                    binding.btnVolunteer.setOnClickListener() {
+                        val intent =
+                            Intent(this@EventDetailsActivity, VolunteerRegisterActivity::class.java)
+                        intent.putExtra("EventUID", "${eventId.toString()}")
+                        startActivity(intent)
+                    }
+                    Log.d("HEY", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+
+
+
+
     }
+
+
 
 
 }
