@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_purple">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivTrending"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/imageplaceholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLyTrendingDetails"
+            android:layout_width="220dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTrending"
+            app:layout_constraintStart_toEndOf="@+id/ivTrending"
+            app:layout_constraintTop_toTopOf="@+id/ivTrending">
+
+            <TextView
+                android:id="@+id/tvTrendingEvName"
+                style="@style/inputDesign"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:lineSpacingExtra="0dp"
+                android:text="Event Name"
+                android:textAllCaps="true"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTrendingDate"
+                style="@style/inputDesign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="2dp"
+                android:text="time"
+                android:textAllCaps="true"
+                android:textColor="#363636"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnTrending"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:clickable="false"
+                android:fontFamily="@font/poppins_medium"
+                android:text="TRENDING"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:backgroundTint="@color/transparent"
+                app:rippleColor="@color/transparent"
+                app:strokeColor="#FFFFFF"
+                app:strokeWidth="4dp" />
+
+            <TextView
+                android:id="@+id/tvIDTrending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/home_purple" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

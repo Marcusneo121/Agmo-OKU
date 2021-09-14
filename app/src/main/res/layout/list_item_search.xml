@@ -35,7 +35,7 @@
             android:id="@+id/linearLayout5Search"
             android:layout_width="228dp"
             android:layout_height="143dp"
-            android:background="#292929"
+            android:background="@color/stroke_edit_text_enabled"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="12dp"
