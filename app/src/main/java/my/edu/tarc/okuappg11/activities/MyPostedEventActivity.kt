@@ -79,7 +79,7 @@ class MyPostedEventActivity : AppCompatActivity() {
                                     postedEventDetails.startDate= dc.getString("startDate")
                                     postedEventDetails.startTime= dc.getString("startTime")
                                     postedEventDetails.location = dc.getString("eventLocation")
-                                    postedEventDetails.eventStatus = dc.getString("eventStatus")
+                                    postedEventDetails.eventStatus = dc.getString("status")
                                     postedEventDetails.eventThumbnailURL = dc.getString("eventThumbnailURL")
                                     postedEventArrayList.add(postedEventDetails)
                                     Log.d("CHECKINSIDE", dc.id)
