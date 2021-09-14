@@ -1,28 +1,26 @@
-package my.edu.tarc.okuappg11.activities
+package my.edu.tarc.okuappg11.models
 
-import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.VolunteerRequestDetailActivity
+import my.edu.tarc.okuappg11.data.VolunteerRequestArrayList
 
 class VolunteerRequestAdapter(private val volunteerRequestArrayListList : ArrayList<VolunteerRequestArrayList>) : RecyclerView.Adapter<VolunteerRequestAdapter.ViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VolunteerRequestAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_volunteer_request, parent, false)
 
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: VolunteerRequestAdapter.ViewHolder, position: Int ){
+    override fun onBindViewHolder(holder: ViewHolder, position: Int ){
         val volunteerRequestArrayListItem: VolunteerRequestArrayList = volunteerRequestArrayListList[position]
         holder.tvVName.text = volunteerRequestArrayListItem.vname
         holder.tvVId.text = volunteerRequestArrayListItem.vid

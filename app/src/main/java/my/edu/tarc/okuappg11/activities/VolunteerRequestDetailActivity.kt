@@ -11,8 +11,9 @@ import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import my.edu.tarc.okuappg11.databinding.ActivityVolunteerRegisterBinding
+import my.edu.tarc.okuappg11.data.VolunteerRequestArrayList
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerRequestDetailBinding
+import my.edu.tarc.okuappg11.models.VolunteerRequestAdapter
 
 class VolunteerRequestDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVolunteerRequestDetailBinding
