@@ -27,7 +27,10 @@ class AdminPendingEvents : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
 
-
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,8 @@ class AdminPendingEvents : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
-
+        supportActionBar?.title = "Pending Event"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         recyclerView = binding.rvAdminPendingEvents
         recyclerView.layoutManager = LinearLayoutManager(this)

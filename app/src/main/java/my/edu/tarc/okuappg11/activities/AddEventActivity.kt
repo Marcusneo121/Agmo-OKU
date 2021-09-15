@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -57,17 +58,30 @@ class AddEventActivity: AppCompatActivity() {
     private var latitude:Double?= null
     private var longitude:Double?= null
 
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddEventBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.title = "Add Event"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
+
         //loadData()
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         getDisplayName()
         val ref:DocumentReference = fStore.collection("events").document()
         eventId = ref.id
+
+
 
         binding.textFieldEventOrganizerName.editText!!.isEnabled = false
         binding.textFieldDateStart.editText!!.isEnabled = false

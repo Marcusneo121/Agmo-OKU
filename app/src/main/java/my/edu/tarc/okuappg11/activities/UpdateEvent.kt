@@ -61,6 +61,9 @@ class UpdateEvent : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
+        supportActionBar?.title = "Edit Event"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.textFieldUpdateEventOrganizerName.editText!!.isEnabled=false
         binding.textFieldUpdateDateStart.editText!!.isEnabled=false
         binding.textFieldUpdateTime.editText!!.isEnabled=false
@@ -175,13 +178,6 @@ class UpdateEvent : AppCompatActivity() {
                         val dateNow = Calendar.getInstance().time
                         val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
-
-
-
-
-
-
-
                         Log.d("check", eventId.toString())
                         if(mSelectedImageFileUri != null) {
 
@@ -279,6 +275,11 @@ class UpdateEvent : AppCompatActivity() {
         }else{
             return true
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun getData() {

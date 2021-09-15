@@ -14,36 +14,51 @@
         android:layout_marginTop="3dp"
         android:background="#262626"
         android:orientation="horizontal"
-        android:padding="30px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3">
 
-        <Button
-            android:id="@+id/btnDeleteStory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/delete_event"
-            android:textColor="#FFFFFF"
-            app:backgroundTint="@android:color/holo_red_light"
-            app:strokeColor="@color/black"
-            app:strokeWidth="2dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnUpdateStory"
-            android:layout_width="155dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:text="@string/update_event"
-            android:textColor="@color/white"
-            app:backgroundTint="#3D70FF"
-            app:strokeColor="#3D70FF"
-            app:strokeWidth="2dp" />
+            <Button
+                android:id="@+id/btnDeleteStory"
+                android:layout_width="155dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginLeft="35dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/delete_event"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:backgroundTint="#DA0101"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#DA0101"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnUpdateStory"
+                android:layout_width="155dp"
+                android:layout_height="65dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginRight="35dp"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/update_event"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:backgroundTint="#3D70FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#3D70FF"
+                app:strokeWidth="2dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <ScrollView
@@ -95,16 +110,18 @@
 
                 <TextView
                     android:id="@+id/tvAdminStoryTitle"
-                    android:layout_width="217dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:padding="3dp"
                     android:paddingLeft="10dp"
                     android:text="event title test"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/btnLike"
@@ -126,17 +143,19 @@
 
             <TextView
                 android:id="@+id/tvAdminStoryDescription"
-                android:layout_width="217dp"
-                android:layout_height="match_parent"
+                android:layout_width="357dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:fontFamily="@font/poppins_medium"
                 android:padding="3dp"
                 android:paddingLeft="10dp"
                 android:text="event description test"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </ScrollView>

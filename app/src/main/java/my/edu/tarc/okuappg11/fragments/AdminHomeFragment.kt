@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,15 +15,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_admin_home.*
-import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.AddEventActivity
 import my.edu.tarc.okuappg11.activities.AddStoryActivity
 import my.edu.tarc.okuappg11.activities.AdminPendingEvents
 import my.edu.tarc.okuappg11.databinding.FragmentAdminHomeBinding
 import my.edu.tarc.okuappg11.models.TopicsAdapter
 import my.edu.tarc.okuappg11.models.TopicsModel
-import my.edu.tarc.okuappg11.models.TrendingAdapter
-import my.edu.tarc.okuappg11.models.TrendingModel
 import my.edu.tarc.okuappg11.recyclerview.EventCardArrayList
 import my.edu.tarc.okuappg11.recyclerview.EventsAdapter
 

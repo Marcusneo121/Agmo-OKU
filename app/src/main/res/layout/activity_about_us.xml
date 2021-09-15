@@ -59,7 +59,7 @@
                 <TextView
                     android:id="@+id/tvIntro"
                     style="@style/inputDesign"
-                    android:layout_width="250dp"
+                    android:layout_width="285dp"
                     android:layout_height="140dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
@@ -338,19 +338,33 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
+                <View
+                    android:id="@+id/dividerAboutUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginRight="100dp"
+                    android:background="@color/divider_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvLY" />
+
                 <TextView
                     android:id="@+id/tvOLM"
                     style="@style/inputDesign"
                     android:layout_width="200dp"
                     android:layout_height="140dp"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:text="@string/end_story"
                     android:textColor="#D5D5D5"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cvLY" />
+                    app:layout_constraintTop_toBottomOf="@+id/dividerAboutUs" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

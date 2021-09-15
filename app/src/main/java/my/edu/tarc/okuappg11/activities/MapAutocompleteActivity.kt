@@ -26,11 +26,19 @@ class MapAutocompleteActivity: AppCompatActivity() {
     private var filterLatitude:String? = null
     private var filterLongitude:String?= null
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapAutocompleteBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.title = "Pick Location"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         Places.initialize(applicationContext, "AIzaSyDAxB57qHvJsDFXNiJNc_bUufAgv3gkcWU")
 

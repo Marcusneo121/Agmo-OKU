@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -54,7 +55,9 @@ class AdminUpdateStory : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
-
+        supportActionBar?.title = "Edit Story"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         getData()
 
@@ -87,40 +90,44 @@ class AdminUpdateStory : AppCompatActivity() {
                     }
                     .setPositiveButton(resources.getString(R.string.dialog_update_story_positive)) { dialog, which ->
                         storyTitle = binding.textFieldUpdateStoryTitle.editText!!.text.toString()
-                        storyThumbnailDescription = binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.toString()
-                        storyDescription = binding.textFieldUpdateStoryDescription.editText!!.text.toString()
+                        storyThumbnailDescription =
+                            binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.toString()
+                        storyDescription =
+                            binding.textFieldUpdateStoryDescription.editText!!.text.toString()
                         val dateNow = Calendar.getInstance().time
                         val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
 
                         Log.d("check", storyId.toString())
-                        if(mSelectedImageFileUri != null) {
+                        if (mSelectedImageFileUri != null) {
 
-                            val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                                Constants.STORY_IMAGE + storyId + "."
-                                        + Constants.getFileExtension(
-                                    this,
-                                    mSelectedImageFileUri
-                                )
-                            )
-
-
-                            sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
-                                Log.e(
-                                    "Firebase Image",
-                                    taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
+                            val sRef: StorageReference =
+                                FirebaseStorage.getInstance().reference.child(
+                                    Constants.STORY_IMAGE + storyId + "."
+                                            + Constants.getFileExtension(
+                                        this,
+                                        mSelectedImageFileUri
+                                    )
                                 )
 
-                                taskSnapshot.metadata!!.reference!!.downloadUrl
-                                    .addOnSuccessListener { uri ->
-                                        Log.e("Downloadable Image URL", uri.toString())
-                                        storyThumbnailURL = uri.toString()
-                                        storageCheck = true
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        Log.e("ERROR", exception.message.toString())
-                                    }
-                            }
+
+                            sRef.putFile(mSelectedImageFileUri!!)
+                                .addOnSuccessListener { taskSnapshot ->
+                                    Log.e(
+                                        "Firebase Image",
+                                        taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
+                                    )
+
+                                    taskSnapshot.metadata!!.reference!!.downloadUrl
+                                        .addOnSuccessListener { uri ->
+                                            Log.e("Downloadable Image URL", uri.toString())
+                                            storyThumbnailURL = uri.toString()
+                                            storageCheck = true
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.e("ERROR", exception.message.toString())
+                                        }
+                                }
                         }
 
                         dialogAddEvent.startLoading()
@@ -131,28 +138,34 @@ class AdminUpdateStory : AppCompatActivity() {
                             "storyThumbnailURL" to storyThumbnailURL
 
                         )
-                        val ref: DocumentReference = fStore.collection("stories").document(storyId!!)
+                        val ref: DocumentReference =
+                            fStore.collection("stories").document(storyId!!)
 
                         ref.update(hashMapEvents as Map<String, Any>)
                             .addOnSuccessListener {
-                                Toast.makeText(this,R.string.update_success,Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, R.string.update_success, Toast.LENGTH_SHORT)
+                                    .show()
                                 Log.d(ContentValues.TAG, "Added Document")
-                                firestoreCheck=true
+                                firestoreCheck = true
 
                             }
                             .addOnFailureListener {
-                                Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
+                                Log.w(
+                                    ContentValues.TAG,
+                                    "Error adding document ${it.suppressedExceptions}"
+                                )
                             }
 
                         val handler = Handler()
-                        handler.postDelayed(object: Runnable{
+                        handler.postDelayed(object : Runnable {
                             override fun run() {
                                 //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
                                 //  val editor = sharedPreferences.edit()
                                 // editor.clear()
                                 // editor.apply()
-                                val intent = Intent(this@AdminUpdateStory, AdminStoryDetails::class.java)
-                                intent.putExtra("StoryUID","${storyId.toString()}")
+                                val intent =
+                                    Intent(this@AdminUpdateStory, AdminStoryDetails::class.java)
+                                intent.putExtra("StoryUID", "${storyId.toString()}")
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 
@@ -162,113 +175,115 @@ class AdminUpdateStory : AppCompatActivity() {
                     .show()
 
 
-            }else{
+            } else {
                 Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()
 
             }
 
 
-
-
-            }
-
-
         }
 
 
-        private fun getData() {
-            val docRef = fStore.collection("stories").document(storyId!!)
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        storyTitle = document.getString("storyTitle")
-                        storyThumbnailDescription = document.getString("storyThumbnailDescription")
-                        storyDescription = document.getString("storyDescription")
-                        storyThumbnailURL = document.getString("storyThumbnailURL")
-                        binding.textFieldUpdateStoryTitle.editText!!.setText(storyTitle)
-                        binding.textFieldUpdateStoryThumbnailDescription.editText!!.setText(
-                            storyThumbnailDescription
-                        )
-                        binding.textFieldUpdateStoryDescription.editText!!.setText(storyDescription)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+
+    private fun getData() {
+        val docRef = fStore.collection("stories").document(storyId!!)
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    storyTitle = document.getString("storyTitle")
+                    storyThumbnailDescription = document.getString("storyThumbnailDescription")
+                    storyDescription = document.getString("storyDescription")
+                    storyThumbnailURL = document.getString("storyThumbnailURL")
+                    binding.textFieldUpdateStoryTitle.editText!!.setText(storyTitle)
+                    binding.textFieldUpdateStoryThumbnailDescription.editText!!.setText(
+                        storyThumbnailDescription
+                    )
+                    binding.textFieldUpdateStoryDescription.editText!!.setText(storyDescription)
 
 
 
-                        GlideLoader(this).loadUserPicture(
-                            Uri.parse(storyThumbnailURL)!!,
-                            binding.ivUpdateStoryThumbnail
-                        )
-
-                    } else {
-                        Log.d("HEY", "No such document")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("TAG", "get failed with ", exception)
-                }
-        }
-
-        override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-        ) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-                //granted
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //Toast.makeText(this,"Storage permission granted", Toast.LENGTH_LONG).show()
-                    Constants.showImageChooser(this)
-
+                    GlideLoader(this).loadUserPicture(
+                        Uri.parse(storyThumbnailURL)!!,
+                        binding.ivUpdateStoryThumbnail
+                    )
 
                 } else {
-                    //display another toast if permission not granted
-                    Toast.makeText(this, R.string.storage_permission_denied, Toast.LENGTH_LONG)
-                        .show()
-
+                    Log.d("HEY", "No such document")
                 }
             }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
+            //granted
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Toast.makeText(this,"Storage permission granted", Toast.LENGTH_LONG).show()
+                Constants.showImageChooser(this)
 
 
+            } else {
+                //display another toast if permission not granted
+                Toast.makeText(this, R.string.storage_permission_denied, Toast.LENGTH_LONG)
+                    .show()
+
+            }
         }
 
-        @Suppress("DEPRECATION")
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE) {
-                if (resultCode == Activity.RESULT_OK) {
 
-                    if (data != null) {
-                        try {
-                            //uri of image
-                            mSelectedImageFileUri = data.data!!
-                            GlideLoader(this).loadUserPicture(
-                                mSelectedImageFileUri!!,
-                                binding.ivUpdateStoryThumbnail
-                            )
-                        } catch (e: Exception) {
-                            Toast.makeText(this, R.string.image_selection_fail, Toast.LENGTH_LONG)
-                                .show()
-                        }
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                if (data != null) {
+                    try {
+                        //uri of image
+                        mSelectedImageFileUri = data.data!!
+                        GlideLoader(this).loadUserPicture(
+                            mSelectedImageFileUri!!,
+                            binding.ivUpdateStoryThumbnail
+                        )
+                    } catch (e: Exception) {
+                        Toast.makeText(this, R.string.image_selection_fail, Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.e("REQUEST CANCELLED", "Image selection cancelled")
             }
-
-
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.e("REQUEST CANCELLED", "Image selection cancelled")
         }
 
-        private fun validateStoryDetails(): Boolean {
-            if (binding.textFieldUpdateStoryTitle.editText!!.text.isEmpty() ||
-                binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.isEmpty() ||
-                binding.textFieldUpdateStoryDescription.editText!!.text.isEmpty()
-            ) {
-                return false
-            } else {
-                return true
-            }
-        }
 
+    }
+
+    private fun validateStoryDetails(): Boolean {
+        if (binding.textFieldUpdateStoryTitle.editText!!.text.isEmpty() ||
+            binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.isEmpty() ||
+            binding.textFieldUpdateStoryDescription.editText!!.text.isEmpty()
+        ) {
+            return false
+        } else {
+            return true
+        }
+    }
 
 
 }
