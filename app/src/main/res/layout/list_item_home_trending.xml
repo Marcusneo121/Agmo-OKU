@@ -21,14 +21,14 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="32dp"
-            android:src="@drawable/imageplaceholder"
+            android:src="@drawable/image_place_holder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLyTrendingDetails"
-            android:layout_width="220dp"
+            android:layout_width="190dp"
             android:layout_height="150dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"

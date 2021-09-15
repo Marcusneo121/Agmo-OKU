@@ -31,8 +31,6 @@ class AdminStoryDetails : AppCompatActivity() {
     private var userID: String? = null
     private var likesCheck:Boolean = false
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminStoryDetailsBinding.inflate(layoutInflater)
@@ -40,7 +38,6 @@ class AdminStoryDetails : AppCompatActivity() {
         setContentView(view)
 
         supportActionBar?.title = ""
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fAuth = FirebaseAuth.getInstance()
@@ -185,5 +182,10 @@ class AdminStoryDetails : AppCompatActivity() {
             Log.d("CHECK", it.message.toString())
             Log.d("CHECK", "STORY_THUMBNAIL${storyId}.jpg")
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

@@ -11,24 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
+        android:paddingBottom="20dp"
         tools:context=".activities.AddStoryActivity">
 
 
         <ImageView
             android:id="@+id/ivStoryThumbnail"
             android:layout_width="329dp"
-            android:layout_height="188dp"
-            android:layout_marginStart="43dp"
-            android:layout_marginLeft="43dp"
+            android:layout_height="184dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="39dp"
-            android:layout_marginRight="39dp"
             android:background="#636363"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/image_place_holder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textStory1"
-            app:srcCompat="@drawable/imageplaceholder" />
+            app:srcCompat="@drawable/image_place_holder" />
 
         <TextView
             android:id="@+id/textStory1"
@@ -37,13 +34,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/story_thumbnail"
             android:textColor="@android:color/white"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
 
 
         <TextView
@@ -53,8 +49,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/story_information"
             android:textColor="#ffff"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivStoryThumbnail" />
 
@@ -71,11 +69,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textStory2">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,16 +89,17 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:hint="@string/topic_thumbnail_description"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldStoryTitle">
-            app:counterEnabled="true"
-            app:counterMaxLength="20
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -116,19 +116,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldStoryThumbnailDescription">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/add_story"
+            android:textSize="18sp"
             app:backgroundTint="@color/signInButtonColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,14 +143,23 @@
 
         <Button
             android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/topic_post_cancel"
-            app:backgroundTint="#FF002E"
+            android:textColor="@color/logout"
+            android:textSize="17sp"
+            app:backgroundTint="@color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnPost" />
+            app:layout_constraintTop_toBottomOf="@+id/btnPost"
+            app:rippleColor="@color/logout_ripple"
+            app:strokeColor="@color/logout"
+            app:strokeWidth="2dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

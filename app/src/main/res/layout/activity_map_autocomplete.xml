@@ -38,8 +38,11 @@
     <Button
         android:id="@+id/btnFinish"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Finish" />
+        android:layout_height="60dp"
+        android:backgroundTint="@color/signInButtonColor"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Finish"
+        android:textSize="20sp" />
 
 
 </LinearLayout>

@@ -32,7 +32,7 @@ class TopicsAdapter(var topicList: ArrayList<TopicsModel>): RecyclerView.Adapter
         val eventIDNumber: String = topicListItem.storyID
 
         holder.itemView.setOnClickListener(){
-            Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
             val intent = Intent(holder.itemView.context, AdminStoryDetails::class.java)
             if(topicListItem.accessBy == "admin"){
                 intent.putExtra("StoryUID", eventIDNumber)
