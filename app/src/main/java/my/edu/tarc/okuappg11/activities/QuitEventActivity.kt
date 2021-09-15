@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.custom_dialog_read.*
+import kotlinx.android.synthetic.main.custom_dialog_read.view.*
+import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityQuitEventBinding
 import my.edu.tarc.okuappg11.databinding.CustomDialogReadBinding
@@ -111,44 +114,59 @@ class QuitEventActivity : AppCompatActivity() {
         }
 
         binding.btnQuitEvent.setOnClickListener {
-            MaterialAlertDialogBuilder(this)
+            /*MaterialAlertDialogBuilder(this)
                 .setTitle("Alert")
                 .setMessage("Do you want to quit this event?")
-                .setPositiveButton("Yes") { dialog, which ->
+                .setPositiveButton("Yes") { dialog, which ->*/
+            val dView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            val dBuilder = AlertDialog.Builder(this)
+                .setView(dView)
+                .setTitle("Do you want to quit this event?")
+            val dAlertDialog = dBuilder.show()
 
-                    //MaterialAlertDialogBuilder(this)
-                        //.setTitle("Reason for Quitting")
-                    //val mView = layoutInflater
-                        //.inflate(R.layout.list_item_bookmark, null)
-                    //val dialog = CustomDialogReadFragment()
+            dView.btnDialogYes.setOnClickListener {
+                val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_read, null)
+                val mBuilder = AlertDialog.Builder(this)
+                    .setView(mView)
+                    .setTitle("Reason for Quitting")
+                val mAlertDialog = mBuilder.show()
 
-                    //dialog.show(supportFragmentManager, "customDialog")
-
-                    //val quitReason: TextView = mView.findViewById(R.id.etReason)
-                    //val btnsubmitReason: Button = mView.findViewById(R.id.btnSubmitReason)
-                    //val btnCancelReason: Button = mView.findViewById(R.id.btnCancelReason)
-
-
-                    //MaterialDialogs.setView(mView)
-
+                mView.btnSubmitReason.setOnClickListener {
+                    val quitReason = mView.etReason.text.toString()
+                    Log.d("check", "submit reason")
+                    if (etReason.text.isEmpty()) {
+                        etReason.error = "Please enter your reason."
+                        return@setOnClickListener
+                    }
                     fStore.collection("users").document(userID!!).collection("upcoming events")
                         .document(eventID!!)
                         .delete()
                         .addOnSuccessListener {
                             Log.d("check", "CHECKDELETE")
-                            val intent = Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
+                            Toast.makeText(
+                                this,
+                                "You have quit this event.",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            val intent =
+                                Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
                             startActivity(intent)
 
                         }.addOnFailureListener {
-                            Log.e("error",it.message.toString())
+                            Log.e("error", it.message.toString())
                         }
                 }
-                .setNegativeButton("No"){ dialog, which ->
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+
+                mView.btnCancelReason.setOnClickListener {
+                    mAlertDialog.dismiss()
                 }
-                .setNeutralButton("Cancel") { dialog, which ->
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-                }.show()
+            }
+
+            dView.btnDialogNo.setOnClickListener {
+                dAlertDialog.dismiss()
+            }
+
         }
     }
 

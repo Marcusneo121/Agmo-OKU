@@ -33,14 +33,14 @@ class LikesAdapter(var likesList: ArrayList<LikesArrayList>):
         fStore = FirebaseFirestore.getInstance()
 
         val likesArrayListItem: LikesArrayList = likesList[position]
-        holder.topicName.text = likesArrayListItem.storyTitle.toString()
-        holder.topicThumbnailDesc.text = likesArrayListItem.storyThumbnailDescription
-        GlideLoader(holder.topicImg.context).loadUserPicture(Uri.parse(likesArrayListItem.storyThumbnailURL),holder.topicImg)
+        holder.storyTitle.text = likesArrayListItem.storyTitle.toString()
+        holder.storyThumbnailDescription.text = likesArrayListItem.storyThumbnailDescription
+        GlideLoader(holder.storyThumbnailURL.context).loadUserPicture(Uri.parse(likesArrayListItem.storyThumbnailURL),holder.storyThumbnailURL)
         val eventIDNumber: String = likesArrayListItem.storyID
 
         holder.itemView.setOnClickListener(){
-            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
-            intent.putExtra("EventUID", eventIDNumber)
+            val intent = Intent(holder.itemView.context, AdminStoryDetails::class.java)
+            intent.putExtra("StoryUID", eventIDNumber)
             holder.itemView.context.startActivity(intent)
         }
 
@@ -52,9 +52,9 @@ class LikesAdapter(var likesList: ArrayList<LikesArrayList>):
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val topicName: TextView = itemView.findViewById(R.id.showTopicName)
-        val topicThumbnailDesc: TextView = itemView.findViewById(R.id.showTopicDescription)
-        val topicImg: ImageView = itemView.findViewById(R.id.ivLikes)
+        val storyTitle: TextView = itemView.findViewById(R.id.showTopicName)
+        val storyThumbnailDescription: TextView = itemView.findViewById(R.id.showTopicDescription)
+        val storyThumbnailURL: ImageView = itemView.findViewById(R.id.ivLikes)
 
     }
 }

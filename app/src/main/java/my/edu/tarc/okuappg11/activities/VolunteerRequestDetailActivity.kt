@@ -7,10 +7,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.data.VolunteerRequestArrayList
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerRequestDetailBinding
 import my.edu.tarc.okuappg11.models.VolunteerRequestAdapter
@@ -94,33 +98,33 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
         }
 
         binding.btnDecline.setOnClickListener() {
+            val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            val mBuilder = AlertDialog.Builder(this)
+                .setView(mView)
+                .setTitle("Do you want to decline this request?")
+            val mAlertDialog = mBuilder.show()
+            mView.btnDialogYes.setOnClickListener {
+                email()
+                fStore.collection("events")
+                    .document(eventId.toString())
+                    .collection("volunteer")
+                    .document(vid.toString())
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d("TAG", "The volunteer data is deleted.")
+                    }
+                    .addOnFailureListener {
+                        Log.w(
+                            ContentValues.TAG,
+                            "Error adding document ${it.suppressedExceptions}"
+                        )
+                    }
+            }
+            mView.btnDialogNo.setOnClickListener {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
+            }
 
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Alert")
-                .setMessage("Do you want to decline this request?")
-                .setPositiveButton("Yes") { dialog, which ->
-                    email()
-                    fStore.collection("events")
-                        .document(eventId.toString())
-                        .collection("volunteer")
-                        .document(vid.toString())
-                        .delete()
-                        .addOnSuccessListener {
-                            Log.d("TAG", "The volunteer data is deleted.")
-                        }
-                        .addOnFailureListener {
-                            Log.w(
-                                ContentValues.TAG,
-                                "Error adding document ${it.suppressedExceptions}"
-                            )
-                        }
-                }
-                .setNegativeButton("No"){ dialog, which ->
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-                 }
-                .setNeutralButton("Cancel") { dialog, which ->
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-                }.show()
         }
 
 

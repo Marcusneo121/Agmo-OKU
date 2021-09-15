@@ -20,7 +20,8 @@ class Likes : AppCompatActivity() {
     private lateinit var fStore: FirebaseFirestore
     private lateinit var fAuth: FirebaseAuth
     private var userID: String? = null
-    private var eventID: String? = null
+    private var storyUID: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,6 @@ class Likes : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         userID = fAuth.currentUser!!.uid
-
 
 
         recyclerView = binding.recyclerViewLikes
@@ -56,8 +56,10 @@ class Likes : AppCompatActivity() {
 
     private fun getData() {
         fStore = FirebaseFirestore.getInstance()
-        fStore.collection("stories")
-            .orderBy("storyCreatedDate", Query.Direction.DESCENDING).limit(5)
+        fStore.collection("users")
+            .document(userID!!)
+            .collection("likes")
+            //.orderBy("storyCreatedDate", Query.Direction.DESCENDING).limit(5)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error != null) {
@@ -66,27 +68,33 @@ class Likes : AppCompatActivity() {
                     }
                     lkArrayList.clear()
                     value?.forEach {
+                        fStore.collection("stories").document(it.id.toString()).get()
+                            .addOnSuccessListener {  dc ->
+                                Log.d("CHECKoutside", dc.id)
 
-                        val lkDetails = it.toObject(LikesArrayList::class.java)
-                        if (lkDetails != null) {
+                                val lkDetails = dc.toObject(LikesArrayList::class.java)
+                                if(lkDetails != null){
 
-                            lkDetails.storyID = it.id
-                            //lkDetails.storyTitle = dc.getString("storyTitle")
-                            //lkDetails.storyThumbnailDescription= dc.getString("storyDescription")
-                            //lkDetails.storyThumbnailURL = dc.getString("storyThumbnailURL")
-                            lkArrayList.add(lkDetails)
+                                    lkDetails.storyID = dc.id
+                                    lkDetails.storyTitle = dc.getString("storyTitle").toString()
+                                    lkDetails.storyThumbnailDescription= dc.getString("storyThumbnailDescription").toString()
+                                    lkDetails.storyThumbnailURL = dc.getString("storyThumbnailURL").toString()
+                                    lkArrayList.add(lkDetails)
+                                    Log.d("CHECKINSIDE", dc.id)
+                                    if(lkArrayList.isEmpty()){
+                                        Log.d("try again","Array list is empty")
+                                    } else {
+                                        Log.d("Got array","Array list is not empty")
+                                    }
+                                    lkAdapter.notifyDataSetChanged()
 
-                            if (lkArrayList.isEmpty()) {
-                                Log.d("try again", "Array list is empty")
-                            } else {
-                                Log.d("Got array", "Array list is not empty")
+                                }
+                            }.addOnFailureListener { exception ->
+                                Log.d("TAG", "get failed with ", exception)
+
                             }
-                            lkAdapter.notifyDataSetChanged()
+
                         }
-                    }
-
-
-
 
                     lkAdapter.notifyDataSetChanged()
 

@@ -116,9 +116,9 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:background="@android:color/transparent"
-                    app:icon="@drawable/like"
+                    android:drawableLeft="@drawable/ic_outline_thumb_up_24"
                     app:iconSize="33dp"
-                    app:iconTint="@color/greyLabel"
+                    app:iconTint="@color/white"
                     app:rippleColor="@color/theme_purple" />
 
 
