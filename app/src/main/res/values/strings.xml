@@ -120,7 +120,9 @@
     <string name="logout">Logout</string>
     <string name="aboutUslbl">About the app</string>
     <string name="story">Our app gather all the events, activities and stories around the globe and allow OKU to join on the
-        platform. OKU LIVES MATTER</string>
+        platform.</string>
+    <string name="end_story">OKU needs more care and help in Malaysia. We are here to help. OKU LIVES MATTER</string>
+
     <string name="devs">The Developers</string>
     <string name="url_ig_marcus">https://www.instagram.com/cheeseburger.extrapickle/</string>
     <string name="url_ig_kj">https://www.instagram.com/teohkjet/</string>
