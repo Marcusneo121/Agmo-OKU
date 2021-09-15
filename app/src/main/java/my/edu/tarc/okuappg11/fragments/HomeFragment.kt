@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.SnapHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.AllTopicsActivity
+import my.edu.tarc.okuappg11.activities.ForgotPasswordActivity
 import my.edu.tarc.okuappg11.databinding.FragmentHomeBinding
 import my.edu.tarc.okuappg11.models.TopicsAdapter
 import my.edu.tarc.okuappg11.models.TopicsModel
@@ -129,7 +131,8 @@ class HomeFragment : Fragment() {
         topicListener()
 
         binding.btnSeeAll.setOnClickListener {
-
+            val intent = Intent(activity, AllTopicsActivity::class.java)
+            startActivity(intent)
         }
     }
 }
