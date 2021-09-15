@@ -1,4 +1,4 @@
-package my.edu.tarc.okuappg11.activities
+package my.edu.tarc.okuappg11.models
 
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.EventDetailsActivity
+import my.edu.tarc.okuappg11.data.VolunteerArrayList
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class MyVolunteerEventAdapter(private val volunteerArrayList: ArrayList<VolunteerArrayList>) :
@@ -22,13 +24,13 @@ class MyVolunteerEventAdapter(private val volunteerArrayList: ArrayList<Voluntee
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MyVolunteerEventAdapter.ViewHolder {
+    ): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_volunteer_event, parent, false)
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: MyVolunteerEventAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val volunteerArrayListItem: VolunteerArrayList = volunteerArrayList[position]
         holder.eventId.text = volunteerArrayListItem.eventId.toString()
         holder.eventName.text = volunteerArrayListItem.eventName.toString()

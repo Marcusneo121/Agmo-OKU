@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clAboutUs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bottom_nav_bar_bg"
+    tools:context=".activities.AboutUsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDetailsAboutUs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnAboutSettings"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="26dp"
+            android:contentDescription="backButToSetting"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelSetting2"
+            style="@style/inputDesign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/aboutUslbl"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.373"
+            app:layout_constraintStart_toEndOf="@+id/btnAboutSettings"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/svAboutUs"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelSetting2"
+            app:layout_constraintVertical_bias="1.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:paddingBottom="25dp">
+
+                <TextView
+                    android:id="@+id/tvIntro"
+                    style="@style/inputDesign"
+                    android:layout_width="250dp"
+                    android:layout_height="140dp"
+                    android:gravity="center"
+                    android:text="@string/story"
+                    android:textColor="#D5D5D5"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lblDevs"
+                    style="@style/inputDesign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/devs"
+                    android:textSize="23sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvIntro" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvMarcus"
+                    android:layout_width="330dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/about_us_bg"
+                    app:cardBackgroundColor="@color/GreyishSand"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblDevs">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/isMarcus"
+                            android:layout_width="match_parent"
+                            android:layout_height="330dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvMarcus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:gravity="center"
+                            android:text="Marcus Neo"
+                            android:textColor="#333333"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isMarcus" />
+
+                        <Button
+                            android:id="@+id/btnInstaMarcus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:shadowColor="@color/transparent"
+                            android:text="Visit Instagram"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                            android:textColor="@color/theme_purple"
+                            android:textSize="16sp"
+                            app:backgroundTint="@color/transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isMarcus"
+                            app:rippleColor="@color/GreyishSand"
+                            app:strokeColor="@color/theme_purple"
+                            app:strokeWidth="2dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvKJ"
+                    android:layout_width="330dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/about_us_bg"
+                    app:cardBackgroundColor="@color/GreyishSand"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvMarcus">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/isKJ"
+                            android:layout_width="match_parent"
+                            android:layout_height="330dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvKJ"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:gravity="center"
+                            android:text="Teoh Kaijet"
+                            android:textColor="#333333"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isKJ" />
+
+                        <Button
+                            android:id="@+id/btnInstaKJ"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:shadowColor="@color/transparent"
+                            android:text="Visit Instagram"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                            android:textColor="@color/theme_purple"
+                            android:textSize="16sp"
+                            app:backgroundTint="@color/transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isKJ"
+                            app:rippleColor="@color/GreyishSand"
+                            app:strokeColor="@color/theme_purple"
+                            app:strokeWidth="2dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvVan"
+                    android:layout_width="330dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/about_us_bg"
+                    app:cardBackgroundColor="@color/GreyishSand"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvKJ">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/isVan"
+                            android:layout_width="match_parent"
+                            android:layout_height="330dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvVan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="11dp"
+                            android:layout_marginLeft="11dp"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:gravity="center"
+                            android:text="Vanessa Koay"
+                            android:textColor="#333333"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isVan" />
+
+                        <Button
+                            android:id="@+id/btnInstaVan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginRight="18dp"
+                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:shadowColor="@color/transparent"
+                            android:text="Visit Instagram"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                            android:textColor="@color/theme_purple"
+                            android:textSize="16sp"
+                            app:backgroundTint="@color/transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isVan"
+                            app:rippleColor="@color/GreyishSand"
+                            app:strokeColor="@color/theme_purple"
+                            app:strokeWidth="2dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvLY"
+                    android:layout_width="330dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/about_us_bg"
+                    app:cardBackgroundColor="@color/GreyishSand"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvVan">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/isLY"
+                            android:layout_width="match_parent"
+                            android:layout_height="332dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLY"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="48dp"
+                            android:layout_marginLeft="48dp"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:gravity="center"
+                            android:text="Li Ying"
+                            android:textColor="#333333"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isLY" />
+
+                        <Button
+                            android:id="@+id/btnInstaLY"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:shadowColor="@color/transparent"
+                            android:text="Visit Instagram"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                            android:textColor="@color/theme_purple"
+                            android:textSize="16sp"
+                            app:backgroundTint="@color/transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/isLY"
+                            app:rippleColor="@color/GreyishSand"
+                            app:strokeColor="@color/theme_purple"
+                            app:strokeWidth="2dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

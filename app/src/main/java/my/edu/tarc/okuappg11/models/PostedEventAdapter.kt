@@ -1,7 +1,6 @@
-package my.edu.tarc.okuappg11.activities
+package my.edu.tarc.okuappg11.models
 
 import android.net.Uri
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -12,8 +11,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.bumptech.glide.Glide
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.ViewEventOrganizeDetailsActivity
+import my.edu.tarc.okuappg11.data.PostedEventArrayList
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class PostedEventAdapter(private val postedEventList: ArrayList<PostedEventArrayList>) :
@@ -24,13 +24,13 @@ class PostedEventAdapter(private val postedEventList: ArrayList<PostedEventArray
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PostedEventAdapter.ViewHolder {
+    ): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_posted_event, parent, false)
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: PostedEventAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val postedEventArrayListItem: PostedEventArrayList = postedEventList[position]
         holder.eventId.text = postedEventArrayListItem.eventId.toString()
         holder.eventName.text = postedEventArrayListItem.eventName.toString()

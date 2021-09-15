@@ -11,8 +11,9 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import my.edu.tarc.okuappg11.databinding.ActivityBookmarkBinding
+import my.edu.tarc.okuappg11.data.VolunteerArrayList
 import my.edu.tarc.okuappg11.databinding.ActivityMyVolunteerEventBinding
+import my.edu.tarc.okuappg11.models.MyVolunteerEventAdapter
 
 class MyVolunteerEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyVolunteerEventBinding

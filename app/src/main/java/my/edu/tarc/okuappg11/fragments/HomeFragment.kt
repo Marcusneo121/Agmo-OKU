@@ -128,12 +128,6 @@ class HomeFragment : Fragment() {
         trendingListener()
         topicListener()
 
-        binding.btnLogout.setOnClickListener {
-            activity?.finish()
-            fAuth.signOut()
-            findNavController().navigate(R.id.action_HomeFragment_to_signInFragment)
-        }
-
         binding.btnSeeAll.setOnClickListener {
 
         }
