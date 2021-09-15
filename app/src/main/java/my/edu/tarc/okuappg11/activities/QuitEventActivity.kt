@@ -125,7 +125,7 @@ class QuitEventActivity : AppCompatActivity() {
             val dAlertDialog = dBuilder.show()
 
             dView.btnDialogYes.setOnClickListener {
-                val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_read, null)
+                /*val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_read, null)
                 val mBuilder = AlertDialog.Builder(this)
                     .setView(mView)
                     .setTitle("Reason for Quitting")
@@ -137,7 +137,7 @@ class QuitEventActivity : AppCompatActivity() {
                     if (mView.etReason.text.isEmpty()) {
                         mView.etReason.error = "Please enter your reason."
                         return@setOnClickListener
-                    }
+                    }*/
                     fStore.collection("users").document(userID!!).collection("upcoming events")
                         .document(eventID!!)
                         .delete()
@@ -149,9 +149,10 @@ class QuitEventActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
-                            val intent =
-                                Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
-                            startActivity(intent)
+                            finish()
+//                            val intent =
+//                                Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
+//                            startActivity(intent)
 
                         }.addOnFailureListener {
                             Log.e("error", it.message.toString())
@@ -168,16 +169,16 @@ class QuitEventActivity : AppCompatActivity() {
                         }
                 }
 
-                mView.btnCancelReason.setOnClickListener {
+                /*mView.btnCancelReason.setOnClickListener {
                     mAlertDialog.dismiss()
-                }
+                }*/
             }
 
-            dView.btnDialogNo.setOnClickListener {
+            /*dView.btnDialogNo.setOnClickListener {
                 dAlertDialog.dismiss()
             }
 
-        }
+        }*/
     }
 
     private fun changeBtnColor(){
@@ -206,6 +207,7 @@ class QuitEventActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
+        finish()
         return true
     }
 

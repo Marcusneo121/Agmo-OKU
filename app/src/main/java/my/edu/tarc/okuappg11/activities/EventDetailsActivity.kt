@@ -125,8 +125,8 @@ class EventDetailsActivity : AppCompatActivity() {
                 .set(hashmapUpcomingEvents)
                 .addOnSuccessListener {
                     Log.d("check", "CHECKADD")
-                    val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                    startActivity(intent)
+                    //val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
+                    //startActivity(intent)
                 }.addOnFailureListener {
                     Log.e("error",it.message.toString())
                 }
@@ -140,6 +140,7 @@ class EventDetailsActivity : AppCompatActivity() {
                 .set(hashmapParticipants)
                 .addOnSuccessListener {
                     Log.d("check", "CHECKADD")
+                    finish()
                     val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
                     startActivity(intent)
                 }.addOnFailureListener {
