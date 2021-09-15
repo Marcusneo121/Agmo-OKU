@@ -42,6 +42,6 @@
 
     <color name="home_purple">#597FFF</color>
 
-    <color name="logout">#950E0E</color>
+    <color name="logout">#AD0404</color>
     <color name="logout_ripple">#623C3C3C</color>
 </resources>

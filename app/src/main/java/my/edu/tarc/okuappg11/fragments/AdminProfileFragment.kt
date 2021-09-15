@@ -61,8 +61,8 @@ class AdminProfileFragment : Fragment() {
             editor.clear()
             editor.apply()
 
-            activity?.finish()
             fAuth.signOut()
+            activity?.finish()
             findNavController().navigate(R.id.action_adminProfileFragment_to_signInFragment2)
         }
     }

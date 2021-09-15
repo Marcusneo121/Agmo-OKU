@@ -9,6 +9,7 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
@@ -166,17 +170,17 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 
     override fun onInfoWindowClick(marker: Marker) {
 
-            //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this.context, AdminEventDetailsActivity::class.java)
-            val snippet = marker.snippet
-            intent.putExtra("EventUID", snippet)
+        val intent = Intent(this.context, AdminEventDetailsActivity::class.java)
+        val snippet = marker.snippet
+        intent.putExtra("EventUID", snippet)
 
-            if (marker.title == "Current Location"){
-                Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
-            } else {
-                startActivity(intent)
-            }
+        if (marker.title == "Current Location"){
+            Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+        } else {
+            startActivity(intent)
+        }
     }
 
     fun getAllEvents(){
@@ -193,10 +197,12 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
                 allEventsArrayList = arrayListOf()
                 val document = snapshot.documents
                 document.forEach{
-                    val mapDetails = it.toObject(AllEventsArrayList::class.java)
-                    if(mapDetails != null){
-                        mapDetails.eventID = it.id
-                        allEventsArrayList.add(mapDetails)
+                    if (it.getString("status").toString() == "accepted") {
+                        val mapDetails = it.toObject(AllEventsArrayList::class.java)
+                        if(mapDetails != null){
+                            mapDetails.eventID = it.id
+                            allEventsArrayList.add(mapDetails)
+                        }
                     }
                 }
             }
@@ -209,7 +215,6 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 //            } else {
 //                Toast.makeText(context, "Array is not empty", Toast.LENGTH_LONG).show()
 //            }
-
             getCurrentLocation()
         }, 2000)
     }
@@ -225,6 +230,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialogLocationFetch.startLoading()
+        allEventsArrayList = arrayListOf()
         getAllEvents()
     }
 }

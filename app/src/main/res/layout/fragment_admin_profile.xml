@@ -77,32 +77,30 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnSetting"
-                style="@style/ToggleButtonWithIconOnly"
-                android:layout_width="54dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@android:color/transparent"
-                app:icon="@drawable/ic_round_settings_24"
-                app:iconSize="30dp"
-                app:iconTint="@color/greyLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:rippleColor="@color/theme_purple" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/btnLogoutAdmin2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="temp logout button"
-        app:backgroundTint="@color/GreyishBlue"
+        android:layout_width="0dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/logout"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="@color/logout"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:backgroundTint="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:rippleColor="@color/logout_ripple"
+        app:strokeColor="@color/logout"
+        app:strokeWidth="2dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

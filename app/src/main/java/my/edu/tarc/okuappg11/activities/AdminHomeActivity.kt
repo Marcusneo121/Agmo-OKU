@@ -82,7 +82,7 @@ class AdminHomeActivity : AppCompatActivity() {
         result.addOnCompleteListener {
             try {
                 val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
-                Toast.makeText(this@AdminHomeActivity, "GPS is On", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@AdminHomeActivity, "GPS is On", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "checkSetting: GPS On")
             } catch (e: ApiException) {
 

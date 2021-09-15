@@ -2,6 +2,8 @@ package my.edu.tarc.okuappg11.activities
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -34,8 +36,9 @@ class AdminStoryDetails : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
@@ -94,7 +97,7 @@ class AdminStoryDetails : AppCompatActivity() {
                     storyDescription = document.getString("storyDescription")
 
 
-                    supportActionBar?.title = storyTitle
+                    //supportActionBar?.title = storyTitle
                     binding.tvAdminStoryTitle.text = storyTitle
                     binding.tvAdminStoryDescription.text = storyDescription
 
