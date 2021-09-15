@@ -5,6 +5,7 @@ import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.recyclerview.EventsAdapter
 
 class GlideLoader(val context: Context) {
     fun loadUserPicture(imageURI: Uri, imageView: ImageView){

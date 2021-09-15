@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.models
 
 import android.net.Uri
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,18 @@ class PostedEventAdapter(private val postedEventList: ArrayList<PostedEventArray
         holder.eventDate.text = postedEventArrayListItem.startDate
         holder.eventTime.text = postedEventArrayListItem.startTime
         holder.eventLocation.text = postedEventArrayListItem.location.toString()
-        holder.eventStatus.text = postedEventArrayListItem.eventStatus.toString()
+        if(postedEventArrayListItem.eventStatus == "pending"){
+            holder.eventStatus.setTextColor(Color.WHITE)
+            holder.eventStatus.text = "Pending"
+        }else if (postedEventArrayListItem.eventStatus == "accepted"){
+            holder.eventStatus.setTextColor(Color.GREEN)
+            holder.eventStatus.text = "Accepted"
+
+        }else if (postedEventArrayListItem.eventStatus == "rejected"){
+            holder.eventStatus.setTextColor(Color.RED)
+            holder.eventStatus.text = "Rejected"
+
+        }
         GlideLoader(holder.ivBookmark.context).loadUserPicture(Uri.parse(postedEventArrayListItem.eventThumbnailURL),holder.ivBookmark)
 
         //val url: Uri? = Uri.parse(bookmarkArrayListItem.eventThumbnailURL)

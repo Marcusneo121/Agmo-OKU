@@ -43,6 +43,11 @@
     <string name="account_created">Account Created</string>
 
 
+    <!-- Strings used for fragments for events -->
+
+    <string name="update_text">Update</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_story">Add Story</string>
     <string name="event_name_text">Event Name</string>
     <string name="event_description_text">Event Description</string>
     <string name="event_thumbnail_text">Event Thumbnail</string>
@@ -58,14 +63,75 @@
     <string name="start_date">Start Date</string>
     <string name="time_text">Time</string>
     <string name="location_text">Location</string>
-
+    <string name="delete_event">Delete</string>
+    <string name="dialog_add_title">Add event</string>
+    <string name="dialog_add_description">Are u sure to add this event?</string>
+    <string name="dialog_add_positive">Add</string>
+    <string name="add_success">Event added successfully</string>
+    <string name="add_cancel">Add event cancelled</string>
+    <string name="dialog_add_story_title">Add story</string>
+    <string name="dialog_add_story_description">Are u sure to add this story?</string>
+    <string name="dialog_add_story_positive">Add</string>
+    <string name="add_story_success">Story added successfully</string>
+    <string name="add_story_cancel">Story event cancelled</string>
+    <string name="dialog_add_negative">Cancel</string>
+    <string name="dialog_delete_title">Delete event</string>
+    <string name="dialog_delete_description">Are u sure to delete this event?</string>
+    <string name="dialog_delete_positive">Delete</string>
+    <string name="dialog_delete_negative">Cancel</string>
+    <string name="dialog_delete_story_title">Delete story</string>
+    <string name="dialog_delete_story_description">Are you sure to delete this event?</string>
+    <string name="dialog_delete_story_positive">Delete</string>
+    <string name="dialog_delete_story_negative">Cancel</string>
+    <string name="delete_success">Delete successfully</string>
+    <string name="delete_cancel">Delete cancelled</string>
+    <string name="dialog_update_title">Update event</string>
+    <string name="dialog_update_description">This update will apply to everyone including the participants.</string>
+    <string name="dialog_update_positive">Update Anyway</string>
+    <string name="dialog_update_negative">Cancel</string>
+    <string name="dialog_update_story_title">Update story</string>
+    <string name="dialog_update_story_description">This update will apply to everyone.</string>
+    <string name="dialog_update_story_positive">Update Anyway</string>
+    <string name="dialog_update_story_negative">Cancel</string>
+    <string name="update_success">Update successfully</string>
+    <string name="update_cancel">Update cancelled</string>
+    <string name="update_event">Update</string>
     <string name="event_validation_error">Please fill in all field.</string>
     <string name="select_duration_event">Please select duration of event.</string>
     <string name="storage_permission_denied">Storage permission denied. You can also allow it at settings.</string>
     <string name="image_selection_fail">Failed to select image</string>
-
+    <string name="pending_events">Pending event</string>
+    <string name="pending_reject">Reject</string>
+    <string name="pending_reject_message">Event has been rejected</string>
+    <string name="dialog_reject_title">Reject event</string>
+    <string name="dialog_reject_description">Are u sure to reject this event?</string>
+    <string name="dialog_reject_positive">Reject</string>
+    <string name="dialog_reject_negative">Cancel</string>
+    <string name="pending_accept">Approve</string>
+    <string name="dialog_accept_title">Approve event</string>
+    <string name="dialog_accept_description">Are u sure to approve this event?</string>
+    <string name="dialog_accept_positive">Approve</string>
+    <string name="dialog_accept_negative">Cancel</string>
+    <string name="pending_accept_message">Event has been approved</string>
+    <string-array name="displayList">
+        <item>All Events</item>
+        <item>Pending Events</item>
+        <item>Approved Events</item>
+        <item>Rejected Events</item>
+        <item>Stories</item>
+    </string-array>
 
     <string name="submit">Submit</string>
+
+    <!-- Strings used for story -->
+    <string name="story_thumbnail">Story Thumbnail</string>
+    <string name="story_title">Story Title</string>
+    <string name="story_information">Story information</string>
+    <string name="topic_thumbnail_description">Topic Thumnbnail Description</string>
+    <string name="topic_description">Topic description</string>
+    <string name="topic_post">Post</string>
+    <string name="topic_post_cancel">Cancel</string>
+
 
     <string-array name="userList">
         <item>OKU</item>
