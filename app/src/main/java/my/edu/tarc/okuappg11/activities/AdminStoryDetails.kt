@@ -25,6 +25,7 @@ class AdminStoryDetails : AppCompatActivity() {
     private lateinit var binding: ActivityAdminStoryDetailsBinding
     private var storyTitle:String? = null
     private var storyDescription:String? = null
+    private var addedBy:String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,7 @@ class AdminStoryDetails : AppCompatActivity() {
 
         val storyId = intent.getStringExtra("StoryUID")
         val accessBy = intent.getStringExtra("accessBy")
+        addedBy = intent.getStringExtra("addedBy")
 
         if(accessBy == "admin"){
             linearLayout5.visibility = View.VISIBLE
@@ -120,5 +122,13 @@ class AdminStoryDetails : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(addedBy == "admin"){
+            val intent = Intent(this, AdminHomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

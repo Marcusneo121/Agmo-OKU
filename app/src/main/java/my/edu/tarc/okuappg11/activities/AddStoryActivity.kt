@@ -162,11 +162,13 @@ class AddStoryActivity : AppCompatActivity() {
                                 val intent =
                                     Intent(this@AddStoryActivity, AdminStoryDetails::class.java)
                                 intent.putExtra("StoryUID", "${storyId.toString()}")
+                                intent.putExtra("accessBy","admin")
+                                intent.putExtra("addedBy","admin")
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 
                             }
-                        }, 5000)
+                        }, 6000)
                     }.show()
 
             }else{

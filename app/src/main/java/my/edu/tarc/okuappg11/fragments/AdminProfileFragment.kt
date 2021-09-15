@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,9 @@ class AdminProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
+    private var userID:String? = null
+    private var userName: String? = null
+    private var userEmail: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +40,21 @@ class AdminProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        fStore = FirebaseFirestore.getInstance()
         fAuth = FirebaseAuth.getInstance()
+        userID = fAuth.currentUser?.uid
+        fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
 
+            userName = it.getString("name")
+            userEmail = it.getString("email")
+
+            binding.tvUserEmail.text = userEmail
+            binding.tvUserName.text = userName
+            binding.tvUserType.text = "Admin"
+
+        }.addOnFailureListener {
+            Log.e("error", it.message.toString())
+        }
         binding.btnLogoutAdmin2.setOnClickListener {
             val preferences = requireActivity().getSharedPreferences("sharedLogin", Context.MODE_PRIVATE)
             val editor = preferences.edit()

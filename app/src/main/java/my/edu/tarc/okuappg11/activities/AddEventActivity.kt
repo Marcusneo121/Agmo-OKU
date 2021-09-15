@@ -57,6 +57,7 @@ class AddEventActivity: AppCompatActivity() {
     private var eventLocation:String? = null
     private var latitude:Double?= null
     private var longitude:Double?= null
+    private var addedBy:String? = null
 
 
     override fun onSupportNavigateUp(): Boolean {
@@ -69,7 +70,7 @@ class AddEventActivity: AppCompatActivity() {
         binding = ActivityAddEventBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        addedBy = intent.getStringExtra("addedBy").toString()
         supportActionBar?.title = "Add Event"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
@@ -275,6 +276,7 @@ class AddEventActivity: AppCompatActivity() {
                                     AdminEventDetailsActivity::class.java
                                 )
                                 intent.putExtra("EventUID", "${eventId.toString()}")
+                                intent.putExtra("addedBy",addedBy)
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 
