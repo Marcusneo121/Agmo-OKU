@@ -24,14 +24,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.activities.EventDetailsActivity
-import my.edu.tarc.okuappg11.activities.HomeActivity
-import my.edu.tarc.okuappg11.activities.testActivity
+import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
 import my.edu.tarc.okuappg11.databinding.FragmentNearMeBinding
 import my.edu.tarc.okuappg11.models.CustomInfoWindow
 import my.edu.tarc.okuappg11.progressdialog.LocationSearchingDialog
-import my.edu.tarc.okuappg11.progressdialog.SignInDialog
 
 class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
@@ -171,7 +168,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 
             //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this.context, EventDetailsActivity::class.java)
+            val intent = Intent(this.context, AdminEventDetailsActivity::class.java)
             val snippet = marker.snippet
             intent.putExtra("EventUID", snippet)
 

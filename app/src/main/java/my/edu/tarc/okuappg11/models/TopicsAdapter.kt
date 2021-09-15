@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.activities.EventDetailsActivity
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class TopicsAdapter(var topicList: ArrayList<TopicsModel>): RecyclerView.Adapter<TopicsAdapter.TopicsViewHolder>() {
@@ -33,9 +32,16 @@ class TopicsAdapter(var topicList: ArrayList<TopicsModel>): RecyclerView.Adapter
 
         holder.itemView.setOnClickListener(){
             Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
-            intent.putExtra("EventUID", eventIDNumber)
-            holder.itemView.context.startActivity(intent)
+            val intent = Intent(holder.itemView.context, AdminStoryDetails::class.java)
+            if(topicListItem.accessBy == "admin"){
+                intent.putExtra("StoryUID", eventIDNumber)
+                intent.putExtra("accessBy", topicListItem.accessBy)
+                holder.itemView.context.startActivity(intent)
+            }else{
+                intent.putExtra("StoryUID", eventIDNumber)
+                holder.itemView.context.startActivity(intent)
+            }
+
         }
     }
 

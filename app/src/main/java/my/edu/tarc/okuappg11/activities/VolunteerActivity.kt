@@ -1,19 +1,16 @@
 package my.edu.tarc.okuappg11.activities
 
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import my.edu.tarc.okuappg11.data.VolunteerArrayList
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerBinding
+import my.edu.tarc.okuappg11.models.VolunteerAdapter
 
 class VolunteerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVolunteerBinding

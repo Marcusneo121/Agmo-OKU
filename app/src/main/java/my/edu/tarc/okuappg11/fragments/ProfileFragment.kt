@@ -191,7 +191,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnSetting.setOnClickListener {
-            val intent = Intent(activity, AddEventActivity::class.java)
+            val intent = Intent(activity, SettingActivity::class.java)
             activity?.startActivity(intent)
         }
 
