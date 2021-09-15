@@ -1,5 +1,6 @@
 package my.edu.tarc.okuappg11.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,6 +40,11 @@ class AdminProfileFragment : Fragment() {
         fAuth = FirebaseAuth.getInstance()
 
         binding.btnLogoutAdmin2.setOnClickListener {
+            val preferences = requireActivity().getSharedPreferences("sharedLogin", Context.MODE_PRIVATE)
+            val editor = preferences.edit()
+            editor.clear()
+            editor.apply()
+
             activity?.finish()
             fAuth.signOut()
             findNavController().navigate(R.id.action_adminProfileFragment_to_signInFragment2)

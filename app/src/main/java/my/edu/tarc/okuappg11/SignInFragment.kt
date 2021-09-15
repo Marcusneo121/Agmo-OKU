@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -33,6 +34,13 @@ class SignInFragment : Fragment() {
     private val dialogEmailNotVerified = EmailVerifyDialog(this)
     private val dialogSignInError = SignInErrorDialog(this)
 
+    lateinit var sharedPreferences: SharedPreferences
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,13 +61,12 @@ class SignInFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true)
-            {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
 
                     Toast.makeText(context, "Press Again to Exit", Toast.LENGTH_SHORT).show()
                     val handler = Handler()
-                    handler.postDelayed(object: Runnable{
+                    handler.postDelayed(object : Runnable {
                         override fun run() {
                             finish(context)
                         }
@@ -85,11 +92,9 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fAuth = FirebaseAuth.getInstance()
-        fStore = FirebaseFirestore.getInstance()
-
         val password = binding.etPassword
         val email = binding.etEmail
+
 
         binding.forgotPassHyplink.setOnClickListener {
             val intent = Intent(activity, ForgotPasswordActivity::class.java)
@@ -97,17 +102,17 @@ class SignInFragment : Fragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            if(email.text.isEmpty()){
+            if (email.text.isEmpty()) {
                 email.error = "Please enter email."
                 return@setOnClickListener
             }
 
-            if(password.text.isEmpty()){
+            if (password.text.isEmpty()) {
                 password.error = "Please enter password."
                 return@setOnClickListener
             }
 
-            if(password.text.toString().length < 6){
+            if (password.text.toString().length < 6) {
                 password.error = "Password must more than 5 characters."
             }
 
@@ -115,57 +120,64 @@ class SignInFragment : Fragment() {
 
             fAuth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                 .addOnCompleteListener {
-                    if(it.isSuccessful){
-                        if(fAuth.currentUser?.isEmailVerified == true){
+                    if (it.isSuccessful) {
+                        if (fAuth.currentUser?.isEmailVerified == true) {
                             userID = fAuth.currentUser?.uid
-                            fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
-                                userRole = it.get("userType").toString()
-                                if(userRole == "OKU" || userRole == "Normal"){
+                            fStore.collection("users").document(userID!!).get()
+                                .addOnSuccessListener { it ->
+                                    userRole = it.get("userType").toString()
+                                    if (userRole == "OKU" || userRole == "Normal") {
 
-                                    val intent = Intent(activity, HomeActivity::class.java)
-                                    activity?.startActivity(intent)
-                                    dialogSignIn.isDismiss()
-                                    Toast.makeText(this.context, "Logged In", Toast.LENGTH_SHORT).show()
+                                        saveData()
+                                        val intent = Intent(activity, HomeActivity::class.java)
+                                        activity?.startActivity(intent)
+                                        dialogSignIn.isDismiss()
+                                        Toast.makeText(
+                                            this.context,
+                                            "Logged In",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
-                                //Sign In -> Home -> User (use KJ part) -> View Posted event -> A list of Event -> Enter a particular Event
-                                   // -> View Volunteer -> A list of Volunteer(save volunteer ID in arrayList, volunteer) ->
+                                    } else if (userRole == "Admin") {
 
+                                        saveData()
+                                        val intent = Intent(activity, AdminHomeActivity::class.java)
+                                        startActivity(intent)
+                                        dialogSignIn.isDismiss()
+                                        Toast.makeText(
+                                            this.context,
+                                            "Admin Logged In",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
-                                } else if (userRole == "Admin"){
+                                    } else {
+                                        dialogSignIn.isDismiss()
+                                        dialogSignInError.startLoading()
 
-                                    val intent = Intent(activity, AdminHomeActivity::class.java)
-                                    startActivity(intent)
-                                    dialogSignIn.isDismiss()
-                                    Toast.makeText(this.context, "Admin Logged In", Toast.LENGTH_SHORT).show()
-
-                                } else {
+                                        val handler = Handler()
+                                        handler.postDelayed(object : Runnable {
+                                            override fun run() {
+                                                dialogSignInError.isDismiss()
+                                            }
+                                        }, 3000)
+                                    }
+                                }.addOnFailureListener {
                                     dialogSignIn.isDismiss()
                                     dialogSignInError.startLoading()
 
                                     val handler = Handler()
-                                    handler.postDelayed(object: Runnable{
+                                    handler.postDelayed(object : Runnable {
                                         override fun run() {
                                             dialogSignInError.isDismiss()
                                         }
                                     }, 3000)
                                 }
-                            }.addOnFailureListener {
-                                dialogSignIn.isDismiss()
-                                dialogSignInError.startLoading()
-
-                                val handler = Handler()
-                                handler.postDelayed(object: Runnable{
-                                    override fun run() {
-                                        dialogSignInError.isDismiss()
-                                    }
-                                }, 3000)
-                            }
                         } else {
                             dialogSignIn.isDismiss()
                             dialogEmailNotVerified.startLoading()
 
                             val handler = Handler()
-                            handler.postDelayed(object: Runnable{
+                            handler.postDelayed(object : Runnable {
                                 override fun run() {
                                     dialogEmailNotVerified.isDismiss()
                                 }
@@ -176,18 +188,18 @@ class SignInFragment : Fragment() {
                         dialogSignInError.startLoading()
 
                         val handler = Handler()
-                        handler.postDelayed(object: Runnable{
+                        handler.postDelayed(object : Runnable {
                             override fun run() {
                                 dialogSignInError.isDismiss()
                             }
                         }, 3000)
                     }
-                }.addOnFailureListener { e->
+                }.addOnFailureListener { e ->
                     dialogSignIn.isDismiss()
                     dialogSignInError.startLoading()
 
                     val handler = Handler()
-                    handler.postDelayed(object: Runnable{
+                    handler.postDelayed(object : Runnable {
                         override fun run() {
                             dialogSignInError.isDismiss()
                         }
@@ -202,6 +214,22 @@ class SignInFragment : Fragment() {
         }
 
     }
+
+    private fun saveData() {
+        val insertedEmail: String = binding.etEmail.text.toString()
+        val insertedPassword: String = binding.etPassword.text.toString()
+
+        sharedPreferences =
+            requireActivity().getSharedPreferences("sharedLogin", Context.MODE_PRIVATE)
+
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString("EMAIL", insertedEmail)
+        editor.putString("PASS", insertedPassword)
+        editor.apply()
+
+        //Toast.makeText(this.context, "ID Recorded", Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

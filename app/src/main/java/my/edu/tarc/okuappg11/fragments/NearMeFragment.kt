@@ -104,10 +104,10 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
         task.addOnSuccessListener { location ->
             if (location != null) {
                 currentLocation = location
-                Toast.makeText(
-                    this.context, currentLocation!!.latitude.toString() + " "
-                            + currentLocation!!.longitude.toString(), Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this.context, currentLocation!!.latitude.toString() + " "
+//                            + currentLocation!!.longitude.toString(), Toast.LENGTH_SHORT
+//                ).show()
             }
         }
     }
@@ -180,7 +180,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
     }
 
     fun getAllEvents(){
-        Toast.makeText(context, "It runs here", Toast.LENGTH_LONG).show()
+        //Toast.makeText(context, "It runs here", Toast.LENGTH_LONG).show()
         fStore = FirebaseFirestore.getInstance()
         val collectionReference = fStore.collection("events")
 
@@ -204,11 +204,11 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            if(allEventsArrayList.isEmpty()){
-                Toast.makeText(context, "Array is empty", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(context, "Array is not empty", Toast.LENGTH_LONG).show()
-            }
+//            if(allEventsArrayList.isEmpty()){
+//                Toast.makeText(context, "Array is empty", Toast.LENGTH_LONG).show()
+//            } else {
+//                Toast.makeText(context, "Array is not empty", Toast.LENGTH_LONG).show()
+//            }
 
             getCurrentLocation()
         }, 2000)
