@@ -46,6 +46,8 @@
     <!-- Strings used for fragments for events -->
 
     <string name="update_text">Update</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_story">Add Story</string>
     <string name="event_name_text">Event Name</string>
     <string name="event_description_text">Event Description</string>
     <string name="event_thumbnail_text">Event Thumbnail</string>
@@ -62,16 +64,35 @@
     <string name="time_text">Time</string>
     <string name="location_text">Location</string>
     <string name="delete_event">Delete</string>
+    <string name="dialog_add_title">Add event</string>
+    <string name="dialog_add_description">Are u sure to add this event?</string>
+    <string name="dialog_add_positive">Add</string>
+    <string name="add_success">Event added successfully</string>
+    <string name="add_cancel">Add event cancelled</string>
+    <string name="dialog_add_story_title">Add story</string>
+    <string name="dialog_add_story_description">Are u sure to add this story?</string>
+    <string name="dialog_add_story_positive">Add</string>
+    <string name="add_story_success">Story added successfully</string>
+    <string name="add_story_cancel">Story event cancelled</string>
+    <string name="dialog_add_negative">Cancel</string>
     <string name="dialog_delete_title">Delete event</string>
     <string name="dialog_delete_description">Are u sure to delete this event?</string>
     <string name="dialog_delete_positive">Delete</string>
     <string name="dialog_delete_negative">Cancel</string>
+    <string name="dialog_delete_story_title">Delete story</string>
+    <string name="dialog_delete_story_description">Are you sure to delete this event?</string>
+    <string name="dialog_delete_story_positive">Delete</string>
+    <string name="dialog_delete_story_negative">Cancel</string>
     <string name="delete_success">Delete successfully</string>
     <string name="delete_cancel">Delete cancelled</string>
     <string name="dialog_update_title">Update event</string>
     <string name="dialog_update_description">This update will apply to everyone including the participants.</string>
     <string name="dialog_update_positive">Update Anyway</string>
     <string name="dialog_update_negative">Cancel</string>
+    <string name="dialog_update_story_title">Update story</string>
+    <string name="dialog_update_story_description">This update will apply to everyone.</string>
+    <string name="dialog_update_story_positive">Update Anyway</string>
+    <string name="dialog_update_story_negative">Cancel</string>
     <string name="update_success">Update successfully</string>
     <string name="update_cancel">Update cancelled</string>
     <string name="update_event">Update</string>

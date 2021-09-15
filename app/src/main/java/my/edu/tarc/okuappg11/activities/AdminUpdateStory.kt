@@ -80,12 +80,12 @@ class AdminUpdateStory : AppCompatActivity() {
         binding.btnUpdateStory.setOnClickListener {
             if (validateStoryDetails()) {
                 MaterialAlertDialogBuilder(this)
-                    .setTitle(resources.getString(R.string.dialog_update_title))
-                    .setMessage(resources.getString(R.string.dialog_update_description))
-                    .setNegativeButton(resources.getString(R.string.dialog_update_negative)) { dialog, which ->
-                        Toast.makeText(this,R.string.update_cancel,Toast.LENGTH_SHORT).show()
+                    .setTitle(resources.getString(R.string.dialog_update_story_title))
+                    .setMessage(resources.getString(R.string.dialog_update_story_description))
+                    .setNegativeButton(resources.getString(R.string.dialog_update_story_negative)) { dialog, which ->
+                        Toast.makeText(this, R.string.update_cancel, Toast.LENGTH_SHORT).show()
                     }
-                    .setPositiveButton(resources.getString(R.string.dialog_update_positive)) { dialog, which ->
+                    .setPositiveButton(resources.getString(R.string.dialog_update_story_positive)) { dialog, which ->
                         storyTitle = binding.textFieldUpdateStoryTitle.editText!!.text.toString()
                         storyThumbnailDescription = binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.toString()
                         storyDescription = binding.textFieldUpdateStoryDescription.editText!!.text.toString()
@@ -152,7 +152,7 @@ class AdminUpdateStory : AppCompatActivity() {
                                 // editor.clear()
                                 // editor.apply()
                                 val intent = Intent(this@AdminUpdateStory, AdminStoryDetails::class.java)
-                                intent.putExtra("EventUID","${storyId.toString()}")
+                                intent.putExtra("StoryUID","${storyId.toString()}")
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 

@@ -24,7 +24,9 @@ class PendingEventsAdapter(private val pendingEventCardArrayListList: ArrayList<
     override fun onBindViewHolder(holder: PendingEventsAdapter.ViewHolder, position: Int) {
         val eventCardArrayListItem:PendingEventCardArrayList = pendingEventCardArrayListList[position]
         holder.itemTitle.text = eventCardArrayListItem.eventTitle
-        holder.itemDescription.text = eventCardArrayListItem.eventDescription
+        holder.itemDescription.text = eventCardArrayListItem.eventDate
+        holder.itemLocation.text = eventCardArrayListItem.eventLocation
+        holder.itemTime.text = eventCardArrayListItem.eventTime
         if(eventCardArrayListItem.eventStatus == "pending"){
             holder.itemStatus.setTextColor(Color.WHITE)
             holder.itemStatus.text = "Pending"

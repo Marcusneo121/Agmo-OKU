@@ -248,20 +248,25 @@
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="54dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginLeft="82dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginRight="112dp"
-        android:text="@string/submit"
+        android:text="@string/add_event"
         app:backgroundTint="@color/signInButtonColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="@+id/textFieldLocation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textFieldLocation" />
 
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/topic_post_cancel"
+        app:backgroundTint="#FF002E"
+        app:layout_constraintEnd_toEndOf="@+id/btnSubmit"
+        app:layout_constraintStart_toStartOf="@+id/btnSubmit"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
     <Button
         android:id="@+id/btnPickPlace"
         android:layout_width="0dp"

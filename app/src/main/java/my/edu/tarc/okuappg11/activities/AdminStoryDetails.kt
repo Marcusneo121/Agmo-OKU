@@ -1,10 +1,13 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -40,7 +43,44 @@ class AdminStoryDetails : AppCompatActivity() {
         fStore = FirebaseFirestore.getInstance()
 
         val storyId = intent.getStringExtra("StoryUID")
-        linearLayout5.visibility = View.GONE
+        val accessBy = intent.getStringExtra("accessBy")
+
+        if(accessBy == "admin"){
+            linearLayout5.visibility = View.VISIBLE
+
+        }else{
+            linearLayout5.visibility = View.GONE
+
+        }
+        binding.btnUpdateStory.setOnClickListener {
+
+            val intent = Intent(this@AdminStoryDetails, AdminUpdateStory::class.java)
+            intent.putExtra("StoryUID", storyId)
+            startActivity(intent)
+
+        }
+
+        binding.btnDeleteStory.setOnClickListener {
+            fStore = FirebaseFirestore.getInstance()
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle(resources.getString(R.string.dialog_delete_story_title))
+                .setMessage(resources.getString(R.string.dialog_delete_story_description))
+                .setNegativeButton(resources.getString(R.string.dialog_delete_story_negative)) { dialog, which ->
+                    Toast.makeText(this, R.string.delete_cancel, Toast.LENGTH_SHORT).show()
+                }
+                .setPositiveButton(resources.getString(R.string.dialog_delete_story_positive)) { dialog, which ->
+                    fStore.collection("stories").document(storyId!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(this, R.string.delete_success, Toast.LENGTH_SHORT)
+                                .show()
+                            finish()
+                        }.addOnFailureListener {
+                            Log.d("error", it.message.toString())
+                        }
+                }.show()
+        }
 
         readData(storyId)
 

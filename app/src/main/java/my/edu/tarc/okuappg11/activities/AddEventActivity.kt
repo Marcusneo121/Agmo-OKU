@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
@@ -73,6 +74,9 @@ class AddEventActivity: AppCompatActivity() {
         binding.textFieldTime.editText!!.isEnabled= false
 
 
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
 
         binding.btnSelectDate.setOnClickListener{
             if(!binding.rbSingleDay.isChecked && !binding.rbMultiday.isChecked){
@@ -168,81 +172,101 @@ class AddEventActivity: AppCompatActivity() {
 
         binding.btnSubmit.setOnClickListener{
             if (validateEventDetails()) {
-                eventName = binding.textFieldEventName.editText!!.text.toString()
-                eventDescription = binding.textFieldEventDescription.editText!!.text.toString()
-                startDate = binding.textFieldDateStart.editText!!.text.toString()
-                startTime = binding.textFieldTime.editText!!.text.toString()
-                val dateNow = Calendar.getInstance().time
-                val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(resources.getString(R.string.dialog_add_title))
+                    .setMessage(resources.getString(R.string.dialog_add_description))
+                    .setNegativeButton(resources.getString(R.string.dialog_add_negative)) { dialog, which ->
+                        Toast.makeText(this, R.string.add_cancel, Toast.LENGTH_SHORT).show()
+                    }
+                    .setPositiveButton(resources.getString(R.string.dialog_add_positive)) { dialog, which ->
+                        eventName = binding.textFieldEventName.editText!!.text.toString()
+                        eventDescription =
+                            binding.textFieldEventDescription.editText!!.text.toString()
+                        startDate = binding.textFieldDateStart.editText!!.text.toString()
+                        startTime = binding.textFieldTime.editText!!.text.toString()
+                        val dateNow = Calendar.getInstance().time
+                        val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
 
 
-                dialogAddEvent.startLoading()
+                        dialogAddEvent.startLoading()
 
 
 
 
-                Log.d("check", eventId.toString())
-                val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                    Constants.USER_PROFILE_IMAGE + eventId + "."
-                            + Constants.getFileExtension(
+                        Log.d("check", eventId.toString())
+                        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
+                            Constants.USER_PROFILE_IMAGE + eventId + "."
+                                    + Constants.getFileExtension(
                                 this,
                                 mSelectedImageFileUri
                             )
-                )
+                        )
 
-                sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
-                    Log.e("Firebase Image", taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
-
-                    taskSnapshot.metadata!!.reference!!.downloadUrl
-                        .addOnSuccessListener { uri ->
-                            Log.e("Downloadable Image URL",uri.toString())
-                            val hashMapEvents = hashMapOf(
-                                "eventName" to eventName,
-                                "eventDescription" to eventDescription,
-                                "startDate" to startDate,
-                                "startTime" to startTime,
-                                "eventDuration" to eventDuration,
-                                "eventOrganizerName" to eventOrganizer,
-                                "eventOrganizerUID" to eventOrganizerUID,
-                                "eventLocation" to eventLocation,
-                                "eventCreatedDate" to formattedDateNow,
-                                "status" to "pending",
-                                "latitude" to latitude,
-                                "longitude" to longitude,
-                                "eventThumbnailURL" to uri.toString()
-
+                        sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
+                            Log.e(
+                                "Firebase Image",
+                                taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                             )
 
-                            ref.set(hashMapEvents)
-                                .addOnSuccessListener {
-                                    Log.d(ContentValues.TAG, "Added Document")
-                                    firestoreCheck=true
-                                }
-                                .addOnFailureListener {
-                                    Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
-                                }
-                            storageCheck=true
-                        }
-                        .addOnFailureListener{exception ->
-                            Log.e("ERROR", exception.message.toString())
-                        }
-                }
+                            taskSnapshot.metadata!!.reference!!.downloadUrl
+                                .addOnSuccessListener { uri ->
+                                    Log.e("Downloadable Image URL", uri.toString())
+                                    val hashMapEvents = hashMapOf(
+                                        "eventName" to eventName,
+                                        "eventDescription" to eventDescription,
+                                        "startDate" to startDate,
+                                        "startTime" to startTime,
+                                        "eventDuration" to eventDuration,
+                                        "eventOrganizerName" to eventOrganizer,
+                                        "eventOrganizerUID" to eventOrganizerUID,
+                                        "eventLocation" to eventLocation,
+                                        "eventCreatedDate" to formattedDateNow,
+                                        "status" to "pending",
+                                        "latitude" to latitude,
+                                        "longitude" to longitude,
+                                        "eventThumbnailURL" to uri.toString()
 
-                val handler = Handler()
-                handler.postDelayed(object: Runnable{
-                    override fun run() {
-                      //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
-                      //  val editor = sharedPreferences.edit()
-                       // editor.clear()
-                       // editor.apply()
-                        val intent = Intent(this@AddEventActivity, EventDetailsActivity::class.java)
-                        intent.putExtra("EventUID","${eventId.toString()}")
-                        startActivity(intent)
-                        dialogAddEvent.isDismiss()
+                                    )
 
-                    }
-                }, 6000)
+                                    ref.set(hashMapEvents)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this,R.string.add_success,Toast.LENGTH_SHORT).show()
+                                            Log.d(ContentValues.TAG, "Added Document")
+                                            firestoreCheck = true
+                                        }
+                                        .addOnFailureListener {
+                                            Log.w(
+                                                ContentValues.TAG,
+                                                "Error adding document ${it.suppressedExceptions}"
+                                            )
+                                        }
+                                    storageCheck = true
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.e("ERROR", exception.message.toString())
+                                }
+                        }
+
+                        val handler = Handler()
+                        handler.postDelayed(object : Runnable {
+                            override fun run() {
+                                //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+                                //  val editor = sharedPreferences.edit()
+                                // editor.clear()
+                                // editor.apply()
+
+                                val intent = Intent(
+                                    this@AddEventActivity,
+                                    AdminEventDetailsActivity::class.java
+                                )
+                                intent.putExtra("EventUID", "${eventId.toString()}")
+                                startActivity(intent)
+                                dialogAddEvent.isDismiss()
+
+                            }
+                        }, 6000)
+                    }.show()
 
             }else{
                 Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()

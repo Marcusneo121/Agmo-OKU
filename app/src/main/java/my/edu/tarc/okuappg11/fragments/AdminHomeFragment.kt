@@ -14,16 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_admin_home.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.AddEventActivity
 import my.edu.tarc.okuappg11.activities.AddStoryActivity
 import my.edu.tarc.okuappg11.activities.AdminPendingEvents
 import my.edu.tarc.okuappg11.databinding.FragmentAdminHomeBinding
+import my.edu.tarc.okuappg11.models.TopicsAdapter
+import my.edu.tarc.okuappg11.models.TopicsModel
+import my.edu.tarc.okuappg11.models.TrendingAdapter
+import my.edu.tarc.okuappg11.models.TrendingModel
 import my.edu.tarc.okuappg11.recyclerview.EventCardArrayList
 import my.edu.tarc.okuappg11.recyclerview.EventsAdapter
 
@@ -36,10 +37,13 @@ class AdminHomeFragment : Fragment() {
     private lateinit var fStore: FirebaseFirestore
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView1: RecyclerView
+
     private lateinit var eventsRecordList: ArrayList<EventCardArrayList>
     private lateinit var eventsRecordAdapter: EventsAdapter
 
-
+    private var topicList: ArrayList<TopicsModel> = ArrayList()
+    private var topicListAdapter = TopicsAdapter(topicList)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,12 +66,19 @@ class AdminHomeFragment : Fragment() {
         fStore = FirebaseFirestore.getInstance()
 
         recyclerView = binding.rvAdminEventsRecord
+        recyclerView1 = binding.rvAdminEventsRecord
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
 
         eventsRecordList = arrayListOf()
         eventsRecordList.clear()
         eventsRecordAdapter = EventsAdapter(eventsRecordList)
+
+        topicList = arrayListOf()
+        topicListAdapter = TopicsAdapter(topicList)
+
+
+
 
         recyclerView.adapter = eventsRecordAdapter
         getData()
@@ -84,13 +95,22 @@ class AdminHomeFragment : Fragment() {
                 position: Int,
                 id: Long){
                     if(binding.spinnerSelectionDisplay.selectedItemPosition == 0){
+                        recyclerView.adapter = eventsRecordAdapter
                         getData()
                     }else if (binding.spinnerSelectionDisplay.selectedItemPosition == 1){
+                        recyclerView.adapter = eventsRecordAdapter
                         getPendingEvent()
                     }else if (binding.spinnerSelectionDisplay.selectedItemPosition == 2){
+                        recyclerView.adapter = eventsRecordAdapter
                         getApprovedEvent()
                     }else if (binding.spinnerSelectionDisplay.selectedItemPosition == 3){
+                        recyclerView.adapter = eventsRecordAdapter
                         getRejectedEvent()
+                    }else if (binding.spinnerSelectionDisplay.selectedItemPosition == 4){
+                        recyclerView.adapter = topicListAdapter
+
+                        Log.d("CHECK","STORIES")
+                        getStories()
                     }
                 }
 
@@ -133,6 +153,33 @@ class AdminHomeFragment : Fragment() {
             val intent = Intent(this@AdminHomeFragment.context, AdminPendingEvents::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun getStories() {
+        fStore.collection("stories")
+            .orderBy("storyCreatedDate", Query.Direction.DESCENDING).limit(5)
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.message.toString())
+                        return
+                    }
+                    topicList.clear()
+                    value?.forEach {
+                        val topicDetails = it.toObject(TopicsModel::class.java)
+                        if (topicDetails != null) {
+                            topicDetails.accessBy = "admin"
+                            topicDetails.storyID = it.id
+                            topicDetails.storyThumbnailDescription = it.getString("storyThumbnailDescription").toString()
+                            topicDetails.storyTitle= it.getString("storyTitle").toString()
+                            topicList.add(topicDetails)
+                            Log.d("text", topicDetails.storyID)
+                        }
+                    }
+                    topicListAdapter.topicList = topicList
+                    topicListAdapter.notifyDataSetChanged()
+                }
+            })
     }
 
     private fun getRejectedEvent() {

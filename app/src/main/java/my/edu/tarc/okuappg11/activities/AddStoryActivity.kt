@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -77,68 +78,86 @@ class AddStoryActivity : AppCompatActivity() {
 
         binding.btnPost.setOnClickListener {
             if (validateStoryDetails()){
-                storyTitle = binding.textFieldStoryTitle.editText!!.text.toString()
-                storyThumbnailDescription = binding.textFieldStoryThumbnailDescription.editText!!.text.toString()
-                storyDescription = binding.textFieldStoryDescription.editText!!.text.toString()
-                val dateNow = Calendar.getInstance().time
-                val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(resources.getString(R.string.dialog_add_story_title))
+                    .setMessage(resources.getString(R.string.dialog_add_story_description))
+                    .setNegativeButton(resources.getString(R.string.dialog_add_negative)) { dialog, which ->
+                        Toast.makeText(this, R.string.add_cancel, Toast.LENGTH_SHORT).show()
+                    }
+                    .setPositiveButton(resources.getString(R.string.dialog_add_story_positive)) { dialog, which ->
+                        storyTitle = binding.textFieldStoryTitle.editText!!.text.toString()
+                        storyThumbnailDescription =
+                            binding.textFieldStoryThumbnailDescription.editText!!.text.toString()
+                        storyDescription =
+                            binding.textFieldStoryDescription.editText!!.text.toString()
+                        val dateNow = Calendar.getInstance().time
+                        val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
 
 
-                Log.d("check", storyId.toString())
-                val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                    Constants.STORY_IMAGE + storyId + "."
-                            + Constants.getFileExtension(
-                        this,
-                        mSelectedImageFileUri
-                    )
-                )
-              dialogAddEvent.startLoading()
-                sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
-                    Log.e("Firebase Image", taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
-
-                    taskSnapshot.metadata!!.reference!!.downloadUrl
-                        .addOnSuccessListener { uri ->
-                            Log.e("Downloadable Image URL",uri.toString())
-                            val hashMapEvents = hashMapOf(
-                                "storyTitle" to storyTitle!!.capitalize(),
-                                "storyThumbnailDescription" to storyThumbnailDescription,
-                                "storyDescription" to storyDescription,
-                                "storyCreatedDate" to formattedDateNow,
-                                "storyThumbnailURL" to uri.toString()
-
+                        Log.d("check", storyId.toString())
+                        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
+                            Constants.STORY_IMAGE + storyId + "."
+                                    + Constants.getFileExtension(
+                                this,
+                                mSelectedImageFileUri
+                            )
+                        )
+                        dialogAddEvent.startLoading()
+                        sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
+                            Log.e(
+                                "Firebase Image",
+                                taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                             )
 
-                            ref.set(hashMapEvents)
-                                .addOnSuccessListener {
-                                    Log.d(ContentValues.TAG, "Added Document")
-                                    firestoreCheck=true
+                            taskSnapshot.metadata!!.reference!!.downloadUrl
+                                .addOnSuccessListener { uri ->
+                                    Log.e("Downloadable Image URL", uri.toString())
+                                    val hashMapStory = hashMapOf(
+                                        "storyTitle" to storyTitle!!.capitalize(),
+                                        "storyThumbnailDescription" to storyThumbnailDescription,
+                                        "storyDescription" to storyDescription,
+                                        "storyCreatedDate" to formattedDateNow,
+                                        "storyThumbnailURL" to uri.toString()
 
+                                    )
+
+                                    ref.set(hashMapStory)
+                                        .addOnSuccessListener {
+                                            Log.d(ContentValues.TAG, "Added Document")
+                                            Toast.makeText(this,R.string.add_story_success,Toast.LENGTH_SHORT).show()
+                                            firestoreCheck = true
+
+                                        }
+                                        .addOnFailureListener {
+                                            Log.w(
+                                                ContentValues.TAG,
+                                                "Error adding document ${it.suppressedExceptions}"
+                                            )
+                                        }
+                                    storageCheck = true
                                 }
-                                .addOnFailureListener {
-                                    Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
+                                .addOnFailureListener { exception ->
+                                    Log.e("ERROR", exception.message.toString())
                                 }
-                            storageCheck=true
                         }
-                        .addOnFailureListener{exception ->
-                            Log.e("ERROR", exception.message.toString())
-                        }
-                }
 
-                val handler = Handler()
-                handler.postDelayed(object: Runnable{
-                    override fun run() {
-                        //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
-                        //  val editor = sharedPreferences.edit()
-                        // editor.clear()
-                        // editor.apply()
-                        val intent = Intent(this@AddStoryActivity, AdminStoryDetails::class.java)
-                        intent.putExtra("StoryUID","${storyId.toString()}")
-                        startActivity(intent)
-                        dialogAddEvent.isDismiss()
+                        val handler = Handler()
+                        handler.postDelayed(object : Runnable {
+                            override fun run() {
+                                //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+                                //  val editor = sharedPreferences.edit()
+                                // editor.clear()
+                                // editor.apply()
+                                val intent =
+                                    Intent(this@AddStoryActivity, AdminStoryDetails::class.java)
+                                intent.putExtra("StoryUID", "${storyId.toString()}")
+                                startActivity(intent)
+                                dialogAddEvent.isDismiss()
 
-                    }
-                }, 5000)
+                            }
+                        }, 5000)
+                    }.show()
 
             }else{
                 Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()
