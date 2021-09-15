@@ -38,7 +38,7 @@ class SplashScreenFragment : Fragment() {
             override fun run() {
                 findNavController().navigate(R.id.action_SplashscreenFragment_to_SignInFragment)
             }
-        }, 1400)
+        }, 4000)
     }
 
 //    override fun onResume() {

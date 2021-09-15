@@ -131,6 +131,7 @@ class AdminHomeFragment : Fragment() {
         btnAdd.setOnClickListener {
             val addSelection = arrayOf("Event","Story")
             val intent = Intent(this@AdminHomeFragment.context, AddEventActivity::class.java)
+            intent.putExtra("addedBy","admin")
             val intent1 = Intent(this@AdminHomeFragment.context, AddStoryActivity::class.java)
 
             MaterialAlertDialogBuilder(it.context)
@@ -153,7 +154,7 @@ class AdminHomeFragment : Fragment() {
 
     private fun getStories() {
         fStore.collection("stories")
-            .orderBy("storyCreatedDate", Query.Direction.DESCENDING).limit(5)
+            .orderBy("storyCreatedDate", Query.Direction.DESCENDING)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error != null) {

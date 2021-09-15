@@ -64,7 +64,7 @@
             <ImageView
                 android:id="@+id/ivEventDetailsThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="158dp"
+                android:layout_height="185dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

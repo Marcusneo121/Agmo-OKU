@@ -59,6 +59,8 @@ class SearchFragment : Fragment() {
         binding.rvSearchResult.layoutManager = LinearLayoutManager(this.context)
         binding.rvSearchResult.adapter = searchListAdapter
 
+        displayAllEvents()
+
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
@@ -68,6 +70,33 @@ class SearchFragment : Fragment() {
                 getInFirestorePlace(searchText.capitalize())
             }
         })
+    }
+
+    private fun displayAllEvents() {
+        fStore.collection("events")
+            .orderBy("eventName")
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.message.toString())
+                        return
+                    }
+                    searchList.clear()
+                    value?.forEach {
+                        if (it.getString("status").toString() == "accepted") {
+                            val searchDetails = it.toObject(SearchModel::class.java)
+                            if (searchDetails != null) {
+                                searchDetails.eventID = it.id
+                                searchList.add(searchDetails)
+                                Log.d("text", searchDetails.eventID)
+                            }
+                        }
+                    }
+                    binding.rvSearchResult.visibility = View.VISIBLE
+                    searchListAdapter.searchList = searchList
+                    searchListAdapter.notifyDataSetChanged()
+                }
+            })
     }
 
     private fun getInFirestoreEvents(searchText: String) {
@@ -83,11 +112,13 @@ class SearchFragment : Fragment() {
                     }
                     searchList.clear()
                     value?.forEach {
-                        val searchDetails = it.toObject(SearchModel::class.java)
-                        if (searchDetails != null) {
-                            searchDetails.eventID = it.id
-                            searchList.add(searchDetails)
-                            Log.d("text", searchDetails.eventID)
+                        if (it.getString("status").toString() == "accepted") {
+                            val searchDetails = it.toObject(SearchModel::class.java)
+                            if (searchDetails != null) {
+                                searchDetails.eventID = it.id
+                                searchList.add(searchDetails)
+                                Log.d("text", searchDetails.eventID)
+                            }
                         }
                     }
 //                    if (binding.etSearch.text.isEmpty()) {
@@ -113,15 +144,18 @@ class SearchFragment : Fragment() {
                         return
                     }
                     value?.forEach {
-                        val searchDetails = it.toObject(SearchModel::class.java)
-                        if (searchDetails != null) {
-                            searchDetails.eventID = it.id
-                            searchList.add(searchDetails)
-                            Log.d("text", searchDetails.eventID)
+                        if (it.getString("status").toString() == "accepted") {
+                            val searchDetails = it.toObject(SearchModel::class.java)
+                            if (searchDetails != null) {
+                                searchDetails.eventID = it.id
+                                searchList.add(searchDetails)
+                                Log.d("text", searchDetails.eventID)
+                            }
                         }
                     }
                     if (binding.etSearch.text.isEmpty()) {
                         binding.rvSearchResult.visibility = View.INVISIBLE
+                        displayAllEvents()
                     } else {
                         binding.rvSearchResult.visibility = View.VISIBLE
                         searchListAdapter.searchList = searchList
@@ -131,6 +165,7 @@ class SearchFragment : Fragment() {
             })
     }
 
+    //Backup another way for search
     private fun searchInFirestore(searchText: String) {
         fStore.collection("events")
             .orderBy("eventName")

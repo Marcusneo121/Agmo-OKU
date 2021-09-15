@@ -24,6 +24,5 @@
     </style>
 
     <style name="Theme.OKUAPPG11.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.OKUAPPG11.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

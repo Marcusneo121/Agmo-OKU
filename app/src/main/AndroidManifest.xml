@@ -59,6 +59,9 @@
         <activity
             android:name=".activities.AdminUpdateStory"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.Bookmark"
+            android:screenOrientation="portrait" />
         <activity android:name=".activities.AdminStoryDetails" />
         <activity android:name=".activities.AddStoryActivity" />
         <activity android:name=".activities.AdminPendingEvents" />

@@ -103,7 +103,7 @@ class HomeActivity : AppCompatActivity() {
         result.addOnCompleteListener {
             try {
                 val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
-                Toast.makeText(this@HomeActivity, "GPS is On", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@HomeActivity, "GPS is On", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "checkSetting: GPS On")
             } catch (e: ApiException) {
 
@@ -131,8 +131,7 @@ class HomeActivity : AppCompatActivity() {
             REQUEST_CHECK_SETTING -> {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
-                        Toast.makeText(this@HomeActivity, "GPS is Turned on", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@HomeActivity, "GPS is Turned on", Toast.LENGTH_SHORT) .show()
                     }
                     Activity.RESULT_CANCELED -> {
                         Toast.makeText(

@@ -1,8 +1,8 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import my.edu.tarc.okuappg11.databinding.ActivitySettingBinding
@@ -23,6 +23,12 @@ class SettingActivity : AppCompatActivity() {
 
         binding.btnLogoutSettings.setOnClickListener {
             //HomeActivity().destroyActivity()
+
+            val preferences = getSharedPreferences("sharedLogin", Context.MODE_PRIVATE)
+            val editor = preferences.edit()
+            editor.clear()
+            editor.apply()
+
             finish()
             fAuth.signOut()
             //supportFragmentManager.beginTransaction().replace(R.id.containerSettings, SignInFragment()).commit()

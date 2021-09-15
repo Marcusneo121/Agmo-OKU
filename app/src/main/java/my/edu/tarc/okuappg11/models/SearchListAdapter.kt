@@ -36,7 +36,7 @@ class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Ad
         val eventIDNumber: String = searchListItem.eventID
 
         holder.itemView.setOnClickListener(){
-            Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
             val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
             intent.putExtra("EventUID", eventIDNumber)
             holder.itemView.context.startActivity(intent)

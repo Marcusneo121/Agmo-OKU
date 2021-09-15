@@ -2,14 +2,11 @@ package my.edu.tarc.okuappg11.activities
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.PorterDuff
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,9 +14,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_admin_story_details.*
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.databinding.ActivityAdminEventDetailsBinding
 import my.edu.tarc.okuappg11.databinding.ActivityAdminStoryDetailsBinding
 import java.io.File
-
 
 class AdminStoryDetails : AppCompatActivity() {
 
@@ -28,8 +25,7 @@ class AdminStoryDetails : AppCompatActivity() {
     private lateinit var binding: ActivityAdminStoryDetailsBinding
     private var storyTitle:String? = null
     private var storyDescription:String? = null
-    private var userID: String? = null
-    private var likesCheck:Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,71 +47,8 @@ class AdminStoryDetails : AppCompatActivity() {
 
         }else{
             linearLayout5.visibility = View.GONE
+
         }
-
-        binding.btnLike.setOnClickListener {
-            fAuth = FirebaseAuth.getInstance()
-            fStore = FirebaseFirestore.getInstance()
-            /*val eventId = intent.getStringExtra("EventUID")*/
-            userID = fAuth.currentUser!!.uid
-
-            val docRef = fStore.collection("users").document(userID!!)
-                .collection("likes")
-                .document(storyId.toString())
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    Log.d("check",document.toString()
-                    )
-                    if ( document.get("storyUID") != null ){
-                        fStore.collection("users").document(userID!!).collection("likes")
-                            .document(storyId!!)
-                            .delete()
-                            .addOnSuccessListener {
-                                Log.d("check", "CHECKDELETE")
-                                likesCheck = false
-                                binding.btnLike.setBackgroundColor(Color.TRANSPARENT)
-
-                                /*val likebtn: Button = findViewById(R.id.btnLike)
-                                val drawable =
-                                    resources.getDrawable(R.drawable.ic_baseline_thumb_up_24).mutate()
-                                drawable.setColorFilter(
-                                    resources.getColor(R.color.white),
-                                    PorterDuff.Mode.SRC_ATOP
-                                )
-
-                                likebtn.setCompoundDrawables(drawable, null, null, null)*/
-                            }.addOnFailureListener {
-
-
-                                Log.e("error",it.message.toString())
-                            }
-                    }else if (document.get("storyUID") == null){
-                        Log.d("check", "CHECK")
-
-                        val hashmapLikes = hashMapOf(
-                            "storyUID" to storyId,
-                            "storyTitle" to storyTitle
-                        )
-
-                        fStore.collection("users").document(userID!!).collection("likes")
-                            .document(storyId!!)
-                            .set(hashmapLikes)
-                            .addOnSuccessListener {
-                                Log.d("check", "CHECKADD")
-
-                                binding.btnLike.setBackgroundColor(Color.WHITE)
-                            }.addOnFailureListener {
-                                Log.e("error",it.message.toString())
-                            }
-                    }
-
-                }
-                .addOnFailureListener { exception ->
-                    likesCheck = false
-                    Log.e("error",exception.message.toString())
-                }
-        }
-
         binding.btnUpdateStory.setOnClickListener {
 
             val intent = Intent(this@AdminStoryDetails, AdminUpdateStory::class.java)

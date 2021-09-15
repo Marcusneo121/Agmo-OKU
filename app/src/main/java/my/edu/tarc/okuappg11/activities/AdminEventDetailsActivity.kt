@@ -15,6 +15,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAdminEventDetailsBinding
+import my.edu.tarc.okuappg11.fragments.HomeFragment
 import my.edu.tarc.okuappg11.models.Constants
 import java.io.File
 
@@ -28,6 +29,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private var startDate:String? = null
     private var startTime:String? = null
     private var eventLocation:String? = null
+    private var addedBy:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
 
         val eventId = intent.getStringExtra("EventUID")
         val eventType = intent.getStringExtra("EventType")
+        addedBy = intent.getStringExtra("addedBy")
 
         readData(eventId)
 
@@ -177,6 +180,17 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(addedBy == "admin"){
+            val intent=Intent(this,AdminHomeActivity::class.java)
+            startActivity(intent)
+        }else if(addedBy == "eventorganizer"){
+            val intent= Intent(this,HomeFragment::class.java)
+            startActivity(intent)
+        }
     }
 
 }
