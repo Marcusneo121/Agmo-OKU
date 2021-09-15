@@ -8,6 +8,25 @@
     android:background="@color/bottom_nav_bar_bg"
     tools:context=".fragments.ProfileFragment">
 
+    <Button
+        android:id="@+id/btnAllUpcomingEvents2"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="@string/btnAllUpcomingEvent"
+        android:textColor="#3D70FF"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="405dp"
@@ -83,8 +102,8 @@
                 android:layout_width="54dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@android:color/transparent"
                 app:icon="@drawable/ic_round_settings_24"
                 app:iconSize="30dp"
@@ -154,7 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:fontFamily="@font/poppins_medium"
@@ -169,8 +188,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUpcomingEvents"
-        android:layout_width="411dp"
-        android:layout_height="301dp"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -215,31 +238,19 @@
         app:strokeWidth="2dp" />
 
     <Button
-        android:id="@+id/btnMyEventHistory"
-        android:layout_width="170dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/btnMyEventHistory"
-        android:textColor="#3D70FF"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:strokeColor="#3D70FF"
-        app:strokeWidth="2dp" />
-
-    <Button
         android:id="@+id/btnAllUpcomingEvents"
-        android:layout_width="176dp"
+        android:layout_width="0dp"
         android:layout_height="70dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
         android:text="@string/btnAllUpcomingEvent"
         android:textColor="#3D70FF"
         app:backgroundTint="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
-        app:layout_constraintStart_toEndOf="@+id/btnMyEventHistory"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
         app:strokeColor="#3D70FF"
         app:strokeWidth="2dp" />
@@ -248,11 +259,12 @@
         android:id="@+id/btnAddevent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:text="add event"
         android:textColor="@color/black"
         app:backgroundTint="@color/GreyishBlue"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUpcomingEvent" />
 

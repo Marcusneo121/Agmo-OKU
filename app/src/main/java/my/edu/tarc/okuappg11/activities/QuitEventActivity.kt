@@ -6,13 +6,20 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityQuitEventBinding
+import my.edu.tarc.okuappg11.databinding.CustomDialogReadBinding
 import java.io.File
 
 class QuitEventActivity : AppCompatActivity() {
@@ -108,6 +115,22 @@ class QuitEventActivity : AppCompatActivity() {
                 .setTitle("Alert")
                 .setMessage("Do you want to quit this event?")
                 .setPositiveButton("Yes") { dialog, which ->
+
+                    //MaterialAlertDialogBuilder(this)
+                        //.setTitle("Reason for Quitting")
+                    //val mView = layoutInflater
+                        //.inflate(R.layout.list_item_bookmark, null)
+                    //val dialog = CustomDialogReadFragment()
+
+                    //dialog.show(supportFragmentManager, "customDialog")
+
+                    //val quitReason: TextView = mView.findViewById(R.id.etReason)
+                    //val btnsubmitReason: Button = mView.findViewById(R.id.btnSubmitReason)
+                    //val btnCancelReason: Button = mView.findViewById(R.id.btnCancelReason)
+
+
+                    //MaterialDialogs.setView(mView)
+
                     fStore.collection("users").document(userID!!).collection("upcoming events")
                         .document(eventID!!)
                         .delete()
@@ -197,3 +220,5 @@ class QuitEventActivity : AppCompatActivity() {
         }
     }
 }
+
+

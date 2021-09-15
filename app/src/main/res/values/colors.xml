@@ -39,4 +39,6 @@
     <color name="search_bg">#262626</color>
 
     <color name="transparent">#0000ffff</color>
+
+    <color name="home_purple">#597FFF</color>
 </resources>

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,21 +23,21 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivSearch"
+            android:id="@+id/ivBookmark"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout5Search"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
-            android:id="@+id/linearLayout5Search"
+            android:id="@+id/linearLayout5"
             android:layout_width="228dp"
             android:layout_height="143dp"
-            android:background="@color/stroke_edit_text_enabled"
+            android:background="#292929"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="12dp"
@@ -43,11 +45,11 @@
             android:paddingBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSearch"
-            app:layout_constraintTop_toTopOf="@+id/ivSearch">
+            app:layout_constraintStart_toEndOf="@+id/ivBookmark"
+            app:layout_constraintTop_toTopOf="@+id/ivBookmark">
 
             <TextView
-                android:id="@+id/showTopicNameSearch"
+                android:id="@+id/showTopicName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Run For A Chance 2020"
@@ -55,8 +57,15 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/txtEventId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="0sp" />
+
             <View
-                android:id="@+id/divider2Search"
+                android:id="@+id/divider2"
                 android:layout_width="198dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="3dp"
@@ -69,15 +78,7 @@
                 tools:layout_marginTop="10dp" />
 
             <TextView
-                android:id="@+id/tvIDSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="#292929"
-                android:textSize="2sp" />
-
-            <TextView
-                android:id="@+id/txtDateSearch"
+                android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date"
@@ -85,7 +86,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/showTopicDescriptionSearch"
+                android:id="@+id/showTopicDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="31 Aug - 16 Sep"
@@ -104,7 +105,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtTimeSearch"
+                        android:id="@+id/txtTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/time"
@@ -112,7 +113,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/showTimeSearch"
+                        android:id="@+id/showTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="8.30 A.M."
@@ -127,7 +128,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtLocationSearch"
+                        android:id="@+id/txtLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/location"
@@ -135,7 +136,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/showLocationSearch"
+                        android:id="@+id/showLocation"
                         android:layout_width="match_parent"
                         android:layout_height="28dp"
                         android:text="Kuala Lumpur"

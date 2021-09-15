@@ -132,6 +132,12 @@ class EventDetailsActivity : AppCompatActivity() {
                 }
 
         }
+
+        binding.btnVolunteer.setOnClickListener(){
+            val intent = Intent(this@EventDetailsActivity, VolunteerRegisterActivity::class.java)
+            intent.putExtra("EventUID","${eventID.toString()}")
+            startActivity(intent)
+        }
     }
 
     private fun changeBtnColor(){
