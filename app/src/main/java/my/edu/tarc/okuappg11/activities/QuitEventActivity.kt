@@ -134,8 +134,8 @@ class QuitEventActivity : AppCompatActivity() {
                 mView.btnSubmitReason.setOnClickListener {
                     val quitReason = mView.etReason.text.toString()
                     Log.d("check", "submit reason")
-                    if (etReason.text.isEmpty()) {
-                        etReason.error = "Please enter your reason."
+                    if (mView.etReason.text.isEmpty()) {
+                        mView.etReason.error = "Please enter your reason."
                         return@setOnClickListener
                     }
                     fStore.collection("users").document(userID!!).collection("upcoming events")
@@ -152,6 +152,16 @@ class QuitEventActivity : AppCompatActivity() {
                             val intent =
                                 Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
                             startActivity(intent)
+
+                        }.addOnFailureListener {
+                            Log.e("error", it.message.toString())
+                        }
+                    //quit as participants
+                    fStore.collection("events").document(eventID!!).collection("participants")
+                        .document(userID!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d("check", "CHECKDELETE")
 
                         }.addOnFailureListener {
                             Log.e("error", it.message.toString())

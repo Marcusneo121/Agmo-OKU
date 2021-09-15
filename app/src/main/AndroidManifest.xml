@@ -28,7 +28,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.AllTopicsActivity"></activity>
+        <activity android:name=".activities.ParticipantsActivity"></activity>
+        <activity android:name=".activities.AllTopicsActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -42,6 +43,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".activities.MapAutocompleteActivity" />
+        <activity android:name=".activities.AddEventActivity" />
+        <activity android:name=".activities.EventDetailsActivity" />
+        <activity android:name=".activities.Bookmark" />
+        <activity android:name=".activities.Likes" />
         <activity android:name=".activities.VolunteerActivity" />
         <activity android:name=".activities.VolunteerDetailActivity" />
         <activity android:name=".activities.VolunteerRequestDetailActivity" />
@@ -57,10 +63,9 @@
         <activity android:name=".activities.AddStoryActivity" />
         <activity android:name=".activities.AdminPendingEvents" />
         <activity android:name=".activities.AdminEventDetailsActivity" />
-        <activity android:name=".activities.MapAutocompleteActivity" />
-        <activity android:name=".activities.AddEventActivity" />
-        <activity android:name=".activities.EventDetailsActivity" />
         <activity android:name=".activities.UpdateEvent" />
+        <activity android:name=".activities.AllUpcomingEvents" />
+        <activity android:name=".activities.QuitEventActivity" />
         <activity
             android:name=".activities.SettingActivity"
             android:screenOrientation="portrait"

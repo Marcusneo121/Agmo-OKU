@@ -33,6 +33,18 @@ class ViewEventOrganizeDetailsActivity : AppCompatActivity() {
 
         getImage(eventId)
 
+        binding.btnParticipants.setOnClickListener {
+            val intent = Intent(this@ViewEventOrganizeDetailsActivity, ParticipantsActivity::class.java)
+            intent.putExtra("EventUID",eventId)
+            startActivity(intent)
+        }
+
+        binding.btnViewEditEventDetails.setOnClickListener {
+            val intent = Intent(this@ViewEventOrganizeDetailsActivity, AdminEventDetailsActivity::class.java)
+            intent.putExtra("EventUID",eventId)
+            startActivity(intent)
+        }
+
         binding.btnViewVolunteerDetails.setOnClickListener(){
             val intent = Intent(this@ViewEventOrganizeDetailsActivity, VolunteerActivity::class.java)
             intent.putExtra("EventUID",eventId)

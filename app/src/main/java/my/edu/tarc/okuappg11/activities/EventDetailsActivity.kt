@@ -129,6 +129,21 @@ class EventDetailsActivity : AppCompatActivity() {
                     Log.e("error",it.message.toString())
                 }
 
+            val hashmapParticipants = hashMapOf(
+                "userUID" to userID,
+            )
+
+            fStore.collection("events").document(eventID!!).collection("participants")
+                .document(userID!!)
+                .set(hashmapParticipants)
+                .addOnSuccessListener {
+                    Log.d("check", "CHECKADD")
+                    val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
+                    startActivity(intent)
+                }.addOnFailureListener {
+                    Log.e("error",it.message.toString())
+                }
+
         }
 
         binding.btnVolunteer.setOnClickListener(){

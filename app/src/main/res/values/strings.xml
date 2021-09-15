@@ -194,5 +194,11 @@
     <string name="url_ig_kj">https://www.instagram.com/teohkjet/</string>
     <string name="url_ig_van">https://www.instagram.com/vanessakoay/</string>
     <string name="url_ig_ly">https://www.instagram.com/liyinggg7/</string>
+    <string name="dialogNo">NO</string>
+    <string name="dialogYes">YES</string>
+    <string name="btnSubmitReason">SUBMIT</string>
+    <string name="btnCancelReason">CANCEL</string>
+    <string name="btnQuitEvent">QUIT EVENT</string>
+    <string name="btnParticipants">View All Participants</string>
 
 </resources>
