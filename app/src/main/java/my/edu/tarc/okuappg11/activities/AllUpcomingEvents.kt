@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.activities
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -50,6 +51,7 @@ class AllUpcomingEvents : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Upcoming Events"
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff262626.toInt()))
 
         getData()
 

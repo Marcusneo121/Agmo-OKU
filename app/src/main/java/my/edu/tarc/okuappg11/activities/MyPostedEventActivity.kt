@@ -44,7 +44,7 @@ class MyPostedEventActivity : AppCompatActivity() {
         recyclerView.adapter = postedEventAdapter
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "My Posted Event"
+        supportActionBar?.title = "My Posted Events"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         getData()

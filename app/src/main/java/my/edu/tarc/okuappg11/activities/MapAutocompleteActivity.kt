@@ -83,7 +83,6 @@ class MapAutocompleteActivity: AppCompatActivity() {
             eventLocality = place.name
             binding.etSearchLocation.setText(place.address)
             binding.tvLocation.setText(String.format("Locality Name :  %s", place.name))
-            binding.tvLocation2.setText(place.latLng.toString())
         }else if ( resultCode == AutocompleteActivity.RESULT_ERROR){
             val status : Status = Autocomplete.getStatusFromIntent(data!!)
             Toast.makeText(applicationContext,status.statusMessage,Toast.LENGTH_SHORT).show()

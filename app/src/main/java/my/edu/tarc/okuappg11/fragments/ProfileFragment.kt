@@ -4,10 +4,12 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -18,8 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_profile.*
 import my.edu.tarc.okuappg11.activities.*
 import my.edu.tarc.okuappg11.databinding.FragmentProfileBinding
-import my.edu.tarc.okuappg11.models.TopicsAdapter
-import my.edu.tarc.okuappg11.models.TopicsModel
+
 
 class ProfileFragment : Fragment() {
 
@@ -40,6 +41,8 @@ class ProfileFragment : Fragment() {
     private var userName: String? = null
     private var userEmail: String? = null
 
+    var constraintLayout: ConstraintLayout? = null
+    var constraintSet: ConstraintSet? = null
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var ueArrayList: ArrayList<AllUpcomingEventsArrayList>
@@ -50,6 +53,7 @@ class ProfileFragment : Fragment() {
         arguments?.let {
         }
 
+        //layout_constraintTop_toTopOf="@+id/btnAllUpcomingEvents2"
     }
 
 
@@ -101,9 +105,7 @@ class ProfileFragment : Fragment() {
                                 Log.d("TAG", "get failed with ", exception)
 
                             }
-
                     }
-
 
                     ueAdapter.notifyDataSetChanged()
 
@@ -143,6 +145,9 @@ class ProfileFragment : Fragment() {
                 btnMyVolunteers.visibility = View.VISIBLE
                 btnAllUpcomingEvents.visibility = View.INVISIBLE
                 btnAllUpcomingEvents2.visibility = View.VISIBLE
+
+                //binding.txtUpcomingEvent.translationY = 100.0f
+
                 userName = it.get("name").toString()
                 userEmail = it.get("email").toString()
                 binding.tvUserType.text = "Normal User"
@@ -155,6 +160,9 @@ class ProfileFragment : Fragment() {
                 btnMyVolunteers.visibility = View.INVISIBLE
                 btnAllUpcomingEvents.visibility = View.VISIBLE
                 btnAllUpcomingEvents2.visibility = View.INVISIBLE
+
+                binding.txtUpcomingEvent.translationY = -220.0f
+
                 userName = it.get("name").toString()
                 userEmail = it.get("email").toString()
                 binding.tvUserType.text = "OKU User"
