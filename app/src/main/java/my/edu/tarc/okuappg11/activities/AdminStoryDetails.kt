@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_admin_story_details.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAdminEventDetailsBinding
 import my.edu.tarc.okuappg11.databinding.ActivityAdminStoryDetailsBinding
+import my.edu.tarc.okuappg11.fragments.HomeFragment
 import java.io.File
 
 class AdminStoryDetails : AppCompatActivity() {
@@ -30,7 +31,8 @@ class AdminStoryDetails : AppCompatActivity() {
     private var userID: String? = null
     private var likesCheck:Boolean = false
     private var storyId:String? = null
-
+    private var addedBy: String? = null
+    private var accessBy: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +50,15 @@ class AdminStoryDetails : AppCompatActivity() {
 
         userID = fAuth.currentUser!!.uid
         storyId = intent.getStringExtra("StoryUID")
-        val accessBy = intent.getStringExtra("accessBy")
+        accessBy = intent.getStringExtra("accessBy")
+        addedBy = intent.getStringExtra("addedBy")
 
         //checkLike(storyId)
 
         if(accessBy == "admin"){
             linearLayout5.visibility = View.VISIBLE
-
+            binding.btnLiked.visibility = View.INVISIBLE
+            binding.btnUnliked.visibility = View.INVISIBLE
         }else{
             linearLayout5.visibility = View.GONE
         }
@@ -239,9 +243,20 @@ class AdminStoryDetails : AppCompatActivity() {
             Log.d("CHECK", "STORY_THUMBNAIL${storyId}.jpg")
         }
     }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(addedBy == "admin"){
+            val intent=Intent(this,AdminHomeActivity::class.java)
+            startActivity(intent)
+        }else if(addedBy == "eventorganizer"){
+            val intent= Intent(this, HomeFragment::class.java)
+            startActivity(intent)
+        }
+    }
+
 }

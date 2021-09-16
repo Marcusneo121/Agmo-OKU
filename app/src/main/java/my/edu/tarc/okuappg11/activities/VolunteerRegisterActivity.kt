@@ -75,6 +75,7 @@ class VolunteerRegisterActivity : AppCompatActivity() {
 
             sendVolunteerRequest(eventId)
             Toast.makeText(this, "Your request has been recorded!", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         binding.btnVReset.setOnClickListener(){

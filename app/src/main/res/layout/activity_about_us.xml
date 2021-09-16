@@ -366,6 +366,48 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dividerAboutUs" />
 
+                <View
+                    android:id="@+id/dividerContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginRight="100dp"
+                    android:background="@color/divider_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOLM" />
+
+                <TextView
+                    android:id="@+id/tvContactUs"
+                    style="@style/inputDesign"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:text="@string/contact_us_at"
+                    android:textColor="#D5D5D5"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dividerContactUs" />
+
+                <TextView
+                    android:id="@+id/tvContactUsEmail"
+                    style="@style/inputDesign"
+                    android:layout_width="256dp"
+                    android:layout_height="32dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/tankerartgallery_gmail_com"
+                    android:textColor="@color/theme_purple"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvContactUs" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

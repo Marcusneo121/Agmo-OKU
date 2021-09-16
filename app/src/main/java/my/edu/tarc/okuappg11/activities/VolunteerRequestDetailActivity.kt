@@ -87,6 +87,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                 .set(hashMapVolunteerEvent)
                 .addOnSuccessListener {
                     Log.d("TAG", "onSuccess: Status has updated")
+                    finish()
                 }
                 .addOnFailureListener {
                     Log.w(
@@ -94,7 +95,6 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                         "Error adding document ${it.suppressedExceptions}"
                     )
                 }
-
         }
 
         binding.btnDecline.setOnClickListener() {
@@ -112,6 +112,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                     .delete()
                     .addOnSuccessListener {
                         Log.d("TAG", "The volunteer data is deleted.")
+                        finish()
                     }
                     .addOnFailureListener {
                         Log.w(

@@ -270,6 +270,7 @@ class AddEventActivity: AppCompatActivity() {
                                 )
                                 intent.putExtra("EventUID", "${eventId.toString()}")
                                 intent.putExtra("addedBy",addedBy)
+                                finish()
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 

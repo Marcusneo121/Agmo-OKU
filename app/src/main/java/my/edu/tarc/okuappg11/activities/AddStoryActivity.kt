@@ -56,6 +56,7 @@ class AddStoryActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
         supportActionBar?.title = "Add Story"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
@@ -102,7 +103,6 @@ class AddStoryActivity : AppCompatActivity() {
                             binding.textFieldStoryDescription.editText!!.text.toString()
                         val dateNow = Calendar.getInstance().time
                         val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
-
 
 
                         Log.d("check", storyId.toString())
@@ -161,6 +161,7 @@ class AddStoryActivity : AppCompatActivity() {
                                 intent.putExtra("StoryUID", "${storyId.toString()}")
                                 intent.putExtra("accessBy","admin")
                                 intent.putExtra("addedBy","admin")
+                                finish()
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 
@@ -234,7 +235,8 @@ class AddStoryActivity : AppCompatActivity() {
     private fun validateStoryDetails(): Boolean {
         if (binding.textFieldStoryDescription.editText!!.text.isEmpty() ||
             binding.textFieldStoryThumbnailDescription.editText!!.text.isEmpty() ||
-            binding.textFieldStoryTitle.editText!!.text.isEmpty()){
+            binding.textFieldStoryTitle.editText!!.text.isEmpty() ||
+                mSelectedImageFileUri == null){
             return false
         }else{
             return true

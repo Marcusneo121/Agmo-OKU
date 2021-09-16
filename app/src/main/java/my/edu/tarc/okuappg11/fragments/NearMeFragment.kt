@@ -23,12 +23,15 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.AdminEventDetailsActivity
+import my.edu.tarc.okuappg11.activities.EventDetailsActivity
+import my.edu.tarc.okuappg11.activities.QuitEventActivity
 import my.edu.tarc.okuappg11.data.AllEventsArrayList
 import my.edu.tarc.okuappg11.databinding.FragmentNearMeBinding
 import my.edu.tarc.okuappg11.models.CustomInfoWindow
@@ -47,6 +50,9 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
     private var currentLocation: Location? = null
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
     private val permissionCode = 101
+
+    private var userID: String? = null
+    private lateinit var fAuth: FirebaseAuth
 
     private lateinit var allEventsArrayList: ArrayList<AllEventsArrayList>
     //private var locationArrayList: ArrayList<com.google.android.gms.maps.model.LatLng>? = null
@@ -169,18 +175,36 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
     }
 
     override fun onInfoWindowClick(marker: Marker) {
-
+        fAuth = FirebaseAuth.getInstance()
+        userID = fAuth.currentUser?.uid
         //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
+        var intent1: Intent = Intent(this.context,  QuitEventActivity::class.java)
+        var intent2: Intent = Intent(this.context,  EventDetailsActivity::class.java)
 
-        val intent = Intent(this.context, AdminEventDetailsActivity::class.java)
         val snippet = marker.snippet
-        intent.putExtra("EventUID", snippet)
-
-        if (marker.title == "Current Location"){
-            Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
-        } else {
-            startActivity(intent)
-        }
+        fStore = FirebaseFirestore.getInstance()
+        fStore.collection("users")
+            .document(userID!!)
+            .collection("upcoming events")
+            .document(snippet!!)
+            .get()
+            .addOnSuccessListener { dc ->
+                if(dc.getString("eventUID").toString() == snippet){
+                    intent1!!.putExtra("EventUID", snippet)
+                    if (marker.title == "Current Location"){
+                        Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        startActivity(intent1)
+                    }
+                } else {
+                    intent2!!.putExtra("EventUID", snippet)
+                    if (marker.title == "Current Location"){
+                        Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        startActivity(intent2)
+                    }
+                }
+            }
     }
 
     fun getAllEvents(){

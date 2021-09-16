@@ -2,8 +2,8 @@ package my.edu.tarc.okuappg11.activities
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import kotlinx.android.synthetic.main.activity_about_us.*
@@ -73,6 +73,18 @@ class AboutUsActivity : AppCompatActivity() {
         binding.btnAboutSettings.setOnClickListener {
             finish()
             onBackPressed()
+        }
+
+        binding.tvContactUsEmail.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            val recipients = arrayOf("tankerartgallery@gmail.com")
+            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+            intent.putExtra(Intent.EXTRA_SUBJECT, "To AGMO Inquiry")
+            //intent.putExtra(Intent.EXTRA_TEXT, "Body of the content here...")
+            intent.putExtra(Intent.EXTRA_CC, "tankerartgallery@gmail.com")
+            intent.type = "text/html"
+            intent.setPackage("com.google.android.gm")
+            startActivity(Intent.createChooser(intent, "Send mail"))
         }
     }
 }
