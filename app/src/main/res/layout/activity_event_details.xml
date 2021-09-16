@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:drawableLeft="@drawable/ic_baseline_bookmark_border_24"
+            android:icon="@drawable/ic_baseline_bookmark_border_24"
             android:text="@string/btnBookmark"
             android:textColor="#3D70FF"
             app:backgroundTint="@android:color/transparent"

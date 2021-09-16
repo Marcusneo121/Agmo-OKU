@@ -202,12 +202,7 @@ class AddEventActivity: AppCompatActivity() {
                         val dateNow = Calendar.getInstance().time
                         val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
-
-
                         dialogAddEvent.startLoading()
-
-
-
 
                         Log.d("check", eventId.toString())
                         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
