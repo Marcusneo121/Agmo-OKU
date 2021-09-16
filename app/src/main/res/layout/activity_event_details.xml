@@ -21,31 +21,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
-        <Button
-            android:id="@+id/btnBookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:drawableLeft="@drawable/ic_baseline_bookmark_border_24"
-            android:text="@string/btnBookmark"
-            android:textColor="#3D70FF"
-            app:backgroundTint="@android:color/transparent"
-            app:strokeColor="#3D70FF"
-            app:strokeWidth="2dp" />
-
-        <Button
-            android:id="@+id/btnJoinEvent"
-            android:layout_width="155dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:text="@string/btnJoinEvent"
-            android:textColor="@color/white"
-            app:backgroundTint="#3D70FF"
-            app:strokeColor="#3D70FF"
-            app:strokeWidth="2dp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnUnbookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_baseline_bookmark_border_24"
+        android:text="@string/btnBookmark"
+        android:textColor="#3D70FF"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/btnBookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_baseline_bookmark_border_24_white"
+        android:text="@string/btnBookmark"
+        android:textColor="@color/white"
+        app:backgroundTint="#3D70FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/btnJoinEvent"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/btnJoinEvent"
+        android:textColor="@color/white"
+        app:backgroundTint="#3D70FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
 
     <ScrollView
         android:id="@+id/scrollView2"

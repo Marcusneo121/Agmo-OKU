@@ -45,6 +45,9 @@ class EventDetailsActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        binding.btnUnbookmark.visibility = View.INVISIBLE
+        binding.btnBookmark.visibility = View.INVISIBLE
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
@@ -53,63 +56,15 @@ class EventDetailsActivity : AppCompatActivity() {
         val eventId = intent.getStringExtra("EventUID")
         eventID = intent.getStringExtra("EventUID").toString()
         userID = fAuth.currentUser!!.uid
-        changeBtnColor()
-        readData(eventId)
+
+        readBookmark()
+
+        binding.btnUnbookmark.setOnClickListener {
+            bookmark()
+        }
 
         binding.btnBookmark.setOnClickListener {
-
-            fAuth = FirebaseAuth.getInstance()
-            fStore = FirebaseFirestore.getInstance()
-            /*val eventId = intent.getStringExtra("EventUID")*/
-            userID = fAuth.currentUser!!.uid
-
-            val docRef = fStore.collection("users").document(userID!!)
-                .collection("bookmarks")
-                .document(eventID.toString())
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    Log.d("check",document.toString()
-                    )
-                    if ( document.get("eventUID") != null ){
-                        fStore.collection("users").document(userID!!).collection("bookmarks")
-                            .document(eventID!!)
-                            .delete()
-                            .addOnSuccessListener {
-                                Log.d("check", "CHECKDELETE")
-                                bookmarkCheck = false
-                                binding.btnBookmark.setBackgroundColor(Color.TRANSPARENT)
-                            }.addOnFailureListener {
-
-
-                                Log.e("error",it.message.toString())
-                            }
-                    }else if (document.get("eventUID") == null){
-                        Log.d("check", "CHECK")
-
-                        val hashmapBookmark = hashMapOf(
-                            "eventUID" to eventID,
-                            "eventName" to eventName
-                        )
-
-                        fStore.collection("users").document(userID!!).collection("bookmarks")
-                            .document(eventID!!)
-                            .set(hashmapBookmark)
-                            .addOnSuccessListener {
-                                Log.d("check", "CHECKADD")
-
-                                binding.btnBookmark.setBackgroundColor(Color.BLUE)
-                            }.addOnFailureListener {
-                                Log.e("error",it.message.toString())
-                            }
-                    }
-
-                }
-                .addOnFailureListener { exception ->
-                    bookmarkCheck = false
-                    Log.e("error",exception.message.toString())
-                }
-            //btnBookmark.setBackgroundColor(ContextCompat.getColor(this,R.blue))
-
+            unBookmark()
         }
 
         binding.btnJoinEvent.setOnClickListener {
@@ -154,9 +109,11 @@ class EventDetailsActivity : AppCompatActivity() {
             intent.putExtra("EventUID","${eventId.toString()}")
             startActivity(intent)
         }
+
+        readData(eventId)
     }
 
-    private fun changeBtnColor(){
+    private fun unBookmark() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         /*val eventId = intent.getStringExtra("EventUID")*/
@@ -167,17 +124,91 @@ class EventDetailsActivity : AppCompatActivity() {
             .document(eventID.toString())
         docRef.get()
             .addOnSuccessListener { document ->
-                if (document.get("eventUID") != null) {
-                    Log.d("check", document.toString())
-                    binding.btnBookmark.setBackgroundColor(Color.BLUE)
-
-                } else if ( document.get("eventUID") == null){
-                    binding.btnBookmark.setBackgroundColor(Color.TRANSPARENT)
+                Log.d("check",document.toString()
+                )
+                if ( document.get("eventUID") != null ){
+                    Log.d("check","ulala")
+                    fStore.collection("users").document(userID!!).collection("bookmarks")
+                        .document(eventID!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            binding.btnBookmark.visibility = View.INVISIBLE
+                            binding.btnUnbookmark.visibility = View.VISIBLE
+                            Log.d("check", "CHECKDELETE")
+                            bookmarkCheck = false
+                        }.addOnFailureListener {
+                            Log.e("error",it.message.toString())
+                        }
                 }
+
             }
             .addOnFailureListener { exception ->
-                Log.d("TAG", "get failed with ", exception)
+                bookmarkCheck = false
+                Log.e("error",exception.message.toString())
             }
+    }
+
+    private fun bookmark() {
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+        /*val eventId = intent.getStringExtra("EventUID")*/
+        userID = fAuth.currentUser!!.uid
+
+        val docRef = fStore.collection("users").document(userID!!)
+            .collection("bookmarks")
+            .document(eventID.toString())
+        docRef.get()
+            .addOnSuccessListener { document ->
+                Log.d("check",document.toString()
+                )
+                if ( document.get("eventUID") == null ){
+
+                    val hashmapBookmark = hashMapOf(
+                        "eventUID" to eventID,
+                        "eventName" to eventName
+                    )
+
+                    fStore.collection("users").document(userID!!).collection("bookmarks")
+                        .document(eventID!!)
+                        .set(hashmapBookmark)
+                        .addOnSuccessListener {
+                            binding.btnBookmark.visibility = View.VISIBLE
+                            binding.btnUnbookmark.visibility = View.INVISIBLE
+                            Log.d("check", "CHECKADD")
+
+                        }.addOnFailureListener {
+                            Log.e("error",it.message.toString())
+                        }
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                bookmarkCheck = false
+                Log.e("error",exception.message.toString())
+            }
+        //btnBookmark.setBackgroundColor(ContextCompat.getColor(this,R.blue))
+    }
+
+    private fun readBookmark() {
+        val docRef = fStore.collection("users").document(userID!!)
+            .collection("bookmarks")
+            .document(eventID.toString())
+        docRef.get()
+            .addOnSuccessListener { document ->
+                Log.d("check",document.toString())
+                if ( document.get("eventUID") == eventID ){
+                    binding.btnBookmark.visibility = View.VISIBLE
+                    Log.d("check","hey")
+
+                }else if (document.get("eventUID") != eventID ) {
+                    Log.d("check","oi")
+                    binding.btnBookmark.visibility = View.INVISIBLE
+                    binding.btnUnbookmark.visibility = View.VISIBLE
+                }
+
+
+            }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

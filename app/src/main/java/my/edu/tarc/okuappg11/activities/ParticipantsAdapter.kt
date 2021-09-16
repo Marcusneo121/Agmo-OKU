@@ -25,7 +25,9 @@ class ParticipantsAdapter(private val participantList: ArrayList<ParticipantsArr
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val participantArrayListItem: ParticipantsArrayList = participantList[position]
-        holder.participantName.text = participantArrayListItem.name
+        holder.participantName.text = participantArrayListItem.participantName
+
+
     }
 
 
@@ -33,11 +35,11 @@ class ParticipantsAdapter(private val participantList: ArrayList<ParticipantsArr
 
 
     override fun getItemCount(): Int {
-    return participantList.size
+        return participantList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val participantName: TextView = itemView.findViewById(R.id.tvPName)
 
     }
-    }
+}

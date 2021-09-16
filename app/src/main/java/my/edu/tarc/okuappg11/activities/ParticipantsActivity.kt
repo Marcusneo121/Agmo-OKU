@@ -10,12 +10,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.databinding.ActivityBookmarkBinding
 import my.edu.tarc.okuappg11.databinding.ActivityParticipantsBinding
-import my.edu.tarc.okuappg11.databinding.FragmentAdminHomeBinding
-import my.edu.tarc.okuappg11.recyclerview.EventCardArrayList
-import my.edu.tarc.okuappg11.recyclerview.EventsAdapter
 
 class ParticipantsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityParticipantsBinding
@@ -25,10 +20,13 @@ class ParticipantsActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerView1: RecyclerView
 
-    private lateinit var participantList: ArrayList<ParticipantsArrayList>
-    private lateinit var participantOKUList: ArrayList<ParticipantsOKUArrayList>
-    private lateinit var participantsAdapter: ParticipantsAdapter
-    private lateinit var participantsOKUAdapter : ParticipantsOKUAdapter
+    private lateinit var eventUserListOKU: ArrayList<ParticipantsOKUArrayList>
+    private lateinit var eventUserAdapterOKU: ParticipantsOKUAdapter
+
+    private lateinit var eventUserListNormal: ArrayList<ParticipantsArrayList>
+    private lateinit var eventUserAdapterNormal: ParticipantsAdapter
+
+    private var totalParticipant: Int = 0
 
 
     private var eventId:String? = null
@@ -39,42 +37,40 @@ class ParticipantsActivity : AppCompatActivity() {
         binding = ActivityParticipantsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         eventId = intent.getStringExtra("EventUID")
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
         recyclerView = binding.recyclerViewOKU
-        recyclerView1  = binding.recyclerViewNormalUser
+        recyclerView1 = binding.recyclerViewNormalUser
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView1.layoutManager = LinearLayoutManager(this)
 
         recyclerView.setHasFixedSize(true)
-        recyclerView1 .setHasFixedSize(true)
+        recyclerView1.setHasFixedSize(true)
 
-        participantList = arrayListOf()
-        participantOKUList = arrayListOf()
-        participantsAdapter = ParticipantsAdapter(participantList)
-        participantsOKUAdapter = ParticipantsOKUAdapter(participantOKUList)
 
-        recyclerView.adapter = participantsOKUAdapter
-        recyclerView1.adapter = participantsAdapter
+        eventUserListOKU = arrayListOf()
+        eventUserListNormal = arrayListOf()
+        eventUserAdapterOKU = ParticipantsOKUAdapter(eventUserListOKU)
+        eventUserAdapterNormal = ParticipantsAdapter(eventUserListNormal)
 
+        recyclerView.adapter = eventUserAdapterOKU
+        recyclerView1.adapter = eventUserAdapterNormal
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "All Participants"
+        supportActionBar?.title = "All Participants "
 
 
         getNormal()
-
+        getOKU()
     }
 
     private fun getNormal() {
 
-        Log.d("EVENTID", eventId.toString())
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("events")
-            .document(eventId.toString())
+            .document(eventId!!)
             .collection("participants")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -82,45 +78,103 @@ class ParticipantsActivity : AppCompatActivity() {
                         Log.e("Firestore Error", error.message.toString())
                         return
                     }
+                    eventUserListNormal.clear()
+                    value?.forEach{
+                        fStore.collection("users").document(it.id.toString()).get()
+                            .addOnSuccessListener {  dc ->
+                                Log.d("CHECKoutside", dc.id)
 
-                    value?.forEach{ test ->
-                        Log.d("Check1",test.id)
-                        val participantDetails = test.toObject(ParticipantsOKUArrayList::class.java)
+                                val participantDetails = dc.toObject(ParticipantsArrayList::class.java)
+                                if(participantDetails != null){
+                                    if (dc.getString("userType") == "Normal") {
+                                        //bmArrayList.userID=userID!!
+                                        participantDetails.participantName =
+                                            dc.getString("name").toString()
+                                        eventUserListNormal.add(participantDetails)
+                                        Log.d("CHECKINSIDE", dc.id)
 
-                        if(participantDetails != null){
-                            fStore.collection("users").document("Daej5FnHv4PsqW7upLQtBINU90x2").get()
-                                .addOnSuccessListener {  dc ->
-                                    Log.d("Check2",dc.id)
-                                        Log.d("Check3",dc.getString("userType").toString())
-                                        Log.d("Check4",dc.getString("name").toString())
-                                        participantDetails.name= dc.getString("name").toString()
-                                        Log.d("Check5", participantDetails.name.toString())
-                                        participantOKUList.add(participantDetails)
+                                    }
 
+                                    if(eventUserListNormal.isEmpty()){
+                                        Log.d("try again","Array list is empty")
+                                    } else {
+                                        Log.d("Got array","Array list is not empty")
+                                    }
+                                    eventUserAdapterNormal.notifyDataSetChanged()
 
-                                    Log.d("checkIn6",participantDetails.name)
-                                    participantOKUList.add(participantDetails)
-
+                                    //Log.d("text", bmArrayList.userID)
                                 }
-                            Log.d("checkOut7",participantDetails.name)
+                            }.addOnFailureListener { exception ->
+                                Log.d("TAG", "get failed with ", exception)
 
+                            }
 
-
-                        }
                     }
 
 
-//                    for (dc: DocumentChange in value?.documentChanges!!) {
-//                        if (dc.type == DocumentChange.Type.ADDED) {
-//                            val volunteerDetails = dc.document.toObject( VolunteerRequestArrayList::class.java)
-//                            volunteerDetails.vid = value.documents.toString()
-//                            volunteerRequestArrayList.add(dc.document.toObject( VolunteerRequestArrayList::class.java))
-//                        }
-//                    }
+                    eventUserAdapterNormal.notifyDataSetChanged()
 
-                    participantsOKUAdapter.notifyDataSetChanged()
+                    if(eventUserListNormal.isEmpty()){
+                        Log.d("try again","Array list is empty")
+                    } else {
+                        Log.d("Got array","Array list is not empty")
+                    }
+                }
+            })
 
-                    if(participantOKUList.isEmpty()){
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun getOKU() {
+        fStore = FirebaseFirestore.getInstance()
+        fStore.collection("events")
+            .document(eventId!!)
+            .collection("participants")
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.message.toString())
+                        return
+                    }
+                    eventUserListOKU.clear()
+                    value?.forEach{
+                        fStore.collection("users").document(it.id.toString()).get()
+                            .addOnSuccessListener {  dc ->
+                                Log.d("CHECKoutside", dc.id)
+
+                                val participantDetails = dc.toObject(ParticipantsOKUArrayList::class.java)
+                                if(participantDetails != null){
+                                    if (dc.getString("userType") == "OKU") {
+                                        //bmArrayList.userID=userID!!
+                                        participantDetails.participantName = dc.getString("name").toString()
+                                        eventUserListOKU.add(participantDetails)
+                                        Log.d("CHECKINSIDE", dc.id)
+
+                                    }
+
+                                    if(eventUserListOKU.isEmpty()){
+                                        Log.d("try again","Array list is empty")
+                                    } else {
+                                        Log.d("Got array","Array list is not empty")
+                                    }
+                                    eventUserAdapterOKU.notifyDataSetChanged()
+
+                                    //Log.d("text", bmArrayList.userID)
+                                }
+                            }.addOnFailureListener { exception ->
+                                Log.d("TAG", "get failed with ", exception)
+
+                            }
+
+                    }
+
+
+                    eventUserAdapterOKU.notifyDataSetChanged()
+
+                    if(eventUserListOKU.isEmpty()){
                         Log.d("try again","Array list is empty")
                     } else {
                         Log.d("Got array","Array list is not empty")
@@ -130,12 +184,7 @@ class ParticipantsActivity : AppCompatActivity() {
 
 
     }
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 
-    private fun getOKU() {
-    }
+
 
 }

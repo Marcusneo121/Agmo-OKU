@@ -62,11 +62,11 @@ class AdminStoryDetails : AppCompatActivity() {
         readLike()
 
         binding.btnUnliked.setOnClickListener {
-          unlikeClick()
+          likeClick()
         }
 
         binding.btnLiked.setOnClickListener {
-            likeClick()
+            unlikeClick()
         }
         binding.btnUpdateStory.setOnClickListener {
 
