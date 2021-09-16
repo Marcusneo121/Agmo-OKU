@@ -25,7 +25,7 @@ class ParticipantsOKUAdapter(private val participantList: ArrayList<Participants
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val participantOKUArrayListItem: ParticipantsOKUArrayList = participantList[position]
-        holder.participantName.text = participantOKUArrayListItem.name.toString()
+        holder.participantName.text = participantOKUArrayListItem.participantName.toString()
 
 
     }

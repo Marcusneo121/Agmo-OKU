@@ -107,11 +107,8 @@ class AddStoryActivity : AppCompatActivity() {
 
                         Log.d("check", storyId.toString())
                         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                            Constants.STORY_IMAGE + storyId + "."
-                                    + Constants.getFileExtension(
-                                this,
-                                mSelectedImageFileUri
-                            )
+                            Constants.STORY_IMAGE + storyId + ".jpg"
+
                         )
                         dialogAddEvent.startLoading()
                         sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->

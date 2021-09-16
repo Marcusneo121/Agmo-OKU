@@ -81,6 +81,25 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnPostedEventsAdmin"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="@string/btnMyPostedEvents"
+        android:textColor="#3D70FF"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:strokeColor="#3D70FF"
+        app:strokeWidth="2dp" />
+
+    <Button
         android:id="@+id/btnLogoutAdmin2"
         android:layout_width="0dp"
         android:layout_height="67dp"
