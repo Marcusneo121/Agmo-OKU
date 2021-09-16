@@ -206,11 +206,8 @@ class AddEventActivity: AppCompatActivity() {
 
                         Log.d("check", eventId.toString())
                         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                            Constants.USER_PROFILE_IMAGE + eventId + "."
-                                    + Constants.getFileExtension(
-                                this,
-                                mSelectedImageFileUri
-                            )
+                            Constants.USER_PROFILE_IMAGE + eventId + ".jpg"
+
                         )
 
                         sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
@@ -241,6 +238,7 @@ class AddEventActivity: AppCompatActivity() {
 
                                     ref.set(hashMapEvents)
                                         .addOnSuccessListener {
+                                            addPostedEvent()
                                             Toast.makeText(this,R.string.add_success,Toast.LENGTH_SHORT).show()
                                             Log.d(ContentValues.TAG, "Added Document")
                                             firestoreCheck = true
@@ -295,6 +293,22 @@ class AddEventActivity: AppCompatActivity() {
 
 
 
+    }
+
+    private fun addPostedEvent() {
+        val hashMapPostedEvent = hashMapOf(
+            "eventId" to eventId.toString(),
+            "eventName" to eventName.toString()
+        )
+
+        fStore.collection("users").document(fAuth.currentUser!!.uid).collection("postedEvent")
+            .document(eventId!!)
+            .set(hashMapPostedEvent)
+            .addOnSuccessListener {
+                Log.d("HEY", "Document is successfully added")
+            }.addOnFailureListener {
+                Log.d("HEY", "No such document")
+            }
     }
 
 //    //private fun saveData() {
@@ -402,7 +416,7 @@ class AddEventActivity: AppCompatActivity() {
         if (binding.textFieldEventName.editText!!.text.isEmpty() ||
             binding.textFieldEventDescription.editText!!.text.isEmpty() ||
             binding.textFieldDateStart.editText!!.text.isEmpty() ||
-            binding.textFieldTime.editText!!.text.isEmpty()){
+            binding.textFieldTime.editText!!.text.isEmpty() || mSelectedImageFileUri == null){
             return false
         }else{
             return true
