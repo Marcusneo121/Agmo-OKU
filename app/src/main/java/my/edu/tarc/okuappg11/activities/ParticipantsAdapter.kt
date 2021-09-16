@@ -25,9 +25,7 @@ class ParticipantsAdapter(private val participantList: ArrayList<ParticipantsArr
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val participantArrayListItem: ParticipantsArrayList = participantList[position]
-        holder.participantName.text = participantArrayListItem.participantName
-
-
+        holder.participantName.text = participantArrayListItem.name
     }
 
 

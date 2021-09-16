@@ -108,35 +108,54 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-                <TextView
-                    android:id="@+id/tvAdminStoryTitle"
-                    android:layout_width="295dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:padding="3dp"
-                    android:paddingLeft="10dp"
-                    android:text="event title test"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/btnLike"
-                    style="@style/ToggleButtonWithIconOnly"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/ic_outline_thumb_up_24"
-                    app:iconSize="33dp"
-                    app:iconTint="@color/white"
-                    app:rippleColor="@color/theme_purple" />
+                    <TextView
+                        android:id="@+id/tvAdminStoryTitle"
+                        android:layout_width="295dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:padding="3dp"
+                        android:paddingLeft="10dp"
+                        android:text="event title test"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btnUnliked"
+                        style="@style/ToggleButtonWithIconOnly"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_outline_thumb_up_24"
+                        app:iconSize="33dp"
+                        app:iconTint="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:rippleColor="@color/theme_purple" />
+
+                    <Button
+                        android:id="@+id/btnLiked"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="11dp"
+                        android:layout_marginRight="11dp"
+                        android:background="@color/transparent"
+                        android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
+                        app:iconSize="33dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.cardview.widget.CardView>

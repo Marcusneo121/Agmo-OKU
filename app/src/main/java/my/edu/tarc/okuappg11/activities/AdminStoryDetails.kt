@@ -29,6 +29,7 @@ class AdminStoryDetails : AppCompatActivity() {
     private var storyDescription:String? = null
     private var userID: String? = null
     private var likesCheck:Boolean = false
+    private var storyId:String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +37,8 @@ class AdminStoryDetails : AppCompatActivity() {
         binding = ActivityAdminStoryDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.btnUnliked.visibility = View.INVISIBLE
+        binding.btnLiked.visibility = View.INVISIBLE
 
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -43,80 +46,28 @@ class AdminStoryDetails : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
-        val storyId = intent.getStringExtra("StoryUID")
+        userID = fAuth.currentUser!!.uid
+        storyId = intent.getStringExtra("StoryUID")
         val accessBy = intent.getStringExtra("accessBy")
+
+        //checkLike(storyId)
 
         if(accessBy == "admin"){
             linearLayout5.visibility = View.VISIBLE
 
         }else{
             linearLayout5.visibility = View.GONE
-
         }
 
-        binding.btnLike.setOnClickListener {
-            fAuth = FirebaseAuth.getInstance()
-            fStore = FirebaseFirestore.getInstance()
-            /*val eventId = intent.getStringExtra("EventUID")*/
-            userID = fAuth.currentUser!!.uid
+        readLike()
 
-            val docRef = fStore.collection("users").document(userID!!)
-                .collection("likes")
-                .document(storyId.toString())
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    Log.d("check",document.toString()
-                    )
-                    if ( document.get("storyUID") != null ){
-                        fStore.collection("users").document(userID!!).collection("likes")
-                            .document(storyId!!)
-                            .delete()
-                            .addOnSuccessListener {
-                                Log.d("check", "CHECKDELETE")
-                                likesCheck = false
-                                binding.btnLike.setBackgroundColor(Color.TRANSPARENT)
-
-                                /*val likebtn: Button = findViewById(R.id.btnLike)
-                                val drawable =
-                                    resources.getDrawable(R.drawable.ic_baseline_thumb_up_24).mutate()
-                                drawable.setColorFilter(
-                                    resources.getColor(R.color.white),
-                                    PorterDuff.Mode.SRC_ATOP
-                                )
-
-                                likebtn.setCompoundDrawables(drawable, null, null, null)*/
-                            }.addOnFailureListener {
-
-
-                                Log.e("error",it.message.toString())
-                            }
-                    }else if (document.get("storyUID") == null){
-                        Log.d("check", "CHECK")
-
-                        val hashmapLikes = hashMapOf(
-                            "storyUID" to storyId,
-                            "storyTitle" to storyTitle
-                        )
-
-                        fStore.collection("users").document(userID!!).collection("likes")
-                            .document(storyId!!)
-                            .set(hashmapLikes)
-                            .addOnSuccessListener {
-                                Log.d("check", "CHECKADD")
-
-                                binding.btnLike.setBackgroundColor(Color.WHITE)
-                            }.addOnFailureListener {
-                                Log.e("error",it.message.toString())
-                            }
-                    }
-
-                }
-                .addOnFailureListener { exception ->
-                    likesCheck = false
-                    Log.e("error",exception.message.toString())
-                }
+        binding.btnUnliked.setOnClickListener {
+          unlikeClick()
         }
 
+        binding.btnLiked.setOnClickListener {
+            likeClick()
+        }
         binding.btnUpdateStory.setOnClickListener {
 
             val intent = Intent(this@AdminStoryDetails, AdminUpdateStory::class.java)
@@ -151,6 +102,108 @@ class AdminStoryDetails : AppCompatActivity() {
 
     }
 
+    private fun unlikeClick() {
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+        /*val eventId = intent.getStringExtra("EventUID")*/
+        userID = fAuth.currentUser!!.uid
+
+        val docRef = fStore.collection("users").document(userID!!)
+            .collection("likes")
+            .document(storyId.toString())
+        docRef.get()
+            .addOnSuccessListener { document ->
+                Log.d("check",document.toString()
+                )
+                if ( document.get("storyUID") != null ){
+                    fStore.collection("users").document(userID!!).collection("likes")
+                        .document(storyId!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            binding.btnLiked.visibility = View.INVISIBLE
+                            binding.btnUnliked.visibility = View.VISIBLE
+                            Log.d("check", "CHECKDELETE")
+                            likesCheck = false
+
+                        }.addOnFailureListener {
+
+
+                            Log.e("error",it.message.toString())
+                        }
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                likesCheck = false
+                Log.e("error",exception.message.toString())
+            }
+    }
+
+    private fun likeClick() {
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+        /*val eventId = intent.getStringExtra("EventUID")*/
+        userID = fAuth.currentUser!!.uid
+
+        val docRef = fStore.collection("users").document(userID!!)
+            .collection("likes")
+            .document(storyId.toString())
+        docRef.get()
+            .addOnSuccessListener { document ->
+                Log.d("check",document.toString()
+                )
+                if ( document.get("storyUID") == null){
+                    Log.d("check", "CHECK")
+
+                    val hashmapLikes = hashMapOf(
+                        "storyUID" to storyId,
+                        "storyTitle" to storyTitle
+                    )
+
+                    fStore.collection("users").document(userID!!).collection("likes")
+                        .document(storyId!!)
+                        .set(hashmapLikes)
+                        .addOnSuccessListener {
+                            binding.btnLiked.visibility = View.VISIBLE
+                            binding.btnUnliked.visibility = View.INVISIBLE
+                            Log.d("check", "CHECKADD")
+
+                            //binding.btnLike.setBackgroundColor(Color.WHITE)
+                        }.addOnFailureListener {
+                            Log.e("error",it.message.toString())
+                        }
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                likesCheck = false
+                Log.e("error",exception.message.toString())
+            }
+    }
+
+    private fun readLike() {
+        val docRef = fStore.collection("users").document(userID!!)
+            .collection("likes")
+            .document(storyId.toString())
+        docRef.get()
+            .addOnSuccessListener { document ->
+                Log.d("check",document.toString())
+                if ( document.get("storyUID") == storyId ){
+                    binding.btnLiked.visibility = View.VISIBLE
+                    Log.d("check","hey")
+
+                }else if (document.get("storyUID") != storyId ) {
+                    Log.d("check","oi")
+                    binding.btnLiked.visibility = View.INVISIBLE
+                    binding.btnUnliked.visibility = View.VISIBLE
+                }
+
+
+                }
+
+    }
+
     private fun readData(storyId: String?) {
         val docRef = fStore.collection("stories").document(storyId.toString())
         docRef.get()
@@ -163,6 +216,8 @@ class AdminStoryDetails : AppCompatActivity() {
                     supportActionBar?.title = storyTitle
                     binding.tvAdminStoryTitle.text = storyTitle
                     binding.tvAdminStoryDescription.text = storyDescription
+
+
 
                 } else {
                     Log.d("HEY", "No such document")
