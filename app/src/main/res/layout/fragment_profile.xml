@@ -8,24 +8,24 @@
     android:background="@color/bottom_nav_bar_bg"
     tools:context=".fragments.ProfileFragment">
 
-    <Button
-        android:id="@+id/btnAllUpcomingEvents2"
+    <TextView
+        android:id="@+id/txtUpcomingEvent"
         android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:text="@string/btnAllUpcomingEvent"
-        android:textColor="#3D70FF"
-        app:backgroundTint="@android:color/transparent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/btnUpcomingEvent"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.94"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:strokeColor="#3D70FF"
-        app:strokeWidth="2dp" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -154,6 +154,32 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="290dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnAllUpcomingEvents2"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:text="@string/btnAllUpcomingEvent"
+            android:textColor="#3D70FF"
+            app:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#3D70FF"
+            app:strokeWidth="2dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <View
         android:id="@+id/divider3"
         android:layout_width="360dp"
@@ -167,29 +193,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
-    <TextView
-        android:id="@+id/txtUpcomingEvent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="@string/btnUpcomingEvent"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMyPostedEvents" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUpcomingEvents"
         android:layout_width="0dp"
-        android:layout_height="240dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
@@ -204,69 +211,80 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btnMyVolunteers"
-        android:layout_width="176dp"
-        android:layout_height="70dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_weight="1"
-        android:text="@string/btnMyVolunteers"
-        android:textColor="#3D70FF"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnMyPostedEvents"
-        app:layout_constraintTop_toBottomOf="@+id/divider3"
-        app:strokeColor="#3D70FF"
-        app:strokeWidth="2dp" />
-
-    <Button
-        android:id="@+id/btnMyPostedEvents"
-        android:layout_width="170dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/btnMyPostedEvents"
-        android:textColor="#3D70FF"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3"
-        app:strokeColor="#3D70FF"
-        app:strokeWidth="2dp" />
-
-    <Button
-        android:id="@+id/btnAllUpcomingEvents"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:text="@string/btnAllUpcomingEvent"
-        android:textColor="#3D70FF"
-        app:backgroundTint="@android:color/transparent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:strokeColor="#3D70FF"
-        app:strokeWidth="2dp" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <Button
+            android:id="@+id/btnAllUpcomingEvents"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/btnAllUpcomingEvent"
+            android:textColor="#3D70FF"
+            app:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#3D70FF"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/btnMyVolunteers"
+            android:layout_width="172dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_weight="1"
+            android:text="@string/btnMyVolunteers"
+            android:textColor="#3D70FF"
+            app:backgroundTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMyPostedEvents"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnMyPostedEvents"
+            app:layout_constraintTop_toTopOf="@+id/btnMyPostedEvents"
+            app:strokeColor="#3D70FF"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/btnMyPostedEvents"
+            android:layout_width="172dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/btnMyPostedEvents"
+            android:textColor="#3D70FF"
+            app:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toStartOf="@+id/btnMyVolunteers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#3D70FF"
+            app:strokeWidth="2dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnAddevent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
         android:text="add event"
         android:textColor="@color/black"
         app:backgroundTint="@color/GreyishBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUpcomingEvent" />
+        tools:visibility="invisible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
