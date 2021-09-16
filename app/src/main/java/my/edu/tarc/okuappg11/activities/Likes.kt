@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.ViewStub
@@ -30,14 +31,17 @@ class Likes : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        viewStubLike = binding.viewStubLike
+        viewStubLike.visibility = View.GONE
+
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         userID = fAuth.currentUser!!.uid
 
-
         recyclerView = binding.recyclerViewLikes
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
 
         lkArrayList = arrayListOf()
         lkAdapter = LikesAdapter(lkArrayList)
@@ -47,14 +51,33 @@ class Likes : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Likes"
 
-        viewStubLike = binding.viewStubLike
-
         getData()
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(lkArrayList.isEmpty()){
+                    viewStubLike.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubLike.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 1000)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(lkArrayList.isEmpty()){
+            viewStubLike.visibility = View.VISIBLE
+        } else {
+            viewStubLike.visibility = View.GONE
+        }
     }
 
     private fun getData() {
@@ -99,12 +122,6 @@ class Likes : AppCompatActivity() {
                         }
 
                     lkAdapter.notifyDataSetChanged()
-                    if(lkArrayList.isEmpty()){
-                        viewStubLike.visibility = View.VISIBLE
-                    } else {
-                        viewStubLike.visibility = View.GONE
-                    }
-
                     if (lkArrayList.isEmpty()) {
                         Log.d("try again", "Array list is empty")
                     } else {
