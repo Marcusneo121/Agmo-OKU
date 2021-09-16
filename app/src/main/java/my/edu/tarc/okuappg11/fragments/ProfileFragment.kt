@@ -184,11 +184,6 @@ class ProfileFragment : Fragment() {
             activity?.startActivity(intent)
         }
 
-        binding.btnAddevent.setOnClickListener {
-            val intent = Intent(activity, AddEventActivity::class.java)
-            intent.putExtra("addedBy","eventorganizer")
-            activity?.startActivity(intent)
-        }
         binding.btnAllUpcomingEvents.setOnClickListener {
             val intent = Intent(activity, AllUpcomingEvents::class.java)
             activity?.startActivity(intent)

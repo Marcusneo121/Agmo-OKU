@@ -1,9 +1,12 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -11,9 +14,11 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.data.PostedEventArrayList
 import my.edu.tarc.okuappg11.databinding.ActivityMyPostedEventBinding
 import my.edu.tarc.okuappg11.models.PostedEventAdapter
+
 
 class MyPostedEventActivity : AppCompatActivity() {
     private lateinit var fStore: FirebaseFirestore
@@ -48,6 +53,25 @@ class MyPostedEventActivity : AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         getData()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_posted_event, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.action_add_events -> {
+                val intent = Intent(this, AddEventActivity::class.java)
+                intent.putExtra("addedBy","eventorganizer")
+                startActivity(intent)
+                return true
+            }
+            else -> {
+            }
+        }
+        return false
     }
 
     override fun onSupportNavigateUp(): Boolean {

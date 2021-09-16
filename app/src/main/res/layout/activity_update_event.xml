@@ -11,20 +11,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
+        android:paddingBottom="30sp"
         tools:context=".activities.UpdateEvent">
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clRG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv6">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/rgUpdateDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rbUpdateSingleDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/singleday_event_text"
+                        android:textColor="#ffff" />
+
+                    <RadioButton
+                        android:id="@+id/rbUpdateMultiday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50sp"
+                        android:layout_marginLeft="50sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/multiday_event_text"
+                        android:textColor="#ffff" />
+                </RadioGroup>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/ivUpdateEventThumbnail"
             android:layout_width="329dp"
-            android:layout_height="188dp"
-            android:layout_marginStart="43dp"
-            android:layout_marginLeft="43dp"
+            android:layout_height="184dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="39dp"
-            android:layout_marginRight="39dp"
             android:background="#636363"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/image_place_holder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv4"
@@ -37,14 +80,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/event_thumbnail_text"
             android:textColor="@android:color/white"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
 
         <TextView
             android:id="@+id/tv5"
@@ -53,8 +94,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/event_information_text"
             android:textColor="#ffff"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivUpdateEventThumbnail" />
 
@@ -71,11 +114,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv5">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,11 +137,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateEventName">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -114,11 +159,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateEventDescription">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -128,60 +175,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/event_setting_text"
             android:textColor="#ffff"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateEventOrganizerName" />
-
-        <RadioGroup
-            android:id="@+id/rgUpdateDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv6">
-
-            <RadioButton
-                android:id="@+id/rbUpdateSingleDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/singleday_event_text"
-                android:textColor="#ffff" />
-
-            <RadioButton
-                android:id="@+id/rbUpdateMultiday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/multiday_event_text"
-                android:textColor="#ffff" />
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/btnSelectDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/select_date"
-            app:backgroundTint="@color/signInButtonColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rgUpdateDate" />
-
-        <Button
-            android:id="@+id/btnSelectTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/select_time"
-            app:backgroundTint="@color/signInButtonColor"
-            app:layout_constraintStart_toEndOf="@+id/btnSelectDate"
-            app:layout_constraintTop_toBottomOf="@+id/rgUpdateDate" />
 
         <com.google.android.material.textfield.TextInputLayout
 
@@ -197,11 +196,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnPickPlace">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -218,11 +218,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateTime">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -239,42 +240,93 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateDateStart">
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/poppins_medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnUpdate"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="82dp"
-            android:layout_marginLeft="82dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="112dp"
-            android:layout_marginRight="112dp"
-            android:text="@string/update_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/update_event_button"
+            android:textSize="18sp"
             app:backgroundTint="@color/signInButtonColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldUpdateLocation" />
 
         <Button
             android:id="@+id/btnPickPlace"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="Choose location"
+            android:textSize="15sp"
             app:backgroundTint="@color/signInButtonColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSelectTime" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clRG">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btnSelectTime"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/select_time"
+                    android:textSize="15sp"
+                    app:backgroundTint="@color/signInButtonColor" />
+
+                <Button
+                    android:id="@+id/btnSelectDate"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/select_date"
+                    android:textSize="15sp"
+                    app:backgroundTint="@color/signInButtonColor" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

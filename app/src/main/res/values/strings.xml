@@ -155,7 +155,7 @@
     <string name="admin_home">Events</string>
     <string name="admin_profile">Profile</string>
     <string name="btnAllUpcomingEvent">All Upcoming Events</string>
-    <string name="btnUpcomingEvent">Your Upcoming Event</string>
+    <string name="btnUpcomingEvent">Your Upcoming Events</string>
     <string name="btnMyVolunteers">My Volunteers</string>
     <string name="btnMyPostedEvents">My Posted Events</string>
     <string name="btnMyEventHistory">My Event History</string>
@@ -199,5 +199,6 @@
     <string name="btnCancelReason">CANCEL</string>
     <string name="btnQuitEvent">QUIT EVENT</string>
     <string name="btnParticipants">View All Participants</string>
+    <string name="update_event_button">Update Event</string>
 
 </resources>

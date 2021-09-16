@@ -91,6 +91,7 @@
         android:layout_marginRight="25dp"
         android:text="@string/btnMyPostedEvents"
         android:textColor="#3D70FF"
+        android:textSize="16sp"
         app:backgroundTint="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

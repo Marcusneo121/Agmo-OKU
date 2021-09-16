@@ -42,7 +42,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="12dp"
             android:paddingRight="20dp"
-            android:paddingBottom="12dp"
+            android:paddingBottom="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBookmark"
@@ -70,7 +70,7 @@
                 android:dividerHeight="1dp"
                 tools:background="@color/white"
                 tools:layout_marginBottom="4dp"
-                tools:layout_marginTop="5dp"  />
+                tools:layout_marginTop="5dp" />
 
             <TextView
                 android:id="@+id/txtDate"

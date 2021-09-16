@@ -24,40 +24,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/btnLeft"
-                android:layout_width="155dp"
-                android:layout_height="65dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginLeft="35dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/delete_event"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                app:backgroundTint="#DA0101"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#DA0101"
-                app:strokeWidth="2dp" />
-
-            <Button
-                android:id="@+id/btnRight"
-                android:layout_width="155dp"
-                android:layout_height="65dp"
-                android:layout_marginEnd="35dp"
-                android:layout_marginRight="35dp"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/update_event"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:backgroundTint="#3D70FF"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#3D70FF"
-                app:strokeWidth="2dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btnLeft"
+                    android:layout_width="155dp"
+                    android:layout_height="65dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/delete_event"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:backgroundTint="#DA0101"
+                    app:strokeColor="#DA0101"
+                    app:strokeWidth="2dp" />
+
+                <Button
+                    android:id="@+id/btnRight"
+                    android:layout_width="155dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="25sp"
+                    android:layout_marginLeft="25sp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/update_event"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:backgroundTint="#3D70FF"
+                    app:strokeColor="#3D70FF"
+                    app:strokeWidth="2dp" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
