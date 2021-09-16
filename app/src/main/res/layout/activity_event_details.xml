@@ -128,9 +128,11 @@
 
                     <LinearLayout
                         android:layout_width="182dp"
-                        android:layout_height="73dp"
+                        android:layout_height="76dp"
                         android:orientation="vertical"
-                        android:padding="30px">
+                        android:paddingLeft="30px"
+                        android:paddingTop="30px"
+                        android:paddingRight="30px">
 
                         <TextView
                             android:id="@+id/textView7"
@@ -147,12 +149,12 @@
                         <TextView
                             android:id="@+id/tvEventLocation"
                             android:layout_width="161dp"
-                            android:layout_height="32dp"
+                            android:layout_height="40dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="left"
                             android:textAlignment="gravity"
                             android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -189,7 +191,10 @@
                         android:layout_row="1"
                         android:layout_column="0"
                         android:orientation="vertical"
-                        android:padding="30px">
+                        android:paddingLeft="30px"
+                        android:paddingTop="5px"
+                        android:paddingRight="30px"
+                        android:paddingBottom="30px">
 
                         <TextView
                             android:layout_width="wrap_content"

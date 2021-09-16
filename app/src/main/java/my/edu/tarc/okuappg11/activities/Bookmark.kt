@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,7 @@ class Bookmark : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private var userID: String? = null
     private var eventID: String? = null
+    private lateinit var viewStubBookmark: ViewStub
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +45,6 @@ class Bookmark : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         userID = fAuth.currentUser!!.uid
-
-
 
         recyclerView = binding.recyclerViewBookmark
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -58,6 +58,8 @@ class Bookmark : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Bookmarks"
 
+        viewStubBookmark = binding.viewStubBookmark
+
         getData()
 
     }
@@ -67,7 +69,7 @@ class Bookmark : AppCompatActivity() {
         return true
     }
 
-    private fun getData(){
+    private fun getData() {
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("users")
             .document(userID!!)
@@ -79,27 +81,27 @@ class Bookmark : AppCompatActivity() {
                         return
                     }
                     bmArrayList.clear()
-                    value?.forEach{
+                    value?.forEach {
                         fStore.collection("events").document(it.id.toString()).get()
-                            .addOnSuccessListener {  dc ->
+                            .addOnSuccessListener { dc ->
                                 Log.d("CHECKoutside", dc.id)
 
                                 val bmDetails = dc.toObject(BookmarkArrayList::class.java)
-                                if(bmDetails != null){
+                                if (bmDetails != null) {
 
                                     //bmArrayList.userID=userID!!
                                     bmDetails.eventID = dc.id
                                     bmDetails.eventName = dc.getString("eventName")
-                                    bmDetails.startDate= dc.getString("startDate")
-                                    bmDetails.startTime= dc.getString("startTime")
+                                    bmDetails.startDate = dc.getString("startDate")
+                                    bmDetails.startTime = dc.getString("startTime")
                                     bmDetails.location = dc.getString("eventLocation")
                                     bmDetails.eventThumbnailURL = dc.getString("eventThumbnailURL")
                                     bmArrayList.add(bmDetails)
                                     Log.d("CHECKINSIDE", dc.id)
-                                    if(bmArrayList.isEmpty()){
-                                        Log.d("try again","Array list is empty")
+                                    if (bmArrayList.isEmpty()) {
+                                        Log.d("try again", "Array list is empty")
                                     } else {
-                                        Log.d("Got array","Array list is not empty")
+                                        Log.d("Got array", "Array list is not empty")
                                     }
                                     bmAdapter.notifyDataSetChanged()
 
@@ -111,17 +113,19 @@ class Bookmark : AppCompatActivity() {
                             }
 
                     }
-
-
-                    bmAdapter.notifyDataSetChanged()
-
-                    if(bmArrayList.isEmpty()){
-                        Log.d("try again","Array list is empty")
+                    if (bmArrayList.isEmpty()) {
+                        Log.d("try again", "Array list is empty")
                     } else {
-                        Log.d("Got array","Array list is not empty")
+                        Log.d("Got array", "Array list is not empty")
                     }
                 }
             })
+        bmAdapter.notifyDataSetChanged()
+        if(bmArrayList.isEmpty()){
+            viewStubBookmark.visibility = View.VISIBLE
+        } else {
+            viewStubBookmark.visibility = View.GONE
+        }
     }
 
 }

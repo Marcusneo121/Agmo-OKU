@@ -20,6 +20,7 @@ import com.google.firebase.firestore.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.AllTopicsActivity
 import my.edu.tarc.okuappg11.activities.ForgotPasswordActivity
+import my.edu.tarc.okuappg11.data.AllEventsArrayList
 import my.edu.tarc.okuappg11.databinding.FragmentHomeBinding
 import my.edu.tarc.okuappg11.models.TopicsAdapter
 import my.edu.tarc.okuappg11.models.TopicsModel
@@ -55,9 +56,43 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    //backup methods
+    private fun trendingListener2(){
+        fStore.collection("events")
+                // to make it work, cannot use orderBy
+            .orderBy("startDate", Query.Direction.ASCENDING)
+            .limit(5)
+            .addSnapshotListener{ snapshot, e->
+                if(e!=null){
+                    Toast.makeText(context, "$e", Toast.LENGTH_LONG).show()
+                    return@addSnapshotListener
+                }
+                if(snapshot != null){
+                    val document = snapshot.documents
+                    document.forEach{
+                        if (it.getString("status").toString() == "accepted") {
+                            val trendingDetails = it.toObject(TrendingModel::class.java)
+                            if (trendingDetails != null) {
+                                trendingDetails.eventID = it.id
+                                trendingList.add(trendingDetails)
+                                Log.d("text", trendingDetails.eventID)
+                            }
+                        }
+                    }
+                    trendingListAdapter.trendingList = trendingList
+                    trendingListAdapter.notifyDataSetChanged()
+                    if(trendingList.isEmpty()){
+                        Log.d("IsEmpty", "Array is empty")
+                    } else {
+                        Log.d("IsNotEmpty", "Array is not empty")
+                    }
+                }
+            }
+    }
+
     private fun trendingListener(){
         fStore.collection("events")
-        .orderBy("startDate", Query.Direction.ASCENDING).limit(5)
+        .limit(5)
         .addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                 if (error != null) {
@@ -66,15 +101,22 @@ class HomeFragment : Fragment() {
                 }
                 trendingList.clear()
                 value?.forEach {
-                    val trendingDetails = it.toObject(TrendingModel::class.java)
-                    if (trendingDetails != null) {
-                        trendingDetails.eventID = it.id
-                        trendingList.add(trendingDetails)
-                        Log.d("text", trendingDetails.eventID)
+                    if (it.getString("status").toString() == "accepted") {
+                        val trendingDetails = it.toObject(TrendingModel::class.java)
+                        if (trendingDetails != null) {
+                            trendingDetails.eventID = it.id
+                            trendingList.add(trendingDetails)
+                            Log.d("text", trendingDetails.eventID)
+                        }
                     }
                 }
                 trendingListAdapter.trendingList = trendingList
                 trendingListAdapter.notifyDataSetChanged()
+                if(trendingList.isEmpty()){
+                    Log.d("IsEmpty", "Array is empty")
+                } else {
+                    Log.d("IsNotEmpty", "Array is not empty")
+                }
             }
         })
     }

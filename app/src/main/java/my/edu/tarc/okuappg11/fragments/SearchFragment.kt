@@ -95,6 +95,11 @@ class SearchFragment : Fragment() {
                     binding.rvSearchResult.visibility = View.VISIBLE
                     searchListAdapter.searchList = searchList
                     searchListAdapter.notifyDataSetChanged()
+                    if(searchList.isEmpty()){
+                        Log.d("IsEmpty", "Array is empty")
+                    } else {
+                        Log.d("IsNotEmpty", "Array is not empty")
+                    }
                 }
             })
     }

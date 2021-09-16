@@ -3,12 +3,12 @@ package my.edu.tarc.okuappg11.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewStub
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import my.edu.tarc.okuappg11.databinding.ActivityBookmarkBinding
 import my.edu.tarc.okuappg11.databinding.ActivityLikesBinding
 
 
@@ -21,6 +21,7 @@ class Likes : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private var userID: String? = null
     private var storyUID: String? = null
+    private lateinit var viewStubLike: ViewStub
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,8 @@ class Likes : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Likes"
+
+        viewStubLike = binding.viewStubLike
 
         getData()
     }
@@ -87,7 +90,6 @@ class Likes : AppCompatActivity() {
                                         Log.d("Got array","Array list is not empty")
                                     }
                                     lkAdapter.notifyDataSetChanged()
-
                                 }
                             }.addOnFailureListener { exception ->
                                 Log.d("TAG", "get failed with ", exception)
@@ -97,6 +99,11 @@ class Likes : AppCompatActivity() {
                         }
 
                     lkAdapter.notifyDataSetChanged()
+                    if(lkArrayList.isEmpty()){
+                        viewStubLike.visibility = View.VISIBLE
+                    } else {
+                        viewStubLike.visibility = View.GONE
+                    }
 
                     if (lkArrayList.isEmpty()) {
                         Log.d("try again", "Array list is empty")

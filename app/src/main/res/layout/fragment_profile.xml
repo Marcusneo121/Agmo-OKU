@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="86dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:fontFamily="@font/poppins_medium"
@@ -239,7 +239,7 @@
 
         <Button
             android:id="@+id/btnMyVolunteers"
-            android:layout_width="172dp"
+            android:layout_width="174dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
             android:layout_marginEnd="24dp"
@@ -257,7 +257,7 @@
 
         <Button
             android:id="@+id/btnMyPostedEvents"
-            android:layout_width="172dp"
+            android:layout_width="173dp"
             android:layout_height="70dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
