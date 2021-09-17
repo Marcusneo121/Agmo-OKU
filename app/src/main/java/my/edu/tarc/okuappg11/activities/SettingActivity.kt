@@ -46,5 +46,15 @@ class SettingActivity : AppCompatActivity() {
             val intent = Intent(this, AboutUsActivity::class.java)
             startActivity(intent)
         }
+
+        binding.lyContactUs.setOnClickListener {
+            val intent = Intent(this, ContactUsActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.lyProfileSetting.setOnClickListener {
+            val intent = Intent(this, ProfileSettingActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
