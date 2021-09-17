@@ -13,17 +13,24 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerRegisterBinding
+import java.util.regex.Pattern
 
 class VolunteerRegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVolunteerRegisterBinding
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
 
-   private lateinit var vName: EditText
+    private lateinit var vName: EditText
     private lateinit var vEmail: EditText
     private lateinit var vPhone : EditText
     private var volunteerUID:String? =null
     private var volunteerName:String? = null
+    private val EMAIL_PATTERN_SCHOOL = Pattern.compile(
+        "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+\\.+[a-z]+"
+    )
+    private val EMAIL_PATTERN = Pattern.compile(
+        "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+    )
 
 
    // private var volId:String? = null
@@ -71,6 +78,11 @@ class VolunteerRegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please agree with the terms and conditions", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
 
+            }
+
+            if(EMAIL_PATTERN.matcher(vEmail.text).matches() == false && EMAIL_PATTERN_SCHOOL.matcher(vEmail.text).matches() == false){
+                Toast.makeText(this, "Please check again your email format", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             sendVolunteerRequest(eventId)
