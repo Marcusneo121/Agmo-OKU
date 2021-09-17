@@ -7,7 +7,10 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Color.blue
 import android.graphics.Insets.add
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RectShape
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -22,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_event_details.*
 import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityEventDetailsBinding
 import my.edu.tarc.okuappg11.models.Constants
@@ -42,6 +46,8 @@ class EventDetailsActivity : AppCompatActivity() {
     private var userID: String? = null
     private var eventID: String? = null
     private var bookmarkCheck:Boolean = false
+    private var userRole: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -268,15 +274,34 @@ class EventDetailsActivity : AppCompatActivity() {
 
 
         }
+
+
+
+        //OKU volunteer validation
+        fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
+            userRole = it.get("userType").toString()
+            if(userRole == "Normal" ){
+                binding.btnVolunteer.visibility=View.VISIBLE
+            } else {
+                binding.btnVolunteer.visibility=View.GONE
+            }
+            }
+
+        // volunteer validation
         val dRef = fStore.collection("users").document(userID!!).collection("volunteerEvent").document(eventId.toString())
         dRef.get()
             .addOnSuccessListener { document ->
                 if (document.get("eventId") != null) {
-                    // binding.btnVolunteer.visibility=View.INVISIBLE
+                    binding.btnVolunteer.setText("Applied Volunteer")
                     binding.btnVolunteer.setOnClickListener() {
                         Toast.makeText(this, "You are a volunteer!", Toast.LENGTH_SHORT).show()
-
                     }
+
+                    binding.btnJoinEvent.isEnabled = false
+                    binding.btnJoinEvent.setText("Volunteered")
+                    binding.btnJoinEvent.setBackgroundColor(Color.parseColor("#2D54C0"))
+
+
                 } else if(document.get("eventId") == null) {
                     //binding.btnVolunteer.visibility=View.VISIBLE
                     binding.btnVolunteer.setOnClickListener() {
@@ -292,6 +317,7 @@ class EventDetailsActivity : AppCompatActivity() {
                 Log.d("TAG", "get failed with ", exception)
             }
     }
+
 
 
 }

@@ -202,5 +202,6 @@
     <string name="update_event_button">Update Event</string>
     <string name="tankerartgallery_gmail_com">tankerartgallery@gmail.com</string>
     <string name="contact_us_at">Contact Us at :</string>
+    <string name="btnDltVol">Delete</string>
 
 </resources>

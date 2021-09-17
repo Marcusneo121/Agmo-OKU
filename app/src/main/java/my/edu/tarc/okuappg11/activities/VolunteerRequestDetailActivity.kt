@@ -55,9 +55,18 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
 
         binding.btnAccept.setOnClickListener() {
 
-            phoneEmail()
+            //phoneEmail()
+            val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            val mBuilder = AlertDialog.Builder(this)
+                .setView(mView)
+                .setTitle("Do you want to accept this request?")
+            val mAlertDialog = mBuilder.show()
+            mView.btnDialogYes.setOnClickListener {
 
-            val hashMapStatus = hashMapOf(
+                Toast.makeText(this, "You have accepted this request.", Toast.LENGTH_SHORT).show()
+
+
+                val hashMapStatus = hashMapOf(
                 "vstatus" to "Accepted"
             )
 
@@ -95,6 +104,11 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                         "Error adding document ${it.suppressedExceptions}"
                     )
                 }
+            }
+            mView.btnDialogNo.setOnClickListener {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
+            }
         }
 
         binding.btnDecline.setOnClickListener() {
@@ -111,6 +125,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                     .document(vid.toString())
                     .delete()
                     .addOnSuccessListener {
+                        Toast.makeText(this, "You have rejected this request.", Toast.LENGTH_SHORT).show()
                         Log.d("TAG", "The volunteer data is deleted.")
                         finish()
                     }

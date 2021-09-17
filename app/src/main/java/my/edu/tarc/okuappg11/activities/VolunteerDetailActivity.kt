@@ -1,15 +1,20 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.data.VolunteerRequestArrayList
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerDetailBinding
 import my.edu.tarc.okuappg11.models.VolunteerRequestAdapter
@@ -59,6 +64,55 @@ class VolunteerDetailActivity : AppCompatActivity() {
         
         binding.btnCancel.setOnClickListener(){
             onBackPressed()
+        }
+
+        binding.btnDltVol.setOnClickListener(){
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Delete volunteer details:")
+                .setMessage("Are you sure you want to remove this volunteer?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    fStore.collection("events")
+                        .document(eventId.toString())
+                        .collection("volunteer")
+                        .document(vid.toString())
+                        .delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "The volunteer data is deleted.", Toast.LENGTH_SHORT).show()
+                            Log.d("TAG", "The volunteer data is deleted.")
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Log.w(
+                                ContentValues.TAG,
+                                "Error adding document ${it.suppressedExceptions}"
+                            )
+                        }
+
+                    fStore.collection("users")
+                        .document(vid.toString())
+                        .collection("volunteerEvent")
+                        .document(eventId.toString())
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d("TAG", "onSuccess: Status has updated")
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Log.w(
+                                ContentValues.TAG,
+                                "Error adding document ${it.suppressedExceptions}"
+                            )
+                        }
+
+                    }
+                .setNegativeButton("No"){ dialog, which ->
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                }
+                .setNeutralButton("Cancel") { dialog, which ->
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                }.show()
+
+
         }
     }
 

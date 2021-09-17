@@ -97,25 +97,42 @@
     <Button
         android:id="@+id/btnContact"
         style="@style/volunteerRegisterButton"
-        android:layout_width="350dp"
+        android:layout_width="170dp"
         android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginBottom="92dp"
         android:text="@string/contact"
         app:backgroundTint="#3D70FF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnPhone"
-        app:layout_constraintStart_toStartOf="@+id/tvVolunteerPhone" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnDltVol"
+        style="@style/volunteerRegisterButton"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="92dp"
+        android:text="@string/btnDltVol"
+        app:backgroundTint="#EA4335"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnContact" />
 
     <Button
         android:id="@+id/btnCancel"
         style="@style/volunteerDecline"
-        android:layout_width="350dp"
+        android:layout_width="355dp"
         android:layout_height="60dp"
         android:layout_marginBottom="24dp"
         android:text="@string/vcancel"
         app:backgroundTint="#545454"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnContact"
+        app:layout_constraintEnd_toEndOf="@+id/btnDltVol"
         app:layout_constraintStart_toStartOf="@+id/btnContact"
         app:strokeColor="#EA4335"
         app:strokeWidth="2dp" />
