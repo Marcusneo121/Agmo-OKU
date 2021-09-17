@@ -58,18 +58,68 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/lyAboutUs"
+                    android:id="@+id/lyProfileSetting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:orientation="horizontal"
-                    android:paddingLeft="20dp"
+                    android:paddingLeft="15dp"
                     android:paddingTop="10dp"
-                    android:paddingRight="20dp"
+                    android:paddingRight="15dp"
                     android:paddingBottom="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imgProfileSetting"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:paddingTop="5dp"
+                        android:src="@drawable/ic_round_face_24" />
+
+                    <TextView
+                        android:id="@+id/itemProfileSetting"
+                        style="@style/inputDesign"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical"
+                        android:paddingTop="5dp"
+                        android:text="@string/profile_setting"
+                        android:textSize="19sp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/dividerAA"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginRight="45dp"
+                    android:background="@color/divider_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lyProfileSetting" />
+
+                <LinearLayout
+                    android:id="@+id/lyAboutUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dividerB">
 
                     <ImageView
                         android:id="@+id/imgAboutUs"
@@ -95,14 +145,64 @@
                     android:id="@+id/dividerA"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginRight="45dp"
                     android:background="@color/divider_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lyAboutUs" />
+
+                <LinearLayout
+                    android:id="@+id/lyContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dividerAA">
+
+                    <ImageView
+                        android:id="@+id/imgContactUs"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:paddingTop="5dp"
+                        android:src="@drawable/ic_round_help_24" />
+
+                    <TextView
+                        android:id="@+id/itemContactUs"
+                        style="@style/inputDesign"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical"
+                        android:paddingTop="5dp"
+                        android:text="@string/chat_bot"
+                        android:textSize="19sp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/dividerB"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginRight="45dp"
+                    android:background="@color/divider_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lyContactUs" />
 
                 <Button
                     android:id="@+id/btnLogoutSettings"
@@ -110,7 +210,7 @@
                     android:layout_height="60dp"
                     android:layout_marginStart="40dp"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="40dp"
                     android:layout_marginRight="40dp"
                     android:fontFamily="@font/poppins_medium"
@@ -122,6 +222,7 @@
                     android:typeface="normal"
                     app:backgroundTint="@color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dividerA"
                     app:rippleColor="@color/logout_ripple"
