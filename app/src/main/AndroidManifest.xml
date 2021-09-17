@@ -28,7 +28,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.ParticipantsActivity"/>
+        <activity android:name=".activities.ForgotPassProfile"></activity>
+        <activity android:name=".activities.ProfileSettingActivity" />
+        <activity android:name=".activities.ContactUsActivity" />
+        <activity android:name=".activities.ParticipantsActivity" />
         <activity android:name=".activities.AllTopicsActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <!--

@@ -38,7 +38,7 @@ private lateinit var binding: ActivityForgotPasswordBinding
                 if(task.isSuccessful){
                     Toast.makeText(
                         this,
-                        "Email sent successfully to reset password!",
+                        "Email successfully sent for password reset!",
                         Toast.LENGTH_SHORT
                     ).show()
 
