@@ -18,7 +18,7 @@ class EmailVerifyDialog(val fragment: SignInFragment){
         isDialog = builder.create()
         isDialog.show()
         isDialog.setCanceledOnTouchOutside(true)
-        isDialog.window?.setLayout(1200,1300) //Controlling width and height.
+        isDialog.window?.setLayout(900,1000) //Controlling width and height.
     }
 
     fun isDismiss(){

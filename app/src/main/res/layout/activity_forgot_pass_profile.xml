@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".activities.ForgotPassProfile">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -35,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPassLottie" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPassLottieProfile" />
 
     <TextView
         android:id="@+id/tvOkMsgProfile"
@@ -48,7 +49,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvForPass" />
+        app:layout_constraintTop_toBottomOf="@+id/tvForPassProfile" />
 
     <TextView
         android:id="@+id/tvOkMsg3Profile"
@@ -62,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOkMsg" />
+        app:layout_constraintTop_toBottomOf="@+id/tvOkMsgProfile" />
 
     <TextView
         android:id="@+id/tvOkMsg4Profile"
@@ -78,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOkMsg3" />
+        app:layout_constraintTop_toBottomOf="@+id/tvOkMsg3Profile" />
 
     <EditText
         android:id="@+id/etForgotEmailProfile"
@@ -100,7 +101,7 @@
         android:paddingRight="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOkMsg4" />
+        app:layout_constraintTop_toBottomOf="@+id/tvOkMsg4Profile" />
 
     <Button
         android:id="@+id/btnSubmitProfile"
@@ -120,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etForgotEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etForgotEmailProfile"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
