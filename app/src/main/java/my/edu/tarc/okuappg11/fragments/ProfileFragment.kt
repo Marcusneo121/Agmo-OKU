@@ -3,10 +3,12 @@ package my.edu.tarc.okuappg11.fragments
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
@@ -20,7 +22,6 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_profile.*
 import my.edu.tarc.okuappg11.activities.*
 import my.edu.tarc.okuappg11.databinding.FragmentProfileBinding
-
 
 class ProfileFragment : Fragment() {
 
@@ -40,6 +41,7 @@ class ProfileFragment : Fragment() {
     private var eventID: String? = null
     private var userName: String? = null
     private var userEmail: String? = null
+    private lateinit var viewStubNoUpcomingEvent: ViewStub
 
     var constraintLayout: ConstraintLayout? = null
     var constraintSet: ConstraintSet? = null
@@ -125,6 +127,9 @@ class ProfileFragment : Fragment() {
         fAuth = FirebaseAuth.getInstance()
         userID = fAuth.currentUser?.uid
 
+        viewStubNoUpcomingEvent = binding.viewStubNoUpcomingEvents
+        viewStubNoUpcomingEvent.visibility = View.GONE
+
         btnMyPostedEvents.visibility = View.INVISIBLE
         btnMyVolunteers.visibility = View.INVISIBLE
         btnAllUpcomingEvents.visibility = View.INVISIBLE
@@ -133,11 +138,26 @@ class ProfileFragment : Fragment() {
         recyclerView = binding.recyclerViewUpcomingEvents
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
+
         ueArrayList = arrayListOf()
         ueAdapter = AllUpcomingEventsAdapter(ueArrayList)
         recyclerView.adapter = ueAdapter
 
         getData()
+
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(ueArrayList.isEmpty()){
+                    viewStubNoUpcomingEvent.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubNoUpcomingEvent.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 1000)
 
         fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
             userRole = it.get("userType").toString()
@@ -162,7 +182,9 @@ class ProfileFragment : Fragment() {
                 btnAllUpcomingEvents.visibility = View.VISIBLE
                 btnAllUpcomingEvents2.visibility = View.INVISIBLE
 
-                binding.txtUpcomingEvent.translationY = -220.0f
+                binding.txtUpcomingEvent.translationY = -180.0f
+                binding.recyclerViewUpcomingEvents.translationY = - 180.0f
+                //binding.viewStubNoUpcomingEvents.translationY = -220.0f
 
                 userName = it.get("name").toString()
                 userEmail = it.get("email").toString()
@@ -209,6 +231,14 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, MyPostedEventActivity::class.java)
             activity?.startActivity(intent)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if(ueArrayList.isEmpty()){
+            viewStubNoUpcomingEvent.visibility = View.VISIBLE
+        } else {
+            viewStubNoUpcomingEvent.visibility = View.GONE
+        }
     }
 }

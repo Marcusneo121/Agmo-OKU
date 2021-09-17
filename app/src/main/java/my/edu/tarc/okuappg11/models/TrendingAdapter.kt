@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.models
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.EventDetailsActivity
+import my.edu.tarc.okuappg11.activities.QuitEventActivity
 import my.edu.tarc.okuappg11.utils.GlideLoader
 
 class TrendingAdapter(var trendingList: ArrayList<TrendingModel>): RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>()  {
+
+    private lateinit var fAuth: FirebaseAuth
+    private lateinit var fStore: FirebaseFirestore
+    private var userID: String? = null
+    private var eventID: String? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -30,12 +40,38 @@ class TrendingAdapter(var trendingList: ArrayList<TrendingModel>): RecyclerView.
         GlideLoader(holder.ivTrending.context).loadUserPicture(Uri.parse(trendingListItem.eventThumbnailURL),holder.ivTrending)
 
         val eventIDNumber: String = trendingListItem.eventID
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+        eventID = holder.id.text.toString()
+        userID = fAuth.currentUser!!.uid
 
         holder.itemView.setOnClickListener(){
             //Toast.makeText(holder.itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
-            intent.putExtra("EventUID", eventIDNumber)
-            holder.itemView.context.startActivity(intent)
+//            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java)
+//            intent.putExtra("EventUID", eventIDNumber)
+//            holder.itemView.context.startActivity(intent)
+
+            val jRef = fStore.collection("users").document(userID!!).collection("upcoming events").document(eventIDNumber)
+            jRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.getString("eventUID") == eventIDNumber) {
+
+                        val intent =
+                            Intent(holder.itemView.context, QuitEventActivity::class.java)
+                        intent.putExtra("EventUID", "${eventIDNumber}")
+
+                        holder.itemView.context.startActivity(intent)
+                    }else{
+                        val intent =
+                            Intent(holder.itemView.context, EventDetailsActivity::class.java)
+                        intent.putExtra("EventUID", "${eventIDNumber}")
+
+                        holder.itemView.context.startActivity(intent)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("TAG", "get failed with ", exception)
+                }
         }
     }
 

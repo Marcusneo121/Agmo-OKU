@@ -87,7 +87,7 @@
             <ImageView
                 android:id="@+id/ivAdminStoryDetailsThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="230dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

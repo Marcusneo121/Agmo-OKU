@@ -38,7 +38,7 @@
             android:id="@+id/linearLayout5"
             android:layout_width="228dp"
             android:layout_height="143dp"
-            android:background="#292929"
+            android:background="#3D3D3D"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="12dp"

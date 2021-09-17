@@ -5,7 +5,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
+import android.view.ViewStub
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +30,7 @@ class AllUpcomingEvents : AppCompatActivity() {
     private var userID: String? = null
     private var eventID: String? = null
     //private var eventName:String? = null
+    private lateinit var viewStubAllUpcoming: ViewStub
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,15 +38,18 @@ class AllUpcomingEvents : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        viewStubAllUpcoming = binding.viewStubAllUpcoming
+        viewStubAllUpcoming .visibility = View.GONE
+
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
         val eventId = intent.getStringExtra("EventUID")
         userID = fAuth.currentUser!!.uid
 
-
         recyclerView = binding.recyclerViewAllUpcomingEvents
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
 
         ueArrayList = arrayListOf()
         ueAdapter = AllUpcomingEventsAdapter(ueArrayList)
@@ -54,11 +61,32 @@ class AllUpcomingEvents : AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff262626.toInt()))
 
         getData()
-
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(ueArrayList.isEmpty()){
+                    viewStubAllUpcoming.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubAllUpcoming.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 1000)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(ueArrayList.isEmpty()){
+            viewStubAllUpcoming.visibility = View.VISIBLE
+        } else {
+            viewStubAllUpcoming.visibility = View.GONE
+        }
     }
 
     private fun getData(){

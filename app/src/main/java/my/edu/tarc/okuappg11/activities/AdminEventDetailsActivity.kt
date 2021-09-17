@@ -4,6 +4,7 @@ import android.app.ActionBar
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -24,12 +25,14 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
     private lateinit var binding: ActivityAdminEventDetailsBinding
-    private var eventName:String? = null
-    private var eventDescription:String? = null
-    private var startDate:String? = null
-    private var startTime:String? = null
-    private var eventLocation:String? = null
-    private var addedBy:String? = null
+    private var eventName: String? = null
+    private var eventDescription: String? = null
+    private var startDate: String? = null
+    private var startTime: String? = null
+    private var eventLocation: String? = null
+    private var addedBy: String? = null
+    private var accessBy: String? = null
+    private var eventId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,22 +42,23 @@ class AdminEventDetailsActivity : AppCompatActivity() {
 
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
-        val eventId = intent.getStringExtra("EventUID")
+        eventId = intent.getStringExtra("EventUID")
         val eventType = intent.getStringExtra("EventType")
         addedBy = intent.getStringExtra("addedBy")
+        accessBy = intent.getStringExtra("accessBy")
 
         readData(eventId)
 
-        if (eventType == "pending"){
+        if (eventType == "pending") {
             binding.btnLeft.setText(R.string.pending_reject)
             binding.btnRight.setText(R.string.pending_accept)
 
-            binding.btnLeft.setOnClickListener{
+            binding.btnLeft.setOnClickListener {
                 MaterialAlertDialogBuilder(this)
                     .setTitle(resources.getString(R.string.dialog_reject_title))
                     .setMessage(resources.getString(R.string.dialog_reject_description))
@@ -77,7 +81,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
                     }.show()
             }
 
-            binding.btnRight.setOnClickListener{
+            binding.btnRight.setOnClickListener {
                 MaterialAlertDialogBuilder(this)
                     .setTitle(resources.getString(R.string.dialog_accept_title))
                     .setMessage(resources.getString(R.string.dialog_accept_description))
@@ -101,8 +105,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             }
 
 
-
-        }else {
+        } else {
             binding.btnLeft.setText(R.string.delete_event)
             binding.btnRight.setText(R.string.update_event)
             binding.btnLeft.setOnClickListener {
@@ -121,6 +124,11 @@ class AdminEventDetailsActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 Toast.makeText(this, R.string.delete_success, Toast.LENGTH_SHORT)
                                     .show()
+                                if (accessBy == "eventorganizer") {
+                                    finish()
+                                    val intent = Intent(this, MyPostedEventActivity::class.java)
+                                    startActivity(intent)
+                                }
                                 finish()
                             }.addOnFailureListener {
                                 Log.d("error", it.message.toString())
@@ -138,6 +146,10 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun endActivity() {
+        this.finish()
     }
 
     private fun readData(eventId: String?) {
@@ -165,13 +177,14 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             }
 
 
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
-        val localfile = File.createTempFile("tempImage","jpg")
+        val sRef: StorageReference =
+            FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
+        val localfile = File.createTempFile("tempImage", "jpg")
         sRef.getFile(localfile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
             binding.ivAdminEventDetailsThumbnail.setImageBitmap(bitmap)
             Log.d("CHECK", " IMAGE LOADED")
-        }.addOnFailureListener{
+        }.addOnFailureListener {
             Log.d("CHECK", it.message.toString())
             Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
         }
@@ -184,13 +197,18 @@ class AdminEventDetailsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if(addedBy == "admin"){
-            val intent=Intent(this,AdminHomeActivity::class.java)
+        if (addedBy == "admin") {
+            val intent = Intent(this, AdminHomeActivity::class.java)
             startActivity(intent)
-        }else if(addedBy == "eventorganizer"){
-            val intent= Intent(this,HomeFragment::class.java)
+        } else if (addedBy == "eventorganizer") {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            //finish()
+        } else if (accessBy == "eventorganizer") {
+            finish()
+            val intent= Intent(this,ViewEventOrganizeDetailsActivity::class.java)
+            intent.putExtra("EventUID", eventId)
             startActivity(intent)
         }
     }
-
 }

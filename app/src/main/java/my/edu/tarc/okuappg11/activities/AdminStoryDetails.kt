@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -44,6 +45,7 @@ class AdminStoryDetails : AppCompatActivity() {
 
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
@@ -59,11 +61,11 @@ class AdminStoryDetails : AppCompatActivity() {
             linearLayout5.visibility = View.VISIBLE
             binding.btnLiked.visibility = View.INVISIBLE
             binding.btnUnliked.visibility = View.INVISIBLE
+
         }else{
             linearLayout5.visibility = View.GONE
+            readLike()
         }
-
-        readLike()
 
         binding.btnUnliked.setOnClickListener {
           likeClick()
@@ -217,7 +219,7 @@ class AdminStoryDetails : AppCompatActivity() {
                     storyDescription = document.getString("storyDescription")
 
 
-                    supportActionBar?.title = storyTitle
+                    //supportActionBar?.title = storyTitle
                     binding.tvAdminStoryTitle.text = storyTitle
                     binding.tvAdminStoryDescription.text = storyDescription
 

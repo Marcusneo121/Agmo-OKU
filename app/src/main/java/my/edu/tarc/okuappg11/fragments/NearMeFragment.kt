@@ -122,30 +122,43 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
         }
     }
 
-    fun getCurrentLocation(){
+    fun getCurrentLocation() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             //val latLng: com.google.android.gms.maps.model.LatLng
-            val latLng = com.google.android.gms.maps.model.LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+            val latLng = com.google.android.gms.maps.model.LatLng(
+                currentLocation!!.latitude,
+                currentLocation!!.longitude
+            )
 //            if(currentLocation != null){
 //                latLng = com.google.android.gms.maps.model.LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
 //            } else {
 //                latLng = com.google.android.gms.maps.model.LatLng(6.1303069, 100.3835099)
 //            }
 
-            for(i in allEventsArrayList.indices){
-                latLngValue = LatLng(allEventsArrayList[i].latitude, allEventsArrayList[i].longitude)
+            for (i in allEventsArrayList.indices) {
+                latLngValue =
+                    LatLng(allEventsArrayList[i].latitude, allEventsArrayList[i].longitude)
                 googleMap.setOnInfoWindowClickListener(this)
                 googleMap.setInfoWindowAdapter(CustomInfoWindow(requireContext()))
-                googleMap.addMarker(MarkerOptions().position(latLngValue)
-                    .title(allEventsArrayList[i].eventName).snippet(allEventsArrayList[i].eventID))
-                    .setIcon(bitmapDescriptorFromVector(requireContext(), R.drawable.ic_round_emoji_events_24))
+                googleMap.addMarker(
+                    MarkerOptions().position(latLngValue)
+                        .title(allEventsArrayList[i].eventName)
+                        .snippet(allEventsArrayList[i].eventID)
+                )
+                    .setIcon(
+                        bitmapDescriptorFromVector(
+                            requireContext(),
+                            R.drawable.ic_round_emoji_events_24
+                        )
+                    )
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLngValue))
             }
 
             val markerOptions = MarkerOptions().position(latLng)
-                .title("Current Location").icon(bitmapDescriptorFromVector(requireContext(), R.drawable.human_me))
+                .title("Current Location")
+                .icon(bitmapDescriptorFromVector(requireContext(), R.drawable.human_me))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f))
             googleMap.addMarker(markerOptions)
             dialogLocationFetch.isDismiss()
@@ -155,7 +168,8 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
         return ContextCompat.getDrawable(context, vectorResId)?.run {
             setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-            val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val bitmap =
+                Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
             draw(Canvas(bitmap))
             BitmapDescriptorFactory.fromBitmap(bitmap)
         }
@@ -167,8 +181,8 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            permissionCode -> if (grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        when (requestCode) {
+            permissionCode -> if (grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 fetchLocation()
             }
         }
@@ -178,52 +192,65 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
         fAuth = FirebaseAuth.getInstance()
         userID = fAuth.currentUser?.uid
         //Toast.makeText(context, "${marker.snippet}", Toast.LENGTH_SHORT).show()
-        var intent1: Intent = Intent(this.context,  QuitEventActivity::class.java)
-        var intent2: Intent = Intent(this.context,  EventDetailsActivity::class.java)
+        var intent1: Intent = Intent(this.context, QuitEventActivity::class.java)
+        var intent2: Intent = Intent(this.context, EventDetailsActivity::class.java)
 
-        val snippet = marker.snippet
-        fStore = FirebaseFirestore.getInstance()
-        fStore.collection("users")
-            .document(userID!!)
-            .collection("upcoming events")
-            .document(snippet!!)
-            .get()
-            .addOnSuccessListener { dc ->
-                if(dc.getString("eventUID").toString() == snippet){
-                    intent1!!.putExtra("EventUID", snippet)
-                    if (marker.title == "Current Location"){
-                        Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
-                    } else {
+        if (marker.title == "Current Location") {
+            Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+        } else {
+            val snippet = marker.snippet
+            fStore = FirebaseFirestore.getInstance()
+            fStore.collection("users")
+                .document(userID!!)
+                .collection("upcoming events")
+                .document(snippet!!)
+                .get()
+                .addOnSuccessListener { dc ->
+                    if (dc.getString("eventUID").toString() == snippet) {
+                        intent1!!.putExtra("EventUID", snippet)
                         startActivity(intent1)
-                    }
-                } else {
-                    intent2!!.putExtra("EventUID", snippet)
-                    if (marker.title == "Current Location"){
-                        Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
                     } else {
+                        intent2!!.putExtra("EventUID", snippet)
                         startActivity(intent2)
                     }
+
+                    //Backup Ex-method
+//                if(dc.getString("eventUID").toString() == snippet){
+//                    if (marker.title == "Current Location"){
+//                        Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        intent1!!.putExtra("EventUID", snippet)
+//                        startActivity(intent1)
+//                    }
+//                } else {
+//                    if (marker.title == "Current Location"){
+//                        Toast.makeText(context, "You are here!", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        intent2!!.putExtra("EventUID", snippet)
+//                        startActivity(intent2)
+//                    }
+//                }
                 }
-            }
+        }
     }
 
-    fun getAllEvents(){
+    fun getAllEvents() {
         //Toast.makeText(context, "It runs here", Toast.LENGTH_LONG).show()
         fStore = FirebaseFirestore.getInstance()
         val collectionReference = fStore.collection("events")
 
-        collectionReference.addSnapshotListener{ snapshot, e->
-            if(e!=null){
+        collectionReference.addSnapshotListener { snapshot, e ->
+            if (e != null) {
                 Toast.makeText(context, "$e", Toast.LENGTH_LONG).show()
                 return@addSnapshotListener
             }
-            if(snapshot != null){
+            if (snapshot != null) {
                 allEventsArrayList = arrayListOf()
                 val document = snapshot.documents
-                document.forEach{
+                document.forEach {
                     if (it.getString("status").toString() == "accepted") {
                         val mapDetails = it.toObject(AllEventsArrayList::class.java)
-                        if(mapDetails != null){
+                        if (mapDetails != null) {
                             mapDetails.eventID = it.id
                             allEventsArrayList.add(mapDetails)
                         }

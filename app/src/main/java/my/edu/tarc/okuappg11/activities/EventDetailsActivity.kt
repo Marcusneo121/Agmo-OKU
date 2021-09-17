@@ -11,14 +11,18 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_event_details.*
+import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityEventDetailsBinding
 import my.edu.tarc.okuappg11.models.Constants
 import java.io.File
@@ -68,40 +72,51 @@ class EventDetailsActivity : AppCompatActivity() {
         }
 
         binding.btnJoinEvent.setOnClickListener {
-            val hashmapUpcomingEvents = hashMapOf(
-                "eventUID" to eventID,
-                "eventName" to eventName,
-                "startDate" to startDate,
-                "startTime" to startTime
-            )
+            val dView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            val dBuilder = AlertDialog.Builder(this)
+                .setView(dView)
+                .setTitle("Do you want to join this event?")
+            val dAlertDialog = dBuilder.show()
+            dView.btnDialogYes.setOnClickListener {
+                val hashmapUpcomingEvents = hashMapOf(
+                    "eventUID" to eventID,
+                    "eventName" to eventName,
+                    "startDate" to startDate,
+                    "startTime" to startTime
+                )
 
-            fStore.collection("users").document(userID!!).collection("upcoming events")
-                .document(eventID.toString())
-                .set(hashmapUpcomingEvents)
-                .addOnSuccessListener {
-                    Log.d("check", "CHECKADD")
-                    //val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                    //startActivity(intent)
-                }.addOnFailureListener {
-                    Log.e("error",it.message.toString())
-                }
+                fStore.collection("users").document(userID!!).collection("upcoming events")
+                    .document(eventID.toString())
+                    .set(hashmapUpcomingEvents)
+                    .addOnSuccessListener {
+                        Log.d("check", "CHECKADD")
+                        //val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
+                        //startActivity(intent)
+                    }.addOnFailureListener {
+                        Log.e("error", it.message.toString())
+                    }
 
-            val hashmapParticipants = hashMapOf(
-                "userUID" to userID,
-            )
+                val hashmapParticipants = hashMapOf(
+                    "userUID" to userID,
+                )
 
-            fStore.collection("events").document(eventID!!).collection("participants")
-                .document(userID!!)
-                .set(hashmapParticipants)
-                .addOnSuccessListener {
-                    Log.d("check", "CHECKADD")
-                    finish()
-                    val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                    startActivity(intent)
-                }.addOnFailureListener {
-                    Log.e("error",it.message.toString())
-                }
-
+                fStore.collection("events").document(eventID!!).collection("participants")
+                    .document(userID!!)
+                    .set(hashmapParticipants)
+                    .addOnSuccessListener {
+                        Log.d("check", "CHECKADD")
+                        finish()
+                        val intent =
+                            Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
+                        startActivity(intent)
+                    }.addOnFailureListener {
+                        Log.e("error", it.message.toString())
+                    }
+            }
+            dView.btnDialogNo.setOnClickListener {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                dAlertDialog.dismiss()
+            }
         }
 
         binding.btnVolunteer.setOnClickListener(){

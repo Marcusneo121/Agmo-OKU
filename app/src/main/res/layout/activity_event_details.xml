@@ -92,7 +92,7 @@
             <ImageView
                 android:id="@+id/ivEventDetailsThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,7 @@
                         <TextView
                             android:id="@+id/tvEventLocation"
                             android:layout_width="161dp"
-                            android:layout_height="40dp"
+                            android:layout_height="36dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="left"
                             android:textAlignment="gravity"

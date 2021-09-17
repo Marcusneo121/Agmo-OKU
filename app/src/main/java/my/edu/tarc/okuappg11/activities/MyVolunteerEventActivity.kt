@@ -3,7 +3,10 @@ package my.edu.tarc.okuappg11.activities
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
+import android.view.ViewStub
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -24,12 +27,16 @@ class MyVolunteerEventActivity : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private var userID: String? = null
     private var eventID: String? = null
+    private lateinit var viewStubVolunteerEvent: ViewStub
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyVolunteerEventBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        viewStubVolunteerEvent = binding.viewStubVolunteerEvent
+        viewStubVolunteerEvent.visibility = View.GONE
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
@@ -38,6 +45,7 @@ class MyVolunteerEventActivity : AppCompatActivity() {
         recyclerView = binding.recyclerViewVolunteerEvent
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
 
         volunteerArrayList = arrayListOf()
         volunteerEventAdapter = MyVolunteerEventAdapter(volunteerArrayList)
@@ -49,12 +57,33 @@ class MyVolunteerEventActivity : AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         getData()
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(volunteerArrayList.isEmpty()){
+                    viewStubVolunteerEvent .visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubVolunteerEvent .visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 1000)
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(volunteerArrayList.isEmpty()){
+            viewStubVolunteerEvent .visibility = View.VISIBLE
+        } else {
+            viewStubVolunteerEvent .visibility = View.GONE
+        }
     }
 
     private fun getData(){

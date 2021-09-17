@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#F2F2F2"
+            android:background="#3D3D3D"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="15dp"
@@ -45,10 +45,10 @@
             <TextView
                 android:id="@+id/showTopicName"
                 android:layout_width="159dp"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Story of Muhammad Ziyad Zolkefli"
-                android:textColor="@color/black"
+                android:textColor="@color/GreyishWhite"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
@@ -69,7 +69,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Inspiration story of Malaysian Paralympic Athlete Gold Medalist"
-                android:textColor="#8E8E8E"
+                android:textColor="@color/GreyishSand"
                 android:textSize="10sp" />
 
         </LinearLayout>

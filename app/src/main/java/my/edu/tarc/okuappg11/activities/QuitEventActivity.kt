@@ -94,41 +94,45 @@ class QuitEventActivity : AppCompatActivity() {
                         mView.etReason.error = "Please enter your reason."
                         return@setOnClickListener
                     }*/
-                    fStore.collection("users").document(userID!!).collection("upcoming events")
-                        .document(eventID!!)
-                        .delete()
-                        .addOnSuccessListener {
-                            Log.d("check", "CHECKDELETE")
-                            Toast.makeText(
-                                this,
-                                "You have quit this event.",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                            finish()
+                fStore.collection("users").document(userID!!).collection("upcoming events")
+                    .document(eventID!!)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d("check", "CHECKDELETE")
+                        Toast.makeText(
+                            this,
+                            "You have quit this event.",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        finish()
 //                            val intent =
 //                                Intent(this@QuitEventActivity, AllUpcomingEvents::class.java)
 //                            startActivity(intent)
 
-                        }.addOnFailureListener {
-                            Log.e("error", it.message.toString())
-                        }
-                    //quit as participants
-                    fStore.collection("events").document(eventID!!).collection("participants")
-                        .document(userID!!)
-                        .delete()
-                        .addOnSuccessListener {
-                            Log.d("check", "CHECKDELETE")
+                    }.addOnFailureListener {
+                        Log.e("error", it.message.toString())
+                    }
+                //quit as participants
+                fStore.collection("events").document(eventID!!).collection("participants")
+                    .document(userID!!)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d("check", "CHECKDELETE")
 
-                        }.addOnFailureListener {
-                            Log.e("error", it.message.toString())
-                        }
-                }
-
-                /*mView.btnCancelReason.setOnClickListener {
-                    mAlertDialog.dismiss()
-                }*/
+                    }.addOnFailureListener {
+                        Log.e("error", it.message.toString())
+                    }
             }
+            dView.btnDialogNo.setOnClickListener {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                dAlertDialog.dismiss()
+            }
+
+            /*mView.btnCancelReason.setOnClickListener {
+                mAlertDialog.dismiss()
+            }*/
+        }
 
         readData(eventID)
     }

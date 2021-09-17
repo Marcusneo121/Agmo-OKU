@@ -3,9 +3,12 @@ package my.edu.tarc.okuappg11.activities
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewStub
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,12 +31,16 @@ class MyPostedEventActivity : AppCompatActivity() {
     private lateinit var postedEventArrayList: ArrayList<PostedEventArrayList>
     private lateinit var postedEventAdapter: PostedEventAdapter
     private var userID: String? = null
+    private lateinit var viewStubPostedEvent: ViewStub
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyPostedEventBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        viewStubPostedEvent = binding.viewStubPostedEvent
+        viewStubPostedEvent.visibility = View.GONE
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
@@ -42,6 +49,7 @@ class MyPostedEventActivity : AppCompatActivity() {
         recyclerView = binding.recyclerViewPostedEvent
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
 
         postedEventArrayList = arrayListOf()
         postedEventAdapter = PostedEventAdapter(postedEventArrayList)
@@ -53,6 +61,18 @@ class MyPostedEventActivity : AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         getData()
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(postedEventArrayList.isEmpty()){
+                    viewStubPostedEvent.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubPostedEvent.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 1000)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -65,6 +85,7 @@ class MyPostedEventActivity : AppCompatActivity() {
             R.id.action_add_events -> {
                 val intent = Intent(this, AddEventActivity::class.java)
                 intent.putExtra("addedBy","eventorganizer")
+                finish()
                 startActivity(intent)
                 return true
             }
@@ -77,6 +98,17 @@ class MyPostedEventActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(postedEventArrayList.isEmpty()){
+            viewStubPostedEvent.visibility = View.VISIBLE
+        } else {
+            viewStubPostedEvent.visibility = View.GONE
+        }
+
+        postedEventAdapter.notifyDataSetChanged()
     }
 
     private fun getData(){

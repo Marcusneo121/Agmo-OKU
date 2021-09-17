@@ -42,6 +42,8 @@ class ViewEventOrganizeDetailsActivity : AppCompatActivity() {
         binding.btnViewEditEventDetails.setOnClickListener {
             val intent = Intent(this@ViewEventOrganizeDetailsActivity, AdminEventDetailsActivity::class.java)
             intent.putExtra("EventUID",eventId)
+            intent.putExtra("accessBy","eventorganizer")
+            finish()
             startActivity(intent)
         }
 

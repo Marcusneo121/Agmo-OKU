@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.MyPostedEventActivity
 import my.edu.tarc.okuappg11.activities.ViewEventOrganizeDetailsActivity
 import my.edu.tarc.okuappg11.data.PostedEventArrayList
 import my.edu.tarc.okuappg11.utils.GlideLoader
@@ -57,14 +58,12 @@ class PostedEventAdapter(private val postedEventList: ArrayList<PostedEventArray
         val eventId = holder.eventId.text
 
         holder.itemView.setOnClickListener(){
-
             val intent = Intent(holder.itemView.context, ViewEventOrganizeDetailsActivity::class.java)
             intent.putExtra("EventUID","${eventId.toString()}")
             holder.itemView.context.startActivity(intent)
         }
 
     }
-
 
     override fun getItemCount(): Int {
         return postedEventList.size
