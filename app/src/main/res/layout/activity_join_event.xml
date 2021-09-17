@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3D3D3D"
+    tools:context=".activities.JoinEvent">
+
+    <TextView
+        android:id="@+id/tvPersonalDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/tvPersonalDetails"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etPName"
+        android:layout_width="360dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/et_bg_white"
+        android:editable="false"
+        android:ems="10"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="@string/etVNameHint"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:textColor="#999999"
+        android:textColorHint="#B5ACAC"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvPersonalDetails"
+        app:layout_constraintTop_toBottomOf="@+id/tvPersonalDetails" />
+
+    <EditText
+        android:id="@+id/etPEmail"
+        style="@style/volunteerRegisterDesign"
+        android:layout_width="360dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/et_bg_white"
+        android:ems="10"
+        android:hint="@string/etVEmailHint"
+        android:inputType="textPersonName"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:textColorHint="#B5ACAC"
+        app:layout_constraintEnd_toEndOf="@+id/etPName"
+        app:layout_constraintStart_toStartOf="@+id/etPName"
+        app:layout_constraintTop_toBottomOf="@+id/etPName" />
+
+    <EditText
+        android:id="@+id/etPPhone"
+        style="@style/volunteerRegisterDesign"
+        android:layout_width="360dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/et_bg_white"
+        android:ems="10"
+        android:hint="@string/etVPhoneHint"
+        android:inputType="textPersonName"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:textColorHint="#B5ACAC"
+        app:layout_constraintEnd_toEndOf="@+id/etPEmail"
+        app:layout_constraintStart_toStartOf="@+id/etPEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etPEmail" />
+
+    <CheckBox
+        android:id="@+id/cBoxJoin1"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/joinCheck2"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/etPPhone"
+        app:layout_constraintStart_toStartOf="@+id/etPPhone"
+        app:layout_constraintTop_toBottomOf="@+id/etPPhone" />
+
+    <CheckBox
+        android:id="@+id/cBoxJoin2"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/checkBoxJoinEvent"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cBoxJoin1"
+        app:layout_constraintStart_toStartOf="@+id/cBoxJoin1"
+        app:layout_constraintTop_toBottomOf="@+id/cBoxJoin1" />
+
+    <LinearLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="409dp"
+        android:layout_height="80dp"
+        android:background="#000000"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnPReset"
+            style="@style/volunteerRegisterButton"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:text="@string/btnVReset"
+            android:textColor="#3D70FF"
+            app:backgroundTint="#000000"
+            app:strokeColor="#3D70FF"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/btnPSubmit"
+            style="@style/volunteerRegisterButton"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:text="@string/btnVSubmit"
+            android:textColor="@color/white"
+            app:backgroundTint="#3D70FF" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

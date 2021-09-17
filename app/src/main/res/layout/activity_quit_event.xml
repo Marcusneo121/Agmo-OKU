@@ -70,10 +70,10 @@
         android:text="@string/btnQuitEvent"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:backgroundTint="#EA4335"
+        app:backgroundTint="#DA0101"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:strokeColor="#EA4335"
+        app:strokeColor="#DA0101"
         app:strokeWidth="2dp" />
 
     <ScrollView

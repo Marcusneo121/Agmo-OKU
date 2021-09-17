@@ -93,7 +93,7 @@ class AllUpcomingEvents : AppCompatActivity() {
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("users")
             .document(userID!!)
-            .collection("upcoming events")
+            .collection("upcomingEvents")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error != null) {

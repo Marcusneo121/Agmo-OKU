@@ -51,7 +51,7 @@ class TrendingAdapter(var trendingList: ArrayList<TrendingModel>): RecyclerView.
 //            intent.putExtra("EventUID", eventIDNumber)
 //            holder.itemView.context.startActivity(intent)
 
-            val jRef = fStore.collection("users").document(userID!!).collection("upcoming events").document(eventIDNumber)
+            val jRef = fStore.collection("users").document(userID!!).collection("upcomingEvents").document(eventIDNumber)
             jRef.get()
                 .addOnSuccessListener { document ->
                     if (document.getString("eventUID") == eventIDNumber) {

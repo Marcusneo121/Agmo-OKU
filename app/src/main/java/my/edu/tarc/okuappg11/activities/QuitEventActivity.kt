@@ -94,7 +94,7 @@ class QuitEventActivity : AppCompatActivity() {
                         mView.etReason.error = "Please enter your reason."
                         return@setOnClickListener
                     }*/
-                fStore.collection("users").document(userID!!).collection("upcoming events")
+                fStore.collection("users").document(userID!!).collection("upcomingEvents")
                     .document(eventID!!)
                     .delete()
                     .addOnSuccessListener {

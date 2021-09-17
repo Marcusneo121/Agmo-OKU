@@ -71,7 +71,7 @@ class ProfileFragment : Fragment() {
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("users")
             .document(userID!!)
-            .collection("upcoming events")
+            .collection("upcomingEvents")
             .limit(2)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
