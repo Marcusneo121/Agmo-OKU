@@ -202,5 +202,14 @@
     <string name="update_event_button">Update Event</string>
     <string name="tankerartgallery_gmail_com">tankerartgallery@gmail.com</string>
     <string name="contact_us_at">Contact Us at :</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="chat_bot">Chat Bot</string>
+    <string name="profile_setting">Profile Setting</string>
+    <string name="save">Save</string>
+    <string name="reset_password">Reset Here</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="tvPersonalDetails">Personal Details</string>
+    <string name="checkBoxJoinEvent">I agree that all my personal details submitted are valid and the event organizer is able to obtain this information</string>
+    <string name="joinCheck2">I agree to the terms and conditions of this event</string>
 
 </resources>
