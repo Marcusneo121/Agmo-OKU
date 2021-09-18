@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
@@ -50,6 +51,9 @@ class EventDetailsActivity : AppCompatActivity() {
     private var userRole: String? = null
     private var latitude:String? = null
     private var longitude:String? = null
+
+
+    private lateinit var recyclerViewComment : RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
