@@ -63,12 +63,13 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
             val mAlertDialog = mBuilder.show()
             mView.btnDialogYes.setOnClickListener {
 
-                Toast.makeText(this, "You have accepted this request.", Toast.LENGTH_SHORT).show()
+                acceptEmail()
 
+                Toast.makeText(this, "You have accepted this request.", Toast.LENGTH_SHORT).show()
 
                 val hashMapStatus = hashMapOf(
                 "vstatus" to "Accepted"
-            )
+                )
 
             fStore.collection("events")
                 .document(eventId.toString())
@@ -118,7 +119,7 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
                 .setTitle("Do you want to decline this request?")
             val mAlertDialog = mBuilder.show()
             mView.btnDialogYes.setOnClickListener {
-                email()
+                rejectEmail()
                 fStore.collection("events")
                     .document(eventId.toString())
                     .collection("volunteer")
@@ -230,12 +231,40 @@ class VolunteerRequestDetailActivity : AppCompatActivity() {
     }
 
     private fun email(){
+
         val emailIntent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, arrayOf(vemail.toString()))
         }
         startActivity(emailIntent)
     }
+
+    private fun rejectEmail(){
+        val subject = "Volunteer Application"
+        val message = "Hi " +vname.toString()+"\n\n"+ "Thank you for applying for the volunteer of our event. Unfortunately, we regret to inform you that, on this occasion, your application has not been successful. May I take this opportunity to thank you for the interest you have shown and all the best to you! "
+
+        val emailIntent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(vemail.toString()))
+            putExtra(Intent.EXTRA_SUBJECT,subject.toString())
+            putExtra(Intent.EXTRA_TEXT, message.toString())
+        }
+        startActivity(emailIntent)
+    }
+
+    private fun acceptEmail(){
+        val subject = "Volunteer Application"
+        val message = "Hi " +vname.toString()+"\n\n"+ "Congratulations! Your volunteer application has been approved. Kindly refer to the attachment for your further action. Have a great day :)"
+
+        val emailIntent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(vemail.toString()))
+            putExtra(Intent.EXTRA_SUBJECT,subject.toString())
+            putExtra(Intent.EXTRA_TEXT, message.toString())
+        }
+        startActivity(emailIntent)
+    }
+
 
     private fun phone(){
         val phoneIntent = Intent(Intent.ACTION_DIAL).apply {
