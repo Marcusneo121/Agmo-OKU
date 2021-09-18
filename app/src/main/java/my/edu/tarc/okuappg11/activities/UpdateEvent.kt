@@ -257,7 +257,27 @@ class UpdateEvent : AppCompatActivity() {
 
 
             }else{
-                Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()
+                if (binding.textFieldUpdateEventName.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateEventName.editText!!.setError("This field cannot be empty")
+
+                }
+
+                if(binding.textFieldUpdateEventDescription.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateEventDescription.editText!!.setError("This field cannot be empty")
+
+                }
+
+                if(binding.textFieldUpdateLocation.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateLocation.editText!!.setError("Please select event location through the button.")
+                }
+
+                if(binding.textFieldUpdateDateStart.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateDateStart.editText!!.setError("Please select the date through the button.")
+                }
+
+                if(binding.textFieldUpdateTime.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateTime.editText!!.setError("Please select the time through the button.")
+                }
 
             }
 

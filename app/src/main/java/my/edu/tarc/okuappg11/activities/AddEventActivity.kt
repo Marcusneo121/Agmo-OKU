@@ -33,6 +33,7 @@ import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
 import my.edu.tarc.okuappg11.progressdialog.SignInDialog
 import my.edu.tarc.okuappg11.utils.GlideLoader
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -199,8 +200,9 @@ class AddEventActivity: AppCompatActivity() {
                             binding.textFieldEventDescription.editText!!.text.toString()
                         startDate = binding.textFieldDateStart.editText!!.text.toString()
                         startTime = binding.textFieldTime.editText!!.text.toString()
-                        val dateNow = Calendar.getInstance().time
-                        val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
+                        val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+                        val date = Date()
+                        val strDate: String = dateFormat.format(date).toString()
 
                         dialogAddEvent.startLoading()
 
@@ -228,7 +230,7 @@ class AddEventActivity: AppCompatActivity() {
                                         "eventOrganizerName" to eventOrganizer,
                                         "eventOrganizerUID" to eventOrganizerUID,
                                         "eventLocation" to eventLocation,
-                                        "eventCreatedDate" to formattedDateNow,
+                                        "eventCreatedDate" to strDate,
                                         "status" to "pending",
                                         "latitude" to latitude,
                                         "longitude" to longitude,
@@ -279,7 +281,32 @@ class AddEventActivity: AppCompatActivity() {
                     }.show()
 
             }else{
-                Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()
+                if (binding.textFieldEventName.editText!!.text.isEmpty()){
+                    binding.textFieldEventName.editText!!.setError("This field cannot be empty")
+
+                }
+
+                if(binding.textFieldEventDescription.editText!!.text.isEmpty()){
+                    binding.textFieldEventDescription.editText!!.setError("This field cannot be empty")
+
+                }
+
+                if(binding.textFieldLocation.editText!!.text.isEmpty()){
+                    binding.textFieldLocation.editText!!.setError("Please select event location through the button.")
+                }
+
+                if(binding.textFieldDateStart.editText!!.text.isEmpty()){
+                    binding.textFieldDateStart.editText!!.setError("Please select the date through the button.")
+                }
+
+                if(binding.textFieldTime.editText!!.text.isEmpty()){
+                    binding.textFieldTime.editText!!.setError("Please select the time through the button.")
+                }
+
+                if(mSelectedImageFileUri == null){
+                    Toast.makeText(this, "Please select an image", Toast.LENGTH_LONG).show()
+
+                }
 
             }
 
@@ -414,6 +441,9 @@ class AddEventActivity: AppCompatActivity() {
     }
 
     private fun validateEventDetails(): Boolean {
+
+
+
         if (binding.textFieldEventName.editText!!.text.isEmpty() ||
             binding.textFieldEventDescription.editText!!.text.isEmpty() ||
             binding.textFieldDateStart.editText!!.text.isEmpty() ||
