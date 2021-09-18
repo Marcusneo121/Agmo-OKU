@@ -22,7 +22,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAdminUpdateStoryBinding
-import my.edu.tarc.okuappg11.databinding.ActivityUpdateEventBinding
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
 import my.edu.tarc.okuappg11.utils.GlideLoader

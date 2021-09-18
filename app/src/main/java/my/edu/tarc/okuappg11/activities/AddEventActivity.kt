@@ -3,9 +3,7 @@ package my.edu.tarc.okuappg11.activities
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -31,7 +29,6 @@ import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAddEventBinding
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
-import my.edu.tarc.okuappg11.progressdialog.SignInDialog
 import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.text.SimpleDateFormat
 import java.util.*

@@ -21,7 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.databinding.ActivityAddEventBinding
 import my.edu.tarc.okuappg11.databinding.ActivityAddStoryBinding
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
