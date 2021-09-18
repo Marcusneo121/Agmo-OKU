@@ -148,7 +148,7 @@ class MyPostedEventActivity : AppCompatActivity() {
                                     }
                                     postedEventAdapter.notifyDataSetChanged()
 
-                                    //Log.d("text", bmArrayList.userID)
+
                                 }
                             }.addOnFailureListener { exception ->
                                 Log.d("TAG", "get failed with ", exception)
