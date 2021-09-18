@@ -1,10 +1,13 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import my.edu.tarc.okuappg11.databinding.ActivityForgotPassProfileBinding
@@ -13,7 +16,9 @@ import my.edu.tarc.okuappg11.databinding.ActivityForgotPassProfileBinding
 class ForgotPassProfile : AppCompatActivity() {
 
     private lateinit var binding: ActivityForgotPassProfileBinding
+    private var emailReset : String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPassProfileBinding.inflate(layoutInflater)
@@ -27,6 +32,13 @@ class ForgotPassProfile : AppCompatActivity() {
         var fAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val email = binding.etForgotEmailProfile
         var emailAddressInput: String
+
+        emailReset = intent.getStringExtra("emailReset").toString()
+
+        binding.etForgotEmailProfile.clearFocus()
+        binding.etForgotEmailProfile.isClickable = false
+        binding.etForgotEmailProfile.isFocusable = false
+        binding.etForgotEmailProfile.setText(emailReset.toString())
 
         binding.btnSubmitProfile.setOnClickListener {
             if (email.text.isEmpty()) {
@@ -47,6 +59,11 @@ class ForgotPassProfile : AppCompatActivity() {
                         val handler = Handler()
                         handler.postDelayed(object: Runnable{
                             override fun run() {
+                                val preferences = getSharedPreferences("sharedLogin", Context.MODE_PRIVATE)
+                                val editor = preferences.edit()
+                                editor.clear()
+                                editor.apply()
+
                                 finish()
                                 fAuth.signOut()
                                 val i = Intent(this@ForgotPassProfile,  MainActivity::class.java)

@@ -2,23 +2,23 @@ package my.edu.tarc.okuappg11.progressdialog
 
 import android.app.AlertDialog
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.SignInFragment
+import my.edu.tarc.okuappg11.activities.ProfileSettingActivity
 
-class EmailVerifyDialog(val fragment: SignInFragment){
+class SavedDialog(val activity: ProfileSettingActivity){
 
     private lateinit var isDialog: AlertDialog
     fun startLoading(){
         //Set View
-        val inflater = fragment.layoutInflater
-        val dialogView = inflater.inflate(R.layout.emailverify_dialog, null)
+        val inflater = activity.layoutInflater
+        val dialogView = inflater.inflate(R.layout.saved_dialog, null)
         //Set Dialog
-        val builder = AlertDialog.Builder(fragment.context)
+        val builder = AlertDialog.Builder(activity)
         builder.setView(dialogView)
         builder.setCancelable(false)
         isDialog = builder.create()
         isDialog.show()
         isDialog.setCanceledOnTouchOutside(true)
-        isDialog.window?.setLayout(900,1000) //Controlling width and height.
+        isDialog.window?.setLayout(850,900) //Controlling width and height.
     }
 
     fun isDismiss(){

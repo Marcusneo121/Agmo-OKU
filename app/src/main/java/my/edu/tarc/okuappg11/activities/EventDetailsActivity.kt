@@ -11,6 +11,7 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -47,6 +48,8 @@ class EventDetailsActivity : AppCompatActivity() {
     private var eventID: String? = null
     private var bookmarkCheck:Boolean = false
     private var userRole: String? = null
+    private var latitude:String? = null
+    private var longitude:String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +71,7 @@ class EventDetailsActivity : AppCompatActivity() {
         userID = fAuth.currentUser!!.uid
 
         readBookmark()
+        readData(eventId)
 
         binding.btnUnbookmark.setOnClickListener {
             bookmark()
@@ -78,51 +82,23 @@ class EventDetailsActivity : AppCompatActivity() {
         }
 
         binding.btnJoinEvent.setOnClickListener {
-            val dView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            /*val dView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
             val dBuilder = AlertDialog.Builder(this)
                 .setView(dView)
                 .setTitle("Do you want to join this event?")
             val dAlertDialog = dBuilder.show()
-            dView.btnDialogYes.setOnClickListener {
-                val hashmapUpcomingEvents = hashMapOf(
-                    "eventUID" to eventID,
-                    "eventName" to eventName,
-                    "startDate" to startDate,
-                    "startTime" to startTime
-                )
-
-                fStore.collection("users").document(userID!!).collection("upcoming events")
-                    .document(eventID.toString())
-                    .set(hashmapUpcomingEvents)
-                    .addOnSuccessListener {
-                        Log.d("check", "CHECKADD")
-                        //val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                        //startActivity(intent)
-                    }.addOnFailureListener {
-                        Log.e("error", it.message.toString())
-                    }
-
-                val hashmapParticipants = hashMapOf(
-                    "userUID" to userID,
-                )
-
-                fStore.collection("events").document(eventID!!).collection("participants")
-                    .document(userID!!)
-                    .set(hashmapParticipants)
-                    .addOnSuccessListener {
-                        Log.d("check", "CHECKADD")
-                        finish()
-                        val intent =
-                            Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                        startActivity(intent)
-                    }.addOnFailureListener {
-                        Log.e("error", it.message.toString())
-                    }
-            }
+            dView.btnDialogYes.setOnClickListener {*/
+                val intent = Intent(this@EventDetailsActivity, JoinEvent::class.java)
+                intent.putExtra("EventUID","${eventId.toString()}")
+                intent.putExtra("EventName","${eventName.toString()}")
+                intent.putExtra("StartDate","${startDate.toString()}")
+                intent.putExtra("StartTime","${startTime.toString()}")
+                startActivity(intent)
+            /*}
             dView.btnDialogNo.setOnClickListener {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
                 dAlertDialog.dismiss()
-            }
+            }*/
         }
 
         binding.btnVolunteer.setOnClickListener(){
@@ -131,7 +107,16 @@ class EventDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        readData(eventId)
+        binding.tvEventLocation.setOnClickListener{
+            val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")
+            val locationIntent = Intent(Intent.ACTION_VIEW,locationUri)
+            locationIntent.setPackage("com.google.android.apps.maps")
+            locationIntent.resolveActivity(packageManager)?.let{
+                startActivity(locationIntent)
+            }
+        }
+
+
     }
 
     private fun unBookmark() {
@@ -247,6 +232,8 @@ class EventDetailsActivity : AppCompatActivity() {
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
                     eventLocation = document.getString("eventLocation")
+                    latitude = document.get("latitude").toString()
+                    longitude = document.get("longitude").toString()
 
                     supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate

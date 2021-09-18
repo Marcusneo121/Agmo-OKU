@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey_focused"
+    tools:context=".progressdialog.SavedDialog">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/emailLottie"
+        android:layout_width="220dp"
+        android:layout_height="203dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.092"
+        app:layout_constraintWidth_percent="0.4"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/confetti_saved" />
+
+    <TextView
+        android:id="@+id/signInErr3"
+        style="@style/inputDesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Update Saved"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLottie" />
+
+    <TextView
+        android:id="@+id/signInErr4"
+        style="@style/inputDesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Press outside to dismiss"
+        android:textColor="#9F9F9F"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInErr3" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInErr4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

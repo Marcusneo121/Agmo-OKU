@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.list_item_search.view.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.EventDetailsActivity
 import my.edu.tarc.okuappg11.activities.QuitEventActivity
@@ -54,7 +52,7 @@ class SearchListAdapter(var searchList: ArrayList<SearchModel>): RecyclerView.Ad
 //            intent.putExtra("EventUID", eventIDNumber)
 //            holder.itemView.context.startActivity(intent)
 
-            val jRef = fStore.collection("users").document(userID!!).collection("upcoming events").document(eventIDNumber)
+            val jRef = fStore.collection("users").document(userID!!).collection("upcomingEvents").document(eventIDNumber)
             jRef.get()
                 .addOnSuccessListener { document ->
                     if (document.getString("eventUID") == eventIDNumber) {

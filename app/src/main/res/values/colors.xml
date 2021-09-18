@@ -44,4 +44,7 @@
 
     <color name="logout">#AD0404</color>
     <color name="logout_ripple">#623C3C3C</color>
+
+    <color name="save_disabled">#273870</color>
+    <color name="save_enabled">#597FFF</color>
 </resources>

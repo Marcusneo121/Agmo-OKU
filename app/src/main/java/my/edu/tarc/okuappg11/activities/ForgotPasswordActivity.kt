@@ -26,6 +26,7 @@ private lateinit var binding: ActivityForgotPasswordBinding
         val email = binding.etForgotEmail
         var emailAddressInput: String
 
+
         binding.btnSubmit.setOnClickListener {
             if (email.text.isEmpty()) {
                 email.error = "Please enter email."

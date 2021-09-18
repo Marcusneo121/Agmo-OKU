@@ -19,7 +19,7 @@ class EmailSentDialog(val fragment: RegisterFragment) {
         isDialog = builder.create()
         isDialog.show()
         isDialog.setCanceledOnTouchOutside(true)
-        isDialog.window?.setLayout(1200,1200) //Controlling width and height.
+        isDialog.window?.setLayout(900,1000) //Controlling width and height.
     }
 
     fun isDismiss(){

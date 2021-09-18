@@ -202,7 +202,7 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
             fStore = FirebaseFirestore.getInstance()
             fStore.collection("users")
                 .document(userID!!)
-                .collection("upcoming events")
+                .collection("upcomingEvents")
                 .document(snippet!!)
                 .get()
                 .addOnSuccessListener { dc ->

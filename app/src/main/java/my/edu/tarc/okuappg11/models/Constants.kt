@@ -11,6 +11,7 @@ object Constants {
     const val PICK_IMAGE_REQUEST_CODE = 1
     const val PLACE_PICKER_REQUEST =1
     const val USER_PROFILE_IMAGE:String = "EVENT_THUMBNAIL"
+    const val USER_IMAGE:String = "PROFILE_IMAGE"
     const val STORY_IMAGE:String = "STORY_THUMBNAIL"
 
 

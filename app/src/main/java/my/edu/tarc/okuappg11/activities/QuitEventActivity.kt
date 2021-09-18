@@ -3,6 +3,7 @@ package my.edu.tarc.okuappg11.activities
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -40,6 +41,8 @@ class QuitEventActivity : AppCompatActivity() {
     private var userID: String? = null
     private var eventID: String? = null
     private var bookmarkCheck:Boolean = false
+    private var latitude:String? = null
+    private var longitude:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,14 @@ class QuitEventActivity : AppCompatActivity() {
 
         readBookmark()
 
+        binding.tvEventLocation.setOnClickListener{
+            val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")
+            val locationIntent = Intent(Intent.ACTION_VIEW,locationUri)
+            locationIntent.setPackage("com.google.android.apps.maps")
+            locationIntent.resolveActivity(packageManager)?.let{
+                startActivity(locationIntent)
+            }
+        }
 
         binding.btnUnbookmark.setOnClickListener {
             bookmark()
@@ -94,7 +105,7 @@ class QuitEventActivity : AppCompatActivity() {
                         mView.etReason.error = "Please enter your reason."
                         return@setOnClickListener
                     }*/
-                fStore.collection("users").document(userID!!).collection("upcoming events")
+                fStore.collection("users").document(userID!!).collection("upcomingEvents")
                     .document(eventID!!)
                     .delete()
                     .addOnSuccessListener {
@@ -251,6 +262,8 @@ class QuitEventActivity : AppCompatActivity() {
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
                     eventLocation = document.getString("eventLocation")
+                    latitude = document.get("latitude").toString()
+                    longitude = document.get("longitude").toString()
 
                     supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate

@@ -2,6 +2,7 @@ package my.edu.tarc.okuappg11.fragments
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -14,14 +15,19 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_profile.*
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.*
 import my.edu.tarc.okuappg11.databinding.FragmentProfileBinding
+import java.io.File
 
 class ProfileFragment : Fragment() {
 
@@ -71,7 +77,7 @@ class ProfileFragment : Fragment() {
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("users")
             .document(userID!!)
-            .collection("upcoming events")
+            .collection("upcomingEvents")
             .limit(2)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -159,6 +165,8 @@ class ProfileFragment : Fragment() {
             }
         }, 1000)
 
+        readImage(userID)
+
         fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
             userRole = it.get("userType").toString()
             if(userRole == "Normal" ){
@@ -233,8 +241,26 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun readImage(userID: String?){
+        val sRef: StorageReference =
+            FirebaseStorage.getInstance().reference.child("PROFILE_IMAGE${userID}.jpg")
+        val localfile = File.createTempFile("tempImage", "jpg")
+        sRef.getFile(localfile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
+            binding.imgProfileFrag.setImageBitmap(bitmap)
+            Log.d("CHECK", " IMAGE LOADED")
+        }.addOnFailureListener {
+            Glide.with(this).load(R.drawable.ic_round_account_circle_192).into(binding.imgProfileFrag)
+            Log.d("CHECK", it.message.toString())
+            Log.d("CHECK", "EVENT_THUMBNAIL${userID}.jpg")
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+
+        readImage(userID)
+
         if(ueArrayList.isEmpty()){
             viewStubNoUpcomingEvent.visibility = View.VISIBLE
         } else {
