@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -33,6 +34,8 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private var addedBy: String? = null
     private var accessBy: String? = null
     private var eventId: String? = null
+    private var latitude:String? = null
+    private var longitude:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,15 @@ class AdminEventDetailsActivity : AppCompatActivity() {
         accessBy = intent.getStringExtra("accessBy")
 
         readData(eventId)
+
+        binding.tvAdminEventLocation.setOnClickListener {
+            val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")
+            val locationIntent = Intent(Intent.ACTION_VIEW,locationUri)
+            locationIntent.setPackage("com.google.android.apps.maps")
+            locationIntent.resolveActivity(packageManager)?.let{
+                startActivity(locationIntent)
+            }
+        }
 
         if (eventType == "pending") {
             binding.btnLeft.setText(R.string.pending_reject)
@@ -153,6 +165,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     }
 
     private fun readData(eventId: String?) {
+
         val docRef = fStore.collection("events").document(eventId.toString())
         docRef.get()
             .addOnSuccessListener { document ->
@@ -162,6 +175,8 @@ class AdminEventDetailsActivity : AppCompatActivity() {
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
                     eventLocation = document.getString("eventLocation")
+                    latitude = document.get("latitude").toString()
+                    longitude = document.get("longitude").toString()
 
                     supportActionBar?.title = eventName
                     binding.tvAdminEventDate.text = startDate

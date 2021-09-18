@@ -144,7 +144,8 @@
                             android:gravity="left"
                             android:textAlignment="gravity"
                             android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:autoLink="web"/>
                     </LinearLayout>
 
                     <LinearLayout
