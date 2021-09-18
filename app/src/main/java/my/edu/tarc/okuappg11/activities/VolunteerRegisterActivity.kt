@@ -94,7 +94,7 @@ class VolunteerRegisterActivity : AppCompatActivity() {
             val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
             val mBuilder = AlertDialog.Builder(this)
                 .setView(mView)
-                .setTitle("I confirm the all the contact information provided are correct!")
+                .setTitle("I confirm that all the contact information provided are correct!")
             val mAlertDialog = mBuilder.show()
             mView.btnDialogYes.setOnClickListener {
                 sendVolunteerRequest(eventId)

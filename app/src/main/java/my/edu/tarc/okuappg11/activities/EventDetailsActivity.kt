@@ -52,9 +52,8 @@ class EventDetailsActivity : AppCompatActivity() {
     private var latitude:String? = null
     private var longitude:String? = null
 
-
     private lateinit var recyclerViewComment : RecyclerView
-
+    private var pressedHideShow: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +75,18 @@ class EventDetailsActivity : AppCompatActivity() {
 
         readBookmark()
         readData(eventId)
+
+        binding.btnShowHideComment.setOnClickListener {
+            if(!pressedHideShow){
+                binding.lyComments.visibility = View.GONE
+                binding.btnShowHideComment.text = "Show Comments"
+                pressedHideShow = true
+            } else {
+                binding.lyComments.visibility = View.VISIBLE
+                binding.btnShowHideComment.text = "Hide Comments"
+                pressedHideShow = false
+            }
+        }
 
         binding.btnUnbookmark.setOnClickListener {
             bookmark()
