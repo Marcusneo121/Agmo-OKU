@@ -11,6 +11,7 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -19,6 +20,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
@@ -47,7 +49,11 @@ class EventDetailsActivity : AppCompatActivity() {
     private var eventID: String? = null
     private var bookmarkCheck:Boolean = false
     private var userRole: String? = null
+    private var latitude:String? = null
+    private var longitude:String? = null
 
+    private lateinit var recyclerViewComment : RecyclerView
+    private var pressedHideShow: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +74,19 @@ class EventDetailsActivity : AppCompatActivity() {
         userID = fAuth.currentUser!!.uid
 
         readBookmark()
+        readData(eventId)
+
+        binding.btnShowHideComment.setOnClickListener {
+            if(!pressedHideShow){
+                binding.lyComments.visibility = View.GONE
+                binding.btnShowHideComment.text = "Show Comments"
+                pressedHideShow = true
+            } else {
+                binding.lyComments.visibility = View.VISIBLE
+                binding.btnShowHideComment.text = "Hide Comments"
+                pressedHideShow = false
+            }
+        }
 
         binding.btnUnbookmark.setOnClickListener {
             bookmark()
@@ -103,7 +122,16 @@ class EventDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        readData(eventId)
+        binding.tvEventLocation.setOnClickListener{
+            val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")
+            val locationIntent = Intent(Intent.ACTION_VIEW,locationUri)
+            locationIntent.setPackage("com.google.android.apps.maps")
+            locationIntent.resolveActivity(packageManager)?.let{
+                startActivity(locationIntent)
+            }
+        }
+
+
     }
 
     private fun unBookmark() {
@@ -219,6 +247,8 @@ class EventDetailsActivity : AppCompatActivity() {
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
                     eventLocation = document.getString("eventLocation")
+                    latitude = document.get("latitude").toString()
+                    longitude = document.get("longitude").toString()
 
                     supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate

@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.list_item_search.view.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.activities.EventDetailsActivity
 import my.edu.tarc.okuappg11.activities.QuitEventActivity

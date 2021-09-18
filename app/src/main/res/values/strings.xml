@@ -213,4 +213,6 @@
     <string name="checkBoxJoinEvent">I agree that all my personal details submitted are valid and the event organizer is able to obtain this information</string>
     <string name="joinCheck2">I agree to the terms and conditions of this event</string>
 
+    <string name="profile_success">Profile Saved</string>
+    <string name="profile_failed">Unsuccessful Profile Edit</string>
 </resources>

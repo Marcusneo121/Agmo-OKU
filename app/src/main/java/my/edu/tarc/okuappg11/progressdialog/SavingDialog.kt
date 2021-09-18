@@ -2,17 +2,17 @@ package my.edu.tarc.okuappg11.progressdialog
 
 import android.app.AlertDialog
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.RegisterFragment
+import my.edu.tarc.okuappg11.activities.ProfileSettingActivity
 
-class RegisterDialog(val fragment: RegisterFragment) {
+class SavingDialog(val activity: ProfileSettingActivity){
 
-    private lateinit var isDialog:AlertDialog
+    private lateinit var isDialog: AlertDialog
     fun startLoading(){
         //Set View
-        val inflater = fragment.layoutInflater
-        val dialogView = inflater.inflate(R.layout.register_dialog, null)
+        val inflater = activity.layoutInflater
+        val dialogView = inflater.inflate(R.layout.saving_dialog, null)
         //Set Dialog
-        val builder = AlertDialog.Builder(fragment.context)
+        val builder = AlertDialog.Builder(activity)
         builder.setView(dialogView)
         builder.setCancelable(false)
         isDialog = builder.create()

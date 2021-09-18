@@ -22,7 +22,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAdminUpdateStoryBinding
-import my.edu.tarc.okuappg11.databinding.ActivityUpdateEventBinding
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
 import my.edu.tarc.okuappg11.utils.GlideLoader
@@ -176,7 +175,21 @@ class AdminUpdateStory : AppCompatActivity() {
 
 
             } else {
-                Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()
+                if(binding.textFieldUpdateStoryTitle.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateStoryTitle.editText!!.setError("This field cannot be empty.")
+                }
+
+                if(binding.textFieldUpdateStoryTitle.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateStoryThumbnailDescription.editText!!.setError("This field cannot be empty.")
+                }
+
+                if(binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateStoryDescription.editText!!.setError("This field cannot be empty.")
+                }
+
+                if(binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.length > 20){
+                    binding.textFieldUpdateStoryThumbnailDescription.editText!!.setError("Can't exceed 20 characters!")
+                }
 
             }
 
@@ -277,7 +290,8 @@ class AdminUpdateStory : AppCompatActivity() {
     private fun validateStoryDetails(): Boolean {
         if (binding.textFieldUpdateStoryTitle.editText!!.text.isEmpty() ||
             binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.isEmpty() ||
-            binding.textFieldUpdateStoryDescription.editText!!.text.isEmpty()
+            binding.textFieldUpdateStoryDescription.editText!!.text.isEmpty() ||
+            binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.length  >20
         ) {
             return false
         } else {

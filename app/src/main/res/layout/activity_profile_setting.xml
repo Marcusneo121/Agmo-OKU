@@ -24,6 +24,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="normal"
+        android:visibility="invisible"
         app:backgroundTint="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +32,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/logout_ripple"
         app:strokeColor="@color/home_purple"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/btnSaveProfileSettingsDisabled"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="false"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="#2B3D78"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:backgroundTint="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/logout_ripple"
+        app:strokeColor="#2B3D78"
         app:strokeWidth="2dp" />
 
     <LinearLayout
@@ -74,7 +101,7 @@
                         android:layout_height="175dp"
                         android:clickable="true"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/image_place_holder" />
+                        android:src="@drawable/ic_round_account_circle_192" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -84,7 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15sp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Username"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
 
@@ -93,7 +119,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="tankerartgallery@gmail.com"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -103,7 +128,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="userType"
                     android:textColor="@color/theme_purple"
                     android:textSize="16sp" />
 
@@ -115,7 +139,7 @@
             android:layout_height="70dp"
             android:layout_marginTop="10dp"
             app:cardBackgroundColor="@color/bottom_nav_bar_disabled"
-            app:cardCornerRadius="18dp">
+            app:cardCornerRadius="21dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -145,7 +169,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/reset_password"
                     android:textColor="@color/home_purple"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

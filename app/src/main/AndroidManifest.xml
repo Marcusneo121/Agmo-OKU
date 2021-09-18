@@ -27,11 +27,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.VerifyOTP"></activity>
-        <activity android:name=".activities.VerifyPhone" />
-        <activity android:name=".activities.JoinEvent" />
-        <activity android:name=".activities.ParticipantsActivity" />
+        android:theme="@style/Theme.OKUAPPG11"
+        android:screenOrientation="portrait">
+        <activity android:name=".activities.JoinEvent"></activity>
+        <activity android:name=".activities.ParticipantsActivity"/>
         <activity android:name=".activities.AllTopicsActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <!--
@@ -58,6 +57,9 @@
         <activity android:name=".activities.ViewEventOrganizeDetailsActivity" />
         <activity android:name=".activities.MyPostedEventActivity" />
         <activity android:name=".activities.MyVolunteerEventActivity" />
+        <activity android:name=".activities.ProfileSettingActivity" />
+        <activity android:name=".activities.ForgotPassProfile" />
+        <activity android:name=".activities.ContactUsActivity" />
         <activity
             android:name=".activities.AdminUpdateStory"
             android:screenOrientation="portrait" />

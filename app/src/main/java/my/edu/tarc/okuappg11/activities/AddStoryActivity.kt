@@ -21,11 +21,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.R
-import my.edu.tarc.okuappg11.databinding.ActivityAddEventBinding
 import my.edu.tarc.okuappg11.databinding.ActivityAddStoryBinding
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
 import my.edu.tarc.okuappg11.utils.GlideLoader
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -101,8 +101,9 @@ class AddStoryActivity : AppCompatActivity() {
                             binding.textFieldStoryThumbnailDescription.editText!!.text.toString()
                         storyDescription =
                             binding.textFieldStoryDescription.editText!!.text.toString()
-                        val dateNow = Calendar.getInstance().time
-                        val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
+                        val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+                        val date = Date()
+                        val strDate: String = dateFormat.format(date).toString()
 
 
                         Log.d("check", storyId.toString())
@@ -124,7 +125,7 @@ class AddStoryActivity : AppCompatActivity() {
                                         "storyTitle" to storyTitle!!.capitalize(),
                                         "storyThumbnailDescription" to storyThumbnailDescription,
                                         "storyDescription" to storyDescription,
-                                        "storyCreatedDate" to formattedDateNow,
+                                        "storyCreatedDate" to strDate,
                                         "storyThumbnailURL" to uri.toString()
 
                                     )
@@ -170,7 +171,26 @@ class AddStoryActivity : AppCompatActivity() {
                     }.show()
 
             }else{
-                Toast.makeText(this, R.string.event_validation_error, Toast.LENGTH_LONG).show()
+                if(binding.textFieldStoryTitle.editText!!.text.isEmpty()){
+                    binding.textFieldStoryTitle.editText!!.setError("This field cannot be empty.")
+                }
+
+                if(binding.textFieldStoryDescription.editText!!.text.isEmpty()){
+                    binding.textFieldStoryDescription.editText!!.setError("This field cannot be empty.")
+                }
+
+                if(binding.textFieldStoryThumbnailDescription.editText!!.text.isEmpty()){
+                    binding.textFieldStoryThumbnailDescription.editText!!.setError("This field cannot be empty.")
+                }
+
+                if(binding.textFieldStoryThumbnailDescription.editText!!.text.length > 20){
+                    binding.textFieldStoryThumbnailDescription.editText!!.setError("Can't exceed 20 characters!")
+                }
+
+                if(mSelectedImageFileUri == null){
+                    Toast.makeText(this, "Please select an image.", Toast.LENGTH_LONG).show()
+
+                }
 
             }
 
@@ -236,6 +256,7 @@ class AddStoryActivity : AppCompatActivity() {
         if (binding.textFieldStoryDescription.editText!!.text.isEmpty() ||
             binding.textFieldStoryThumbnailDescription.editText!!.text.isEmpty() ||
             binding.textFieldStoryTitle.editText!!.text.isEmpty() ||
+            binding.textFieldStoryThumbnailDescription.editText!!.text.length  >20 ||
                 mSelectedImageFileUri == null){
             return false
         }else{

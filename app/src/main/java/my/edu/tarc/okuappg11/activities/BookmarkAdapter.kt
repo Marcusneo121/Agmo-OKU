@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.utils.GlideLoader

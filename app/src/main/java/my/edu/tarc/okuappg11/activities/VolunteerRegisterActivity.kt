@@ -3,15 +3,21 @@ package my.edu.tarc.okuappg11.activities
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
+import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerRegisterBinding
 import java.util.regex.Pattern
 
@@ -85,9 +91,23 @@ class VolunteerRegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            sendVolunteerRequest(eventId)
-            Toast.makeText(this, "Your request has been recorded!", Toast.LENGTH_SHORT).show()
-            finish()
+            val mView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            val mBuilder = AlertDialog.Builder(this)
+                .setView(mView)
+                .setTitle("I confirm that all the contact information provided are correct!")
+            val mAlertDialog = mBuilder.show()
+            mView.btnDialogYes.setOnClickListener {
+                sendVolunteerRequest(eventId)
+                //sendEmail()
+                Toast.makeText(this, "Your request has been recorded!", Toast.LENGTH_SHORT).show()
+                finish()
+
+            }
+            mView.btnDialogNo.setOnClickListener {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
+            }
+
         }
 
         binding.btnVReset.setOnClickListener(){
@@ -147,5 +167,7 @@ class VolunteerRegisterActivity : AppCompatActivity() {
                 Log.d("TAG", "get failed with ", exception)
             }
     }
+
+
 
 }
