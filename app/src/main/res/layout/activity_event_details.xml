@@ -331,7 +331,7 @@
                         android:textSize="14sp" />
 
                     <Button
-                        android:id="@+id/btnSetting"
+                        android:id="@+id/btnSubmitComment"
                         style="@style/ToggleButtonWithIconOnly"
                         android:layout_width="54dp"
                         android:layout_height="wrap_content"
@@ -353,9 +353,24 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
-                    tools:listitem="@layout/recycler_view_item" />
+                    tools:itemCount="13"
+                    tools:listitem="@layout/recycler_view_item">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/btnSeeAllComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="See All"
+                    android:textColor="@color/theme_purple"
+                    android:textSize="15dp" />
 
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

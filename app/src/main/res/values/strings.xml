@@ -207,7 +207,7 @@
     <string name="profile_setting">Profile Setting</string>
     <string name="save">Save</string>
     <string name="reset_password">Reset Here</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password">Reset Password?</string>
     <string name="btnDltVol">Delete</string>
     <string name="tvPersonalDetails">Personal Details</string>
     <string name="checkBoxJoinEvent">I agree that all my personal details submitted are valid and the event organizer is able to obtain this information</string>
