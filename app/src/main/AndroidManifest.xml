@@ -28,8 +28,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OKUAPPG11">
-        <activity android:name=".activities.JoinEvent"></activity>
-        <activity android:name=".activities.ParticipantsActivity"/>
+        <activity android:name=".activities.VerifyOTP"></activity>
+        <activity android:name=".activities.VerifyPhone" />
+        <activity android:name=".activities.JoinEvent" />
+        <activity android:name=".activities.ParticipantsActivity" />
         <activity android:name=".activities.AllTopicsActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <!--

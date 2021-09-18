@@ -17,14 +17,16 @@ class JoinEvent : AppCompatActivity() {
     private lateinit var binding: ActivityJoinEventBinding
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
-
+    private var startDate:String? = null
+    private var startTime:String? = null
     private lateinit var pName: EditText
     private lateinit var pEmail: EditText
-    private lateinit var pPhone : EditText
     private var participantUID:String? =null
     private var participantName:String? = null
+    private var participantEmail:String? = null
+    private var eventName:String? = null
     private var userID: String? = null
-    private var eventID: String? = null
+    //private var eventID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,19 +45,16 @@ class JoinEvent : AppCompatActivity() {
         val eventName = intent.getStringExtra("EventName")
         val startDate = intent.getStringExtra("StartDate")
         val startTime = intent.getStringExtra("StartTime")
-        eventID = intent.getStringExtra("EventUID").toString()
+        //eventID = intent.getStringExtra("EventUID").toString()
         userID = fAuth.currentUser!!.uid
 
         pName = binding.etPName
         pEmail = binding.etPEmail
-        pPhone = binding.etPPhone
 
         getDisplayName()
-
         binding.btnPReset.setOnClickListener(){
             binding.etPName.setText("")
             binding.etPEmail.setText("")
-            binding.etPPhone.setText("")
             binding.cBoxJoin1.isChecked = false
             binding.cBoxJoin2.isChecked = false
 
@@ -71,10 +70,6 @@ class JoinEvent : AppCompatActivity() {
                 pEmail.error = "Please enter your email address."
                 return@setOnClickListener
             }
-            if (pPhone.text.isEmpty()) {
-                pPhone.error = "Please enter your phone number."
-                return@setOnClickListener
-            }
 
             if (binding.cBoxJoin1.isChecked == false){
                 Toast.makeText(this, "Please agree with the terms and conditions", Toast.LENGTH_SHORT).show()
@@ -85,7 +80,18 @@ class JoinEvent : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            registerEvent(eventId, eventName, startDate, startTime)
+            participantName = binding.etPName.text.toString()
+            participantEmail = binding.etPEmail.text.toString()
+
+           // registerEvent(eventId, eventName, startDate, startTime)
+            val intent = Intent(this@JoinEvent, VerifyPhone::class.java)
+            intent.putExtra("EventUID","${eventId.toString()}")
+            intent.putExtra("EventName","${eventName.toString()}")
+            intent.putExtra("StartDate","${startDate.toString()}")
+            intent.putExtra("StartTime","${startTime.toString()}")
+            intent.putExtra("ParticipantName", "${participantName.toString()}")
+            intent.putExtra("ParticipantEmail", "${participantEmail.toString()}")
+            startActivity(intent)
 
             finish()
         }
@@ -96,6 +102,8 @@ class JoinEvent : AppCompatActivity() {
         return true
     }
 
+
+/*
     private fun registerEvent(eventId: String?, eventName: String?, startDate: String?, startTime: String?){
         val hashmapUpcomingEvents = hashMapOf(
             "eventUID" to eventId.toString(),
@@ -129,7 +137,7 @@ class JoinEvent : AppCompatActivity() {
                 Log.d("check", "CHECKADD")
 
                 val intent =
-                    Intent(this@JoinEvent, AllUpcomingEvents::class.java)
+                    Intent(this@JoinEvent, VerifyPhone::class.java)
                 startActivity(intent)
                 finish()
             }.addOnFailureListener {
@@ -137,6 +145,7 @@ class JoinEvent : AppCompatActivity() {
             }
 
     }
+*/
 
     private fun getDisplayName() {
         val docRef = fStore.collection("users").document(fAuth.currentUser!!.uid)
@@ -148,7 +157,7 @@ class JoinEvent : AppCompatActivity() {
                     binding.etPName.setText(participantName)
 
                 } else {
-                    Log.d("HEY", "No such document")
+                    Log.d("LMAO", "No such document")
                 }
             }
             .addOnFailureListener { exception ->

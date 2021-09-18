@@ -62,36 +62,18 @@
         app:layout_constraintStart_toStartOf="@+id/etPName"
         app:layout_constraintTop_toBottomOf="@+id/etPName" />
 
-    <EditText
-        android:id="@+id/etPPhone"
-        style="@style/volunteerRegisterDesign"
-        android:layout_width="360dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/et_bg_white"
-        android:ems="10"
-        android:hint="@string/etVPhoneHint"
-        android:inputType="textPersonName"
-        android:paddingLeft="12dp"
-        android:paddingTop="2dp"
-        android:paddingRight="12dp"
-        android:textColorHint="#B5ACAC"
-        app:layout_constraintEnd_toEndOf="@+id/etPEmail"
-        app:layout_constraintStart_toStartOf="@+id/etPEmail"
-        app:layout_constraintTop_toBottomOf="@+id/etPEmail" />
-
     <CheckBox
         android:id="@+id/cBoxJoin1"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/joinCheck2"
         android:textColor="@color/white"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/etPPhone"
-        app:layout_constraintStart_toStartOf="@+id/etPPhone"
-        app:layout_constraintTop_toBottomOf="@+id/etPPhone" />
+        app:layout_constraintEnd_toEndOf="@+id/etPEmail"
+        app:layout_constraintStart_toStartOf="@+id/etPEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etPEmail" />
 
     <CheckBox
         android:id="@+id/cBoxJoin2"
@@ -141,7 +123,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
-            android:text="@string/btnVSubmit"
+            android:text="Next"
             android:textColor="@color/white"
             app:backgroundTint="#3D70FF" />
     </LinearLayout>
