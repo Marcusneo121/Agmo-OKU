@@ -1,19 +1,22 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import my.edu.tarc.okuappg11.R
+import java.util.*
 
 class VerifyOTP : AppCompatActivity() {
     //lateinit var auth: FirebaseAuth
@@ -29,6 +32,7 @@ class VerifyOTP : AppCompatActivity() {
     private var participantEmail:String? = null
     private var participantPhoneNum:String? = null
 
+    private var userRole: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +49,9 @@ class VerifyOTP : AppCompatActivity() {
         participantName = intent.getStringExtra("ParticipantName")
         participantEmail = intent.getStringExtra("ParticipantEmail")
         participantPhoneNum = intent.getStringExtra("ParticipantPhoneNumber")
-        val storedVerificationId=intent.getStringExtra("storedVerificationId")
+        val storedVerificationId = intent.getStringExtra("storedVerificationId")
         eventID = intent.getStringExtra("EventUID").toString()
         userID = fAuth.currentUser!!.uid
-
 
 //        Reference
         val verify=findViewById<Button>(R.id.verifyBtn)
@@ -71,17 +74,24 @@ class VerifyOTP : AppCompatActivity() {
         fAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-
+                    stayLogin()
                     registerEvent(eventID, eventName, startDate, startTime)
                     registerParticipant(eventID, participantName, participantEmail)
-
-                    startActivity(Intent(applicationContext, AllUpcomingEvents::class.java))
-                    finish()
-// ...
+                    Toast.makeText(this@VerifyOTP,"Verifying OTP...", Toast.LENGTH_SHORT).show()
+                    val handler = Handler()
+                    handler.postDelayed(object: Runnable{
+                        override fun run() {
+                            finish()
+                            val handlerInner = Handler()
+                            handlerInner.postDelayed(object: Runnable{
+                                override fun run() {
+                                    startActivity(Intent(this@VerifyOTP, AllUpcomingEvents::class.java))
+                                }
+                            }, 1000)
+                        }
+                    }, 100)
                 } else {
-// Sign in failed, display a message and update the UI
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
-// The verification code entered was invalid
                         Toast.makeText(this,"Invalid OTP",Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -102,10 +112,6 @@ class VerifyOTP : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d("check", "CHECKADD")
 
-                /*val intent =
-                    Intent(this@JoinEvent, VerifyPhone::class.java)
-                startActivity(intent)
-                finish()*/
             }.addOnFailureListener {
                 Log.e("error", it.message.toString())
             }
@@ -124,8 +130,6 @@ class VerifyOTP : AppCompatActivity() {
             .set(hashmapUpcomingEvents)
             .addOnSuccessListener {
                 Log.d("check", "CHECKADD")
-                //val intent = Intent(this@EventDetailsActivity, AllUpcomingEvents::class.java)
-                //startActivity(intent)
             }.addOnFailureListener {
                 Log.e("error", it.message.toString())
             }
@@ -137,9 +141,33 @@ class VerifyOTP : AppCompatActivity() {
         return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        //val intent = Intent(this@VerifyOTP, VerifyPhone::class.java)
-        //startActivity(intent)
+    private fun stayLogin() {
+        var getSharePref = getSharedPreferences("sharedLogin", Context.MODE_PRIVATE)
+        var username = getSharePref.getString("EMAIL", null)
+        var pass = getSharePref.getString("PASS", null)
+
+        if (username != null && pass != null) {
+            fAuth.signInWithEmailAndPassword(username.toString(), pass.toString())
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        userID = fAuth.currentUser?.uid
+                        fStore.collection("users").document(userID!!).get()
+                            .addOnSuccessListener { it ->
+                                userRole = it.get("userType").toString()
+                                if (userRole == "OKU" || userRole == "Normal") {
+                                    val intent = Intent(this, HomeActivity::class.java)
+                                    startActivity(intent)
+
+                                } else if (userRole == "Admin") {
+                                    val intent = Intent(this, AdminHomeActivity::class.java)
+                                    startActivity(intent)
+
+                                }
+                            }
+                    }
+                }
+        } else {
+            return
+        }
     }
 }

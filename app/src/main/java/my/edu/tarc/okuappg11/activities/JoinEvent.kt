@@ -92,7 +92,6 @@ class JoinEvent : AppCompatActivity() {
             intent.putExtra("ParticipantName", "${participantName.toString()}")
             intent.putExtra("ParticipantEmail", "${participantEmail.toString()}")
             startActivity(intent)
-
             finish()
         }
     }

@@ -3,6 +3,7 @@ package my.edu.tarc.okuappg11.activities
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.dialog.MaterialDialogs
 import com.google.firebase.auth.FirebaseAuth
@@ -44,6 +46,9 @@ class QuitEventActivity : AppCompatActivity() {
     private var latitude:String? = null
     private var longitude:String? = null
 
+    private lateinit var recyclerViewComment : RecyclerView
+    private var pressedHideShow: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuitEventBinding.inflate(layoutInflater)
@@ -54,6 +59,7 @@ class QuitEventActivity : AppCompatActivity() {
         binding.btnBookmark.visibility = View.INVISIBLE
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
@@ -62,6 +68,18 @@ class QuitEventActivity : AppCompatActivity() {
        // changeBtnColor()
 
         readBookmark()
+
+        binding.btnShowHideCommentQuitEv.setOnClickListener {
+            if(!pressedHideShow){
+                binding.lyCommentsQuitEv.visibility = View.GONE
+                binding.btnShowHideCommentQuitEv.text = "Show Comments"
+                pressedHideShow = true
+            } else {
+                binding.lyCommentsQuitEv.visibility = View.VISIBLE
+                binding.btnShowHideCommentQuitEv.text = "Hide Comments"
+                pressedHideShow = false
+            }
+        }
 
         binding.tvEventLocation.setOnClickListener{
             val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")

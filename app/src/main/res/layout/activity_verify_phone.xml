@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9FAFF"
+    android:background="#000000"
     android:orientation="vertical"
     android:weightSum="2"
     tools:context=".activities.VerifyPhone">
@@ -12,20 +12,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:gravity="center|bottom">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="40dp"
-            android:src="@drawable/ic_verify_phone" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/forgotPassLottie"
+            android:layout_width="320dp"
+            android:layout_height="392dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/authenfinal" />
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:paddingBottom="40dp"-->
+        <!--            android:src="@drawable/ic_verify_phone" />-->
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:gravity="bottom|center"
         android:orientation="vertical">
 
@@ -35,8 +50,8 @@
             android:fontFamily="@font/poppins_medium"
             android:paddingLeft="40dp"
             android:text="Phone Authentication"
-            android:textColor="#444444"
-            android:textSize="20sp" />
+            android:textColor="@color/GreyishWhite"
+            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,35 +64,46 @@
 
             <EditText
                 android:layout_width="70dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/edittext_phoneverify_bg"
-                android:enabled="false"
+                android:background="@drawable/edittext_bg"
+                android:clickable="false"
+                android:enabled="true"
                 android:fontFamily="@font/poppins_medium"
-                android:paddingLeft="10dp"
+                android:paddingLeft="13dp"
+                android:paddingTop="3sp"
                 android:text="+60"
-                android:textColor="#1F1F1F" />
+                android:textColor="@color/GreyishSand" />
 
             <EditText
                 android:id="@+id/phoneNumber"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_phoneverify_bg"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_bg"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="123456789"
                 android:inputType="phone"
-                android:paddingLeft="10dp"
-                android:textColor="#1F1F1F" />
+                android:paddingLeft="14dp"
+                android:paddingTop="3sp"
+                android:textColor="@color/GreyishWhite"
+                android:textColorHint="@color/GreyishGrey" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btnVerifyPhone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:layout_margin="40dp"
-            android:background="#6372FF"
+            android:elevation="6dp"
             android:fontFamily="@font/poppins_medium"
-            android:text="VERIFY"
-            android:textColor="@color/white"
-            app:backgroundTint="#3D70FF" />
+            android:text="Verify"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/theme_purple"
+            android:textSize="20sp"
+            app:backgroundTint="@color/transparent"
+            app:rippleColor="#E7515151"
+            app:strokeColor="@color/theme_purple"
+            app:strokeWidth="2dp" />
     </LinearLayout>
+
 </LinearLayout>

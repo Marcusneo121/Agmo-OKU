@@ -8,8 +8,10 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +39,9 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private var latitude:String? = null
     private var longitude:String? = null
 
+    private lateinit var recyclerViewComment : RecyclerView
+    private var pressedHideShow: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminEventDetailsBinding.inflate(layoutInflater)
@@ -56,6 +61,18 @@ class AdminEventDetailsActivity : AppCompatActivity() {
         accessBy = intent.getStringExtra("accessBy")
 
         readData(eventId)
+
+        binding.btnShowHideCommentAdminEv.setOnClickListener {
+            if(!pressedHideShow){
+                binding.lyCommentsAdminEv.visibility = View.GONE
+                binding.btnShowHideCommentAdminEv.text = "Show Comments"
+                pressedHideShow = true
+            } else {
+                binding.lyCommentsAdminEv.visibility = View.VISIBLE
+                binding.btnShowHideCommentAdminEv.text = "Hide Comments"
+                pressedHideShow = false
+            }
+        }
 
         binding.tvAdminEventLocation.setOnClickListener {
             val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")

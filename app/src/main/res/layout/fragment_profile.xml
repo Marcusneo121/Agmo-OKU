@@ -75,23 +75,23 @@
 
             </androidx.cardview.widget.CardView>
 
-<!--            <Button-->
-<!--                android:id="@+id/btnProfile"-->
-<!--                style="@style/ToggleButtonWithIconOnly"-->
-<!--                android:layout_width="110dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginStart="4dp"-->
-<!--                android:layout_marginLeft="4dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:background="@android:color/transparent"-->
-<!--                app:icon="@drawable/ic_round_account_circle_24"-->
-<!--                app:iconSize="98dp"-->
-<!--                app:iconTint="@color/greyLabel"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintVertical_bias="0.0"-->
-<!--                app:rippleColor="@android:color/transparent" />-->
+            <!--            <Button-->
+            <!--                android:id="@+id/btnProfile"-->
+            <!--                style="@style/ToggleButtonWithIconOnly"-->
+            <!--                android:layout_width="110dp"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_marginStart="4dp"-->
+            <!--                android:layout_marginLeft="4dp"-->
+            <!--                android:layout_marginTop="16dp"-->
+            <!--                android:background="@android:color/transparent"-->
+            <!--                app:icon="@drawable/ic_round_account_circle_24"-->
+            <!--                app:iconSize="98dp"-->
+            <!--                app:iconTint="@color/greyLabel"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:layout_constraintVertical_bias="0.0"-->
+            <!--                app:rippleColor="@android:color/transparent" />-->
 
             <LinearLayout
                 android:id="@+id/linearLayout13"
@@ -249,8 +249,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUpcomingEvent"
-        app:layout_constraintVertical_bias="1.0">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintVertical_bias="1.0"></androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -312,6 +311,4 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

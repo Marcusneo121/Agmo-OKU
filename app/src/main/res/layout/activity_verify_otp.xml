@@ -5,59 +5,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9FAFF"
-    tools:context=".activities.VerifyOTP"
+    android:background="@color/black"
     android:orientation="vertical"
-    android:weightSum="2">
+    android:weightSum="2"
+    tools:context=".activities.VerifyOTP">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center|bottom"
-        android:layout_weight="1">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_verify_otp"
-            android:paddingBottom="40dp"/>
+        android:layout_weight="1.2"
+        android:gravity="center|bottom">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/forgotPassLottie"
+            android:layout_width="320dp"
+            android:layout_height="392dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/phone_end" />
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:paddingBottom="40dp"-->
+        <!--            android:src="@drawable/ic_verify_otp" />-->
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        android:layout_weight="0.8"
         android:gravity="bottom|center"
-        android:layout_weight="1">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
-            android:paddingLeft="40dp"
             android:layout_height="wrap_content"
-            android:text="Verify mobile"
-            android:paddingBottom="15dp"
-            android:textSize="20sp"
             android:fontFamily="@font/poppins_medium"
-            android:textColor="#444444"/>
+            android:paddingLeft="40dp"
+            android:paddingBottom="5dp"
+            android:text="Verify mobile"
+            android:textColor="@color/GreyishWhite"
+            android:textSize="22sp" />
+
         <com.chaos.view.PinView
             android:id="@+id/id_otp"
+            style="@style/PinWidget.PinView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:itemCount="6"
             android:layout_margin="10dp"
-            android:itemBackground="#F4F6F9"
             android:cursorVisible="true"
-            app:lineColor="#2196F3"
-            android:textColor="#1F1F1F"
             android:inputType="number"
+            android:itemBackground="@drawable/edittext_bg"
+            android:textColor="@color/GreyishWhite"
+            android:textSize="20sp"
             app:hideLineWhenFilled="true"
-            style="@style/PinWidget.PinView"
-            app:itemRadius="5dp"/>
+            app:itemCount="6"
+            app:itemRadius="5dp"
+            app:lineColor="@color/theme_purple" />
+
         <Button
             android:id="@+id/verifyBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Verify"
-            android:textAllCaps="false"
-            android:fontFamily="@font/poppins_medium"
+            android:layout_height="65dp"
             android:layout_margin="40dp"
-            android:textColor="@color/white"
-            app:backgroundTint="#3D70FF"/>
+            android:elevation="6dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Verify"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/theme_purple"
+            android:textSize="20sp"
+            app:backgroundTint="@color/transparent"
+            app:rippleColor="#E7515151"
+            app:strokeColor="@color/theme_purple"
+            app:strokeWidth="2dp" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/verifyBtn"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="40dp"-->
+        <!--            android:fontFamily="@font/poppins_medium"-->
+        <!--            android:text="Verify"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            app:backgroundTint="#3D70FF" />-->
     </LinearLayout>
 </LinearLayout>

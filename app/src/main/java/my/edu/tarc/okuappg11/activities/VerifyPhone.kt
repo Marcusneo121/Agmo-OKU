@@ -85,11 +85,10 @@ class VerifyPhone : AppCompatActivity() {
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
-
+                Toast.makeText(this@VerifyPhone,"Sending OTP...", Toast.LENGTH_SHORT).show()
                 Log.d("TAG","onCodeSent:$verificationId")
                 storedVerificationId = verificationId
                 resendToken = token
-
                 var intent = Intent(applicationContext,VerifyOTP::class.java)
                 intent.putExtra("storedVerificationId",storedVerificationId)
                 intent.putExtra("EventUID","${eventId.toString()}")
@@ -98,7 +97,7 @@ class VerifyPhone : AppCompatActivity() {
                 intent.putExtra("StartTime","${startTime.toString()}")
                 intent.putExtra("ParticipantName", "${participantName.toString()}")
                 intent.putExtra("ParticipantEmail", "${participantEmail.toString()}")
-                intent.putExtra("ParticipantPhoneNumber", "0${number.toString()}")
+                intent.putExtra("ParticipantPhoneNumber", "${number.toString()}")
                 finish()
                 startActivity(intent)
             }
