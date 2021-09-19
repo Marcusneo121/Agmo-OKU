@@ -14,11 +14,13 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.dialog.MaterialDialogs
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.custom_dialog_read.*
@@ -27,7 +29,13 @@ import kotlinx.android.synthetic.main.custom_dialog_yes_no_cancel.view.*
 import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityQuitEventBinding
 import my.edu.tarc.okuappg11.databinding.CustomDialogReadBinding
+import my.edu.tarc.okuappg11.recyclerview.CommentsAdapter
+import my.edu.tarc.okuappg11.recyclerview.CommentsArrayList
 import java.io.File
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class QuitEventActivity : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
@@ -45,6 +53,10 @@ class QuitEventActivity : AppCompatActivity() {
     private var bookmarkCheck:Boolean = false
     private var latitude:String? = null
     private var longitude:String? = null
+    private var userDisplayName:String?=null
+    private var userProfileImageUri:String?= null
+    private lateinit var commentsArrayList: ArrayList<CommentsArrayList>
+    private lateinit var commentsAdapter: CommentsAdapter
 
     private lateinit var recyclerViewComment : RecyclerView
     private var pressedHideShow: Boolean = false
@@ -67,6 +79,19 @@ class QuitEventActivity : AppCompatActivity() {
         userID = fAuth.currentUser!!.uid
        // changeBtnColor()
 
+        recyclerViewComment = binding.rvCommentsQuitEv
+        recyclerViewComment.layoutManager = LinearLayoutManager(this)
+        recyclerViewComment.setHasFixedSize(true)
+        commentsArrayList = arrayListOf()
+        commentsAdapter = CommentsAdapter(commentsArrayList)
+
+        recyclerViewComment.adapter = commentsAdapter
+        binding.lyCommentsQuitEv.visibility = View.GONE
+        binding.btnShowHideCommentQuitEv.text = "Show Comments"
+        pressedHideShow = true
+        readComment()
+
+
         readBookmark()
 
         binding.btnShowHideCommentQuitEv.setOnClickListener {
@@ -74,12 +99,47 @@ class QuitEventActivity : AppCompatActivity() {
                 binding.lyCommentsQuitEv.visibility = View.GONE
                 binding.btnShowHideCommentQuitEv.text = "Show Comments"
                 pressedHideShow = true
+
             } else {
                 binding.lyCommentsQuitEv.visibility = View.VISIBLE
                 binding.btnShowHideCommentQuitEv.text = "Hide Comments"
                 pressedHideShow = false
             }
         }
+
+        binding.btnSubmitCommentQuitEv.setOnClickListener {
+            val commentDetails = binding.editTextCommentQuitEv.text.toString()
+            val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+            val date = Date()
+            val strDate: String = dateFormat.format(date).toString()
+
+            val hashmapComment = hashMapOf(
+                "userUID" to userID,
+                "commentDetails" to commentDetails,
+                "commentDate" to strDate
+            )
+
+            fStore.collection("events").document(eventID!!).collection("comments").document()
+                .set(hashmapComment)
+                .addOnSuccessListener {
+                    commentsAdapter.notifyDataSetChanged()
+                    Log.d("check","comments saved")
+                    binding.editTextCommentQuitEv.setText("")
+                    binding.editTextCommentQuitEv.isFocusable = false
+                    Toast.makeText(this,"Comment successfully",Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Log.e("error", it.message.toString())
+                }
+        }
+
+        binding.btnSeeAllCommentQuitEv.setOnClickListener {
+            commentsArrayList.clear()
+            val intent= Intent(this, SeeAllComment::class.java)
+            intent.putExtra("EventUID",eventID)
+            startActivity(intent)
+
+        }
+
 
         binding.tvEventLocation.setOnClickListener{
             val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")
@@ -164,6 +224,62 @@ class QuitEventActivity : AppCompatActivity() {
         }
 
         readData(eventID)
+    }
+
+    private fun readComment() {
+
+        fStore = FirebaseFirestore.getInstance()
+        fStore.collection("events")
+            .document(eventID!!)
+            .collection("comments")
+            .orderBy("commentDate", Query.Direction.DESCENDING)
+            .limit(3)
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.message.toString())
+                        return
+                    }
+                    commentsArrayList.clear()
+                    value?.forEach {
+                        Log.d("checkid",it.getString("userUID").toString())
+                        fStore.collection("users").document(it.getString("userUID").toString()).get()
+                            .addOnSuccessListener { dc ->
+
+                                userDisplayName = dc.getString("name").toString()
+                                userProfileImageUri = dc.getString("profileImageURL").toString()
+                                Log.d("CHECKoutside", userProfileImageUri.toString())
+
+                                val userCommentDetails = it.toObject(CommentsArrayList::class.java)
+                                if (userCommentDetails != null){
+                                    userCommentDetails.displayName = userDisplayName.toString()
+                                    userCommentDetails.userImageUri = userProfileImageUri.toString()
+                                    userCommentDetails.userID = it.getString("userUID").toString()
+                                    userCommentDetails.commentDetails = it.getString("commentDetails").toString()
+                                    userCommentDetails.commentDate = it.getString("commentDate").toString()
+                                    commentsArrayList.add(userCommentDetails)
+                                }
+                            }.addOnFailureListener {
+                                Log.e("error", it.message.toString())
+                            }
+                        Log.d("CHECKout", userDisplayName.toString())
+
+
+
+
+
+
+
+                        commentsAdapter.notifyDataSetChanged()
+
+                        if (commentsArrayList.isEmpty()) {
+                            Log.d("try again", "Array list is empty")
+                        } else {
+                            Log.d("Got array", "Array list is not empty")
+                        }
+                    }
+                }
+            })
     }
 
     private fun unBookmark() {
