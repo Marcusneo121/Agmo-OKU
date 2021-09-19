@@ -2,10 +2,12 @@ package my.edu.tarc.okuappg11.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
@@ -41,6 +43,7 @@ class AdminHomeFragment : Fragment() {
     private var topicList: ArrayList<TopicsModel> = ArrayList()
     private var topicListAdapter = TopicsAdapter(topicList)
 
+    private lateinit var viewStubAdminHome: ViewStub
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,9 @@ class AdminHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
+
+        viewStubAdminHome = binding.viewStubAdminHome
+        viewStubAdminHome.visibility = View.GONE
 
         recyclerView = binding.rvAdminEventsRecord
         recyclerView1 = binding.rvAdminEventsRecord
@@ -177,6 +183,18 @@ class AdminHomeFragment : Fragment() {
                     topicListAdapter.notifyDataSetChanged()
                 }
             })
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(topicList.isEmpty()){
+                    viewStubAdminHome.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubAdminHome.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 700)
     }
 
     private fun getRejectedEvent() {
@@ -225,6 +243,18 @@ class AdminHomeFragment : Fragment() {
         } else {
             Log.d("Got array","Array list is not empty")
         }
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(eventsRecordList.isEmpty()){
+                    viewStubAdminHome.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubAdminHome.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 700)
     }
 
     private fun getApprovedEvent() {
@@ -274,6 +304,18 @@ class AdminHomeFragment : Fragment() {
         } else {
             Log.d("Got array","Array list is not empty")
         }
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(eventsRecordList.isEmpty()){
+                    viewStubAdminHome.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubAdminHome.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 700)
     }
 
     private fun getPendingEvent() {
@@ -323,6 +365,18 @@ class AdminHomeFragment : Fragment() {
         } else {
             Log.d("Got array","Array list is not empty")
         }
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(eventsRecordList.isEmpty()){
+                    viewStubAdminHome.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubAdminHome.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 700)
     }
 
     private fun getData() {
@@ -370,7 +424,37 @@ class AdminHomeFragment : Fragment() {
         } else {
             Log.d("Got array","Array list is not empty")
         }
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(eventsRecordList.isEmpty()){
+                    viewStubAdminHome.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubAdminHome.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 700)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewStubAdminHome.visibility = View.GONE
+
+        if (binding.spinnerSelectionDisplay.selectedItemPosition == 4){
+            if(topicList.isEmpty()){
+                viewStubAdminHome.visibility = View.VISIBLE
+            } else {
+                viewStubAdminHome.visibility = View.GONE
+            }
+        } else {
+            if(eventsRecordList.isEmpty()){
+                viewStubAdminHome.visibility = View.VISIBLE
+            } else {
+                viewStubAdminHome.visibility = View.GONE
+            }
+        }
     }
 
 }

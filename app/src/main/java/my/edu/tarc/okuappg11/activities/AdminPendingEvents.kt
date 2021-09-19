@@ -1,8 +1,12 @@
 package my.edu.tarc.okuappg11.activities
 
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
+import android.view.ViewStub
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +31,8 @@ class AdminPendingEvents : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
 
+    private lateinit var viewStubPendingEvents: ViewStub
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -37,9 +43,15 @@ class AdminPendingEvents : AppCompatActivity() {
         binding = ActivityAdminPendingEventsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        viewStubPendingEvents = binding.viewStubPending
+        viewStubPendingEvents.visibility = View.GONE
+
         supportActionBar?.title = "Pending Events"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff262626.toInt()))
+
+
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
@@ -58,10 +70,19 @@ class AdminPendingEvents : AppCompatActivity() {
         //var adapter = VolunteerRequestAdapter(volunteerRequestArrayList)
         //recyclerView.adapter = adapter
 
-
-
         getData()
-
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(pendingEventsRecordList.isEmpty()){
+                    viewStubPendingEvents.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    viewStubPendingEvents.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }, 1000)
 
     }
 
@@ -141,6 +162,15 @@ class AdminPendingEvents : AppCompatActivity() {
             Log.d("Got array","Array list is not empty")
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(pendingEventsRecordList.isEmpty()){
+            viewStubPendingEvents.visibility = View.VISIBLE
+        } else {
+            viewStubPendingEvents.visibility = View.GONE
+        }
     }
 
 }

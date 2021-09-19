@@ -26,7 +26,7 @@ class ForgotPassProfile : AppCompatActivity() {
         setContentView(view)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Forgot Password"
+        supportActionBar?.title = "Reset Password"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(0xff000000.toInt()))
 
         var fAuth: FirebaseAuth = FirebaseAuth.getInstance()

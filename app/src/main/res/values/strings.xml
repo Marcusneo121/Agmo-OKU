@@ -215,4 +215,6 @@
 
     <string name="profile_success">Profile Saved</string>
     <string name="profile_failed">Unsuccessful Profile Edit</string>
+    <string name="just_enter_the_email_address">Just enter the email address</string>
+    <string name="want_to_reset_your_password">Want to reset your password?</string>
 </resources>
