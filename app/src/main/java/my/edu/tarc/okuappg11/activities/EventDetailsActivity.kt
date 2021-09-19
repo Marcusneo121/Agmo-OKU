@@ -116,6 +116,12 @@ class EventDetailsActivity : AppCompatActivity() {
         }
 
         binding.btnSubmitComment.setOnClickListener {
+
+            if (binding.editTextComment.text.isEmpty()) {
+                binding.editTextComment.error = "Please enter comment."
+                return@setOnClickListener
+            }
+
             val commentDetails = binding.editTextComment.text.toString()
             val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
             val date = Date()
@@ -197,12 +203,11 @@ class EventDetailsActivity : AppCompatActivity() {
 
 
     private fun readComment() {
-
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("events")
             .document(eventID!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.DESCENDING)
+            .orderBy("commentDate", Query.Direction.ASCENDING)
             .limit(3)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -233,12 +238,6 @@ class EventDetailsActivity : AppCompatActivity() {
                                 Log.e("error", it.message.toString())
                             }
                         Log.d("CHECKout", userDisplayName.toString())
-
-
-
-
-
-
 
                         commentsAdapter.notifyDataSetChanged()
 

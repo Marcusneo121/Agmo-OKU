@@ -61,6 +61,7 @@ class AdminPendingEvents : AppCompatActivity() {
         recyclerView = binding.rvAdminPendingEvents
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
 
         pendingEventsRecordList = arrayListOf()
         eventsRecordAdapter = PendingEventsAdapter(pendingEventsRecordList)

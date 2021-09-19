@@ -3,7 +3,10 @@ package my.edu.tarc.okuappg11.activities
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
+import android.view.ViewStub
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -26,18 +29,24 @@ class SeeAllComment : AppCompatActivity() {
     private var userProfileImageUri:String?= null
     private var eventID:String?= null
 
+    private lateinit var viewStubAllComment: ViewStub
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeeAllCommentBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        viewStubAllComment = binding.viewStubAllComment
+        viewStubAllComment.visibility = View.GONE
+
         eventID = intent.getStringExtra("EventUID")
-
-
 
         recyclerViewAllComment = binding.rvSeeAllComment
         recyclerViewAllComment.layoutManager = LinearLayoutManager(this)
         recyclerViewAllComment.setHasFixedSize(true)
+        recyclerViewAllComment.visibility = View.GONE
+
         allCommentsArrayList = arrayListOf()
         allCommentsAdapter = AllCommentsAdapter(allCommentsArrayList)
 
@@ -49,6 +58,18 @@ class SeeAllComment : AppCompatActivity() {
 
         readAllComments()
 
+        val handler = Handler()
+        handler.postDelayed(object: Runnable{
+            override fun run() {
+                if(allCommentsArrayList.isEmpty()){
+                    viewStubAllComment.visibility = View.VISIBLE
+                    recyclerViewAllComment .visibility = View.GONE
+                } else {
+                    viewStubAllComment.visibility = View.GONE
+                    recyclerViewAllComment .visibility = View.VISIBLE
+                }
+            }
+        }, 600)
     }
 
     private fun readAllComments() {
@@ -56,7 +77,7 @@ class SeeAllComment : AppCompatActivity() {
         fStore.collection("events")
             .document(eventID!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.DESCENDING)
+            .orderBy("commentDate", Query.Direction.ASCENDING)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error != null) {
@@ -106,6 +127,14 @@ class SeeAllComment : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(allCommentsArrayList.isEmpty()){
+            viewStubAllComment.visibility = View.VISIBLE
+        } else {
+            viewStubAllComment.visibility = View.GONE
+        }
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

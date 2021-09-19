@@ -232,7 +232,7 @@ class QuitEventActivity : AppCompatActivity() {
         fStore.collection("events")
             .document(eventID!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.DESCENDING)
+            .orderBy("commentDate", Query.Direction.ASCENDING)
             .limit(3)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -263,12 +263,6 @@ class QuitEventActivity : AppCompatActivity() {
                                 Log.e("error", it.message.toString())
                             }
                         Log.d("CHECKout", userDisplayName.toString())
-
-
-
-
-
-
 
                         commentsAdapter.notifyDataSetChanged()
 
