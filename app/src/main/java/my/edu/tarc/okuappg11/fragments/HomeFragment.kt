@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
 
     private fun trendingListener(){
         fStore.collection("events")
-        .limit(5)
+        .limit(6)
         .addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                 if (error != null) {

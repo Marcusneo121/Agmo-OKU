@@ -36,6 +36,7 @@ import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.progressdialog.AddEventDialog
 import my.edu.tarc.okuappg11.recyclerview.CommentsAdapter
 import my.edu.tarc.okuappg11.recyclerview.CommentsArrayList
+import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -67,6 +68,8 @@ class EventDetailsActivity : AppCompatActivity() {
 
     private lateinit var recyclerViewComment : RecyclerView
     private var pressedHideShow: Boolean = false
+
+    private var currentImageURL: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -207,7 +210,7 @@ class EventDetailsActivity : AppCompatActivity() {
         fStore.collection("events")
             .document(eventID!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.ASCENDING)
+            .orderBy("commentDate", Query.Direction.DESCENDING)
             .limit(3)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -251,6 +254,11 @@ class EventDetailsActivity : AppCompatActivity() {
             })
 
             }
+
+    override fun onResume() {
+        super.onResume()
+        readData(eventID)
+    }
 
     private fun unBookmark() {
         fAuth = FirebaseAuth.getInstance()
@@ -367,6 +375,9 @@ class EventDetailsActivity : AppCompatActivity() {
                     eventLocation = document.getString("eventLocation")
                     latitude = document.get("latitude").toString()
                     longitude = document.get("longitude").toString()
+                    currentImageURL = document.getString("eventThumbnailURL")
+                    GlideLoader(this)
+                        .loadUserPicture(Uri.parse(currentImageURL.toString()), binding.ivEventDetailsThumbnail)
 
                     supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate
@@ -380,22 +391,6 @@ class EventDetailsActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
-
-
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
-        val localfile = File.createTempFile("tempImage","jpg")
-        sRef.getFile(localfile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.ivEventDetailsThumbnail.setImageBitmap(bitmap)
-            Log.d("CHECK", " IMAGE LOADED")
-        }.addOnFailureListener{
-            Log.d("CHECK", it.message.toString())
-            Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
-
-
-        }
-
-
 
         //OKU volunteer validation
         fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->

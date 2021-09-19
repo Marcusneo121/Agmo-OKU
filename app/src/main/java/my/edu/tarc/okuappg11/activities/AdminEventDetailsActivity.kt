@@ -25,6 +25,7 @@ import my.edu.tarc.okuappg11.fragments.HomeFragment
 import my.edu.tarc.okuappg11.models.Constants
 import my.edu.tarc.okuappg11.recyclerview.CommentsAdapter
 import my.edu.tarc.okuappg11.recyclerview.CommentsArrayList
+import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -55,6 +56,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private var pressedHideShow: Boolean = false
     private var userID:String? = null
 
+    private var currentImageURI: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,6 +235,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             }
 
             binding.btnRight.setOnClickListener {
+                finish()
                 val intent = Intent(this@AdminEventDetailsActivity, UpdateEvent::class.java)
                 intent.putExtra("EventUID", "${eventId}")
                 startActivity(intent)
@@ -248,7 +251,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
         fStore.collection("events")
             .document(eventId!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.ASCENDING)
+            .orderBy("commentDate", Query.Direction.DESCENDING)
             .limit(3)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -309,6 +312,10 @@ class AdminEventDetailsActivity : AppCompatActivity() {
                     eventLocation = document.getString("eventLocation")
                     latitude = document.get("latitude").toString()
                     longitude = document.get("longitude").toString()
+                    currentImageURI = document.get("eventThumbnailURL").toString()
+
+                    GlideLoader(this)
+                        .loadUserPicture(Uri.parse(currentImageURI.toString()), binding.ivAdminEventDetailsThumbnail)
 
                     supportActionBar?.title = eventName
                     binding.tvAdminEventDate.text = startDate
@@ -322,19 +329,11 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
+    }
 
-
-        val sRef: StorageReference =
-            FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
-        val localfile = File.createTempFile("tempImage", "jpg")
-        sRef.getFile(localfile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.ivAdminEventDetailsThumbnail.setImageBitmap(bitmap)
-            Log.d("CHECK", " IMAGE LOADED")
-        }.addOnFailureListener {
-            Log.d("CHECK", it.message.toString())
-            Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
-        }
+    override fun onResume() {
+        super.onResume()
+        readData(eventId)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -362,7 +361,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             startActivity(intent)
 
         } else if (updatedBy == "Normal"){
-            val intent= Intent(this,HomeActivity::class.java)
+            val intent= Intent(this,MyPostedEventActivity::class.java)
             startActivity(intent)
 
         }

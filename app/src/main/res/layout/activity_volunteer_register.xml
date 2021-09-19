@@ -91,7 +91,8 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/etVPhone"
         app:layout_constraintStart_toStartOf="@+id/etVPhone"
-        app:layout_constraintTop_toBottomOf="@+id/etVPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/etVPhone"
+        android:buttonTint="@color/theme_purple"/>
 
     <LinearLayout
         android:id="@+id/btnLayout"

@@ -34,26 +34,26 @@ class UpdateEvent : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateEventBinding
     private val dialogAddEvent = AddEventDialog(this)
 
-    private var firestoreCheck:Boolean = false
-    private var storageCheck:Boolean = false
+    private var firestoreCheck: Boolean = false
+    private var storageCheck: Boolean = false
     private var mSelectedImageFileUri: Uri? = null
-    private var eventId:String? = null
-    private var eventName:String? = null
-    private var eventDescription:String? = null
-    private var startDate:String? = null
-    private var startTime:String? = null
-    private var eventDuration:String? = null
+    private var eventId: String? = null
+    private var eventName: String? = null
+    private var eventDescription: String? = null
+    private var startDate: String? = null
+    private var startTime: String? = null
+    private var eventDuration: String? = null
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
-    private var eventOrganizer:String? = null
-    private var eventOrganizerUID:String? =null
-    private var eventLocation:String? = null
-    private var latitude:Double?= null
-    private var longitude:Double?= null
-    private var eventThumbnailURL:String? = null
-    private var updatedBy:String? = null
-    private var currentUserID:String? = null
-    private var userRole:String? = null
+    private var eventOrganizer: String? = null
+    private var eventOrganizerUID: String? = null
+    private var eventLocation: String? = null
+    private var latitude: Double? = null
+    private var longitude: Double? = null
+    private var eventThumbnailURL: String? = null
+    private var updatedBy: String? = null
+    private var currentUserID: String? = null
+    private var userRole: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,18 +69,18 @@ class UpdateEvent : AppCompatActivity() {
         supportActionBar?.title = "Edit Event"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.textFieldUpdateEventOrganizerName.editText!!.isEnabled=false
-        binding.textFieldUpdateDateStart.editText!!.isEnabled=false
-        binding.textFieldUpdateTime.editText!!.isEnabled=false
+        binding.textFieldUpdateEventOrganizerName.editText!!.isEnabled = false
+        binding.textFieldUpdateDateStart.editText!!.isEnabled = false
+        binding.textFieldUpdateTime.editText!!.isEnabled = false
 
         getData()
         readUserRole()
 
-        binding.btnSelectDate.setOnClickListener{
-            if(!binding.rbUpdateSingleDay.isChecked && !binding.rbUpdateMultiday.isChecked){
+        binding.btnSelectDate.setOnClickListener {
+            if (!binding.rbUpdateSingleDay.isChecked && !binding.rbUpdateMultiday.isChecked) {
                 Toast.makeText(this, R.string.select_duration_event, Toast.LENGTH_LONG).show()
 
-            }else {
+            } else {
                 if (binding.rbUpdateSingleDay.isChecked) {
                     val datePicker =
                         MaterialDatePicker.Builder.datePicker()
@@ -92,7 +92,7 @@ class UpdateEvent : AppCompatActivity() {
 
 
                     datePicker.addOnPositiveButtonClickListener {
-                        eventDuration="1"
+                        eventDuration = "1"
                         binding.textFieldUpdateDateStart.editText?.setText(datePicker.headerText)
                     }
                 }
@@ -119,7 +119,7 @@ class UpdateEvent : AppCompatActivity() {
             }
         }
 
-        binding.btnSelectTime.setOnClickListener{
+        binding.btnSelectTime.setOnClickListener {
             val picker =
                 MaterialTimePicker.Builder()
                     .setTimeFormat(TimeFormat.CLOCK_12H)
@@ -140,18 +140,17 @@ class UpdateEvent : AppCompatActivity() {
 
         }
 
-        binding.ivUpdateEventThumbnail.setOnClickListener{
-            if(ContextCompat.checkSelfPermission(
+        binding.ivUpdateEventThumbnail.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
-            ){
+            ) {
                 //Toast.makeText(this,"You already have storage permission", Toast.LENGTH_SHORT).show()
                 Constants.showImageChooser(this)
 
 
-
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -160,101 +159,121 @@ class UpdateEvent : AppCompatActivity() {
             }
         }
 
-        binding.btnPickPlace.setOnClickListener{
+        binding.btnPickPlace.setOnClickListener {
             //saveData()
             val intent = Intent(this@UpdateEvent, MapAutocompleteActivity::class.java)
             startActivityForResult(intent, 3)
         }
 
 
-        binding.btnUpdate.setOnClickListener{
+        binding.btnUpdate.setOnClickListener {
             if (validateEventDetails()) {
                 MaterialAlertDialogBuilder(this)
                     .setTitle(resources.getString(R.string.dialog_update_title))
                     .setMessage(resources.getString(R.string.dialog_update_description))
                     .setNegativeButton(resources.getString(R.string.dialog_update_negative)) { dialog, which ->
-                        Toast.makeText(this,R.string.update_cancel,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.update_cancel, Toast.LENGTH_SHORT).show()
                     }
                     .setPositiveButton(resources.getString(R.string.dialog_update_positive)) { dialog, which ->
                         eventName = binding.textFieldUpdateEventName.editText!!.text.toString()
-                        eventDescription = binding.textFieldUpdateEventDescription.editText!!.text.toString()
+                        eventDescription =
+                            binding.textFieldUpdateEventDescription.editText!!.text.toString()
                         startDate = binding.textFieldUpdateDateStart.editText!!.text.toString()
                         startTime = binding.textFieldUpdateTime.editText!!.text.toString()
                         val dateNow = Calendar.getInstance().time
                         val formattedDateNow = SimpleDateFormat("dd/MM/yyyy").format(dateNow)
 
                         Log.d("check", eventId.toString())
-                        if(mSelectedImageFileUri != null) {
+                        if (mSelectedImageFileUri != null) {
 
-                            val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                                Constants.USER_PROFILE_IMAGE + eventId + "."
-                                        + Constants.getFileExtension(
-                                    this,
-                                    mSelectedImageFileUri
+                            val sRef: StorageReference =
+                                FirebaseStorage.getInstance().reference.child(
+                                    Constants.USER_PROFILE_IMAGE + eventId + "."
+                                            + Constants.getFileExtension(
+                                        this,
+                                        mSelectedImageFileUri
+                                    )
                                 )
-                            )
 
 
-                            sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
-                                Log.e(
-                                    "Firebase Image",
-                                    taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
-                                )
-                                dialogAddEvent.startLoading()
+                            sRef.putFile(mSelectedImageFileUri!!)
+                                .addOnSuccessListener { taskSnapshot ->
+                                    Log.e(
+                                        "Firebase Image",
+                                        taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
+                                    )
+                                    dialogAddEvent.startLoading()
 
-                                taskSnapshot.metadata!!.reference!!.downloadUrl
-                                    .addOnSuccessListener { uri ->
-                                        Log.e("Downloadable Image URL", uri.toString())
-                                        eventThumbnailURL = uri.toString()
-                                        storageCheck = true
-                                        val hashMapEvents = hashMapOf(
-                                            "eventName" to eventName,
-                                            "eventDescription" to eventDescription,
-                                            "startDate" to startDate,
-                                            "startTime" to startTime,
-                                            "eventDuration" to eventDuration,
-                                            "eventOrganizerName" to eventOrganizer,
-                                            "eventOrganizerUID" to eventOrganizerUID,
-                                            "eventLocation" to eventLocation,
-                                            "eventCreatedDate" to formattedDateNow,
-                                            "status" to "pending",
-                                            "latitude" to latitude,
-                                            "longitude" to longitude,
-                                            "eventThumbnailURL" to eventThumbnailURL
+                                    taskSnapshot.metadata!!.reference!!.downloadUrl
+                                        .addOnSuccessListener { uri ->
+                                            Log.e("Downloadable Image URL", uri.toString())
+                                            eventThumbnailURL = uri.toString()
+                                            storageCheck = true
+                                            val hashMapEvents = hashMapOf(
+                                                "eventName" to eventName,
+                                                "eventDescription" to eventDescription,
+                                                "startDate" to startDate,
+                                                "startTime" to startTime,
+                                                "eventDuration" to eventDuration,
+                                                "eventOrganizerName" to eventOrganizer,
+                                                "eventOrganizerUID" to eventOrganizerUID,
+                                                "eventLocation" to eventLocation,
+                                                "eventCreatedDate" to formattedDateNow,
+                                                "status" to "pending",
+                                                "latitude" to latitude,
+                                                "longitude" to longitude,
+                                                "eventThumbnailURL" to eventThumbnailURL
 
-                                        )
-                                        val ref: DocumentReference = fStore.collection("events").document(eventId!!)
+                                            )
+                                            val ref: DocumentReference =
+                                                fStore.collection("events").document(eventId!!)
 
-                                        ref.update(hashMapEvents as Map<String, Any>)
-                                            .addOnSuccessListener {
-                                                Toast.makeText(this,R.string.update_success,Toast.LENGTH_SHORT).show()
-                                                Log.d(ContentValues.TAG, "Added Document")
-                                                firestoreCheck=true
+                                            ref.update(hashMapEvents as Map<String, Any>)
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(
+                                                        this,
+                                                        R.string.update_success,
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    Log.d(ContentValues.TAG, "Added Document")
+                                                    firestoreCheck = true
 
-                                            }
-                                            .addOnFailureListener {
-                                                Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
-                                            }
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        Log.e("ERROR", exception.message.toString())
-                                    }
-                            }
+                                                }
+                                                .addOnFailureListener {
+                                                    Log.w(
+                                                        ContentValues.TAG,
+                                                        "Error adding document ${it.suppressedExceptions}"
+                                                    )
+                                                }
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.e("ERROR", exception.message.toString())
+                                        }
+                                }
                         }
 
 
-
                         val handler = Handler()
-                        handler.postDelayed(object: Runnable{
+                        handler.postDelayed(object : Runnable {
                             override fun run() {
                                 //  val sharedPreferences:SharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
                                 //  val editor = sharedPreferences.edit()
                                 // editor.clear()
                                 // editor.apply()
-                                val intent = Intent(this@UpdateEvent, AdminEventDetailsActivity::class.java)
-                                intent.putExtra("EventUID","${eventId.toString()}")
-                                intent.putExtra("updatedBy", userRole)
-                                startActivity(intent)
+                                finish()
+
+                                val intent1= Intent(this@UpdateEvent, HomeActivity::class.java)
+                                val intent2 =
+                                    Intent(this@UpdateEvent, AdminEventDetailsActivity::class.java)
+                                if(userRole == "Normal"){
+                                    intent1.putExtra("EventUID", "${eventId.toString()}")
+                                    intent1.putExtra("updatedBy", userRole)
+                                    startActivity(intent1)
+                                } else {
+                                    intent2.putExtra("EventUID", "${eventId.toString()}")
+                                    intent2.putExtra("updatedBy", userRole)
+                                    startActivity(intent2)
+                                }
                                 dialogAddEvent.isDismiss()
 
                             }
@@ -263,26 +282,26 @@ class UpdateEvent : AppCompatActivity() {
                     .show()
 
 
-            }else{
-                if (binding.textFieldUpdateEventName.editText!!.text.isEmpty()){
+            } else {
+                if (binding.textFieldUpdateEventName.editText!!.text.isEmpty()) {
                     binding.textFieldUpdateEventName.editText!!.setError("This field cannot be empty")
 
                 }
 
-                if(binding.textFieldUpdateEventDescription.editText!!.text.isEmpty()){
+                if (binding.textFieldUpdateEventDescription.editText!!.text.isEmpty()) {
                     binding.textFieldUpdateEventDescription.editText!!.setError("This field cannot be empty")
 
                 }
 
-                if(binding.textFieldUpdateLocation.editText!!.text.isEmpty()){
+                if (binding.textFieldUpdateLocation.editText!!.text.isEmpty()) {
                     binding.textFieldUpdateLocation.editText!!.setError("Please select event location through the button.")
                 }
 
-                if(binding.textFieldUpdateDateStart.editText!!.text.isEmpty()){
+                if (binding.textFieldUpdateDateStart.editText!!.text.isEmpty()) {
                     binding.textFieldUpdateDateStart.editText!!.setError("Please select the date through the button.")
                 }
 
-                if(binding.textFieldUpdateTime.editText!!.text.isEmpty()){
+                if (binding.textFieldUpdateTime.editText!!.text.isEmpty()) {
                     binding.textFieldUpdateTime.editText!!.setError("Please select the time through the button.")
                 }
 
@@ -297,9 +316,10 @@ class UpdateEvent : AppCompatActivity() {
         if (binding.textFieldUpdateEventName.editText!!.text.isEmpty() ||
             binding.textFieldUpdateEventDescription.editText!!.text.isEmpty() ||
             binding.textFieldUpdateDateStart.editText!!.text.isEmpty() ||
-            binding.textFieldUpdateTime.editText!!.text.isEmpty()){
+            binding.textFieldUpdateTime.editText!!.text.isEmpty()
+        ) {
             return false
-        }else{
+        } else {
             return true
         }
     }
@@ -336,16 +356,19 @@ class UpdateEvent : AppCompatActivity() {
                     binding.textFieldUpdateEventDescription.editText!!.setText(eventDescription)
                     binding.textFieldUpdateEventOrganizerName.editText!!.setText(eventOrganizer)
 
-                    if(eventDuration == "1"){
-                        binding.rbUpdateSingleDay.isChecked= true
-                    }else{
+                    if (eventDuration == "1") {
+                        binding.rbUpdateSingleDay.isChecked = true
+                    } else {
                         binding.rbUpdateSingleDay.isChecked = true
                     }
 
                     binding.textFieldUpdateDateStart.editText!!.setText(startDate)
                     binding.textFieldUpdateTime.editText!!.setText(startTime)
                     binding.textFieldUpdateLocation.editText!!.setText(eventLocation)
-                    GlideLoader(this).loadUserPicture(Uri.parse(eventThumbnailURL)!!,binding.ivUpdateEventThumbnail)
+                    GlideLoader(this).loadUserPicture(
+                        Uri.parse(eventThumbnailURL)!!,
+                        binding.ivUpdateEventThumbnail
+                    )
 
                 } else {
                     Log.d("HEY", "No such document")
@@ -355,26 +378,26 @@ class UpdateEvent : AppCompatActivity() {
                 Log.d("TAG", "get failed with ", exception)
             }
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == Constants.READ_STORAGE_PERMISSION_CODE){
+        if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             //granted
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Toast.makeText(this,"Storage permission granted", Toast.LENGTH_LONG).show()
                 Constants.showImageChooser(this)
 
 
-            }else{
+            } else {
                 //display another toast if permission not granted
-                Toast.makeText(this,R.string.storage_permission_denied, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.storage_permission_denied, Toast.LENGTH_LONG).show()
 
             }
         }
-
 
 
     }
@@ -382,25 +405,29 @@ class UpdateEvent : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == Constants.PICK_IMAGE_REQUEST_CODE){
-            if (resultCode== Activity.RESULT_OK){
+        if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
 
-                if (data !=null){
-                    try{
+                if (data != null) {
+                    try {
                         //uri of image
                         mSelectedImageFileUri = data.data!!
-                        GlideLoader(this).loadUserPicture(mSelectedImageFileUri!!, binding.ivUpdateEventThumbnail)
-                    }catch(e: Exception){
-                        Toast.makeText(this, R.string.image_selection_fail, Toast.LENGTH_LONG).show()
+                        GlideLoader(this).loadUserPicture(
+                            mSelectedImageFileUri!!,
+                            binding.ivUpdateEventThumbnail
+                        )
+                    } catch (e: Exception) {
+                        Toast.makeText(this, R.string.image_selection_fail, Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
             }
-        }else if (resultCode == Activity.RESULT_CANCELED){
+        } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.e("REQUEST CANCELLED", "Image selection cancelled")
         }
 
-        if(requestCode == 3){
-            if(resultCode == RESULT_OK){
+        if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
                 eventLocation = data!!.getStringExtra("eventLocation")
                 latitude = data!!.getStringExtra("latitude")?.toDouble()
                 longitude = data!!.getStringExtra("longitude")?.toDouble()

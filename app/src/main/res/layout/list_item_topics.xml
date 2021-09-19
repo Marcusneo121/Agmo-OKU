@@ -74,8 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textColor="#292929"
-                android:textSize="2sp" />
+                android:textColor="#393939"
+                android:textSize="0sp" />
 
             <TextView
                 android:id="@+id/storyThumbnailDesc"

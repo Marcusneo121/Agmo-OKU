@@ -31,6 +31,7 @@ import my.edu.tarc.okuappg11.databinding.ActivityQuitEventBinding
 import my.edu.tarc.okuappg11.databinding.CustomDialogReadBinding
 import my.edu.tarc.okuappg11.recyclerview.CommentsAdapter
 import my.edu.tarc.okuappg11.recyclerview.CommentsArrayList
+import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -41,25 +42,27 @@ class QuitEventActivity : AppCompatActivity() {
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
     private lateinit var binding: ActivityQuitEventBinding
-    private var eventName:String? = null
-    private var eventDescription:String? = null
-    private var eventLocation:String? = null
-    private var startDate:String? = null
-    private var startTime:String? = null
+    private var eventName: String? = null
+    private var eventDescription: String? = null
+    private var eventLocation: String? = null
+    private var startDate: String? = null
+    private var startTime: String? = null
     private lateinit var bmArrayList: ArrayList<BookmarkArrayList>
     private lateinit var bmAdapter: BookmarkAdapter
     private var userID: String? = null
     private var eventID: String? = null
-    private var bookmarkCheck:Boolean = false
-    private var latitude:String? = null
-    private var longitude:String? = null
-    private var userDisplayName:String?=null
-    private var userProfileImageUri:String?= null
+    private var bookmarkCheck: Boolean = false
+    private var latitude: String? = null
+    private var longitude: String? = null
+    private var userDisplayName: String? = null
+    private var userProfileImageUri: String? = null
     private lateinit var commentsArrayList: ArrayList<CommentsArrayList>
     private lateinit var commentsAdapter: CommentsAdapter
 
-    private lateinit var recyclerViewComment : RecyclerView
+    private lateinit var recyclerViewComment: RecyclerView
     private var pressedHideShow: Boolean = false
+
+    private var currentImageURL: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +80,7 @@ class QuitEventActivity : AppCompatActivity() {
         fStore = FirebaseFirestore.getInstance()
         eventID = intent.getStringExtra("EventUID").toString()
         userID = fAuth.currentUser!!.uid
-       // changeBtnColor()
+        // changeBtnColor()
 
         recyclerViewComment = binding.rvCommentsQuitEv
         recyclerViewComment.layoutManager = LinearLayoutManager(this)
@@ -95,7 +98,7 @@ class QuitEventActivity : AppCompatActivity() {
         readBookmark()
 
         binding.btnShowHideCommentQuitEv.setOnClickListener {
-            if(!pressedHideShow){
+            if (!pressedHideShow) {
                 binding.lyCommentsQuitEv.visibility = View.GONE
                 binding.btnShowHideCommentQuitEv.text = "Show Comments"
                 pressedHideShow = true
@@ -123,10 +126,10 @@ class QuitEventActivity : AppCompatActivity() {
                 .set(hashmapComment)
                 .addOnSuccessListener {
                     commentsAdapter.notifyDataSetChanged()
-                    Log.d("check","comments saved")
+                    Log.d("check", "comments saved")
                     binding.editTextCommentQuitEv.setText("")
                     binding.editTextCommentQuitEv.isFocusable = false
-                    Toast.makeText(this,"Comment successfully",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Comment successfully", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Log.e("error", it.message.toString())
                 }
@@ -134,18 +137,18 @@ class QuitEventActivity : AppCompatActivity() {
 
         binding.btnSeeAllCommentQuitEv.setOnClickListener {
             commentsArrayList.clear()
-            val intent= Intent(this, SeeAllComment::class.java)
-            intent.putExtra("EventUID",eventID)
+            val intent = Intent(this, SeeAllComment::class.java)
+            intent.putExtra("EventUID", eventID)
             startActivity(intent)
 
         }
 
 
-        binding.tvEventLocation.setOnClickListener{
+        binding.tvEventLocation.setOnClickListener {
             val locationUri = Uri.parse("geo:${latitude},${longitude}?q=${eventLocation}")
-            val locationIntent = Intent(Intent.ACTION_VIEW,locationUri)
+            val locationIntent = Intent(Intent.ACTION_VIEW, locationUri)
             locationIntent.setPackage("com.google.android.apps.maps")
-            locationIntent.resolveActivity(packageManager)?.let{
+            locationIntent.resolveActivity(packageManager)?.let {
                 startActivity(locationIntent)
             }
         }
@@ -163,7 +166,8 @@ class QuitEventActivity : AppCompatActivity() {
                 .setTitle("Alert")
                 .setMessage("Do you want to quit this event?")
                 .setPositiveButton("Yes") { dialog, which ->*/
-            val dView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
+            val dView =
+                LayoutInflater.from(this).inflate(R.layout.custom_dialog_yes_no_cancel, null)
             val dBuilder = AlertDialog.Builder(this)
                 .setView(dView)
                 .setTitle("Do you want to quit this event?")
@@ -232,7 +236,7 @@ class QuitEventActivity : AppCompatActivity() {
         fStore.collection("events")
             .document(eventID!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.ASCENDING)
+            .orderBy("commentDate", Query.Direction.DESCENDING)
             .limit(3)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -242,8 +246,9 @@ class QuitEventActivity : AppCompatActivity() {
                     }
                     commentsArrayList.clear()
                     value?.forEach {
-                        Log.d("checkid",it.getString("userUID").toString())
-                        fStore.collection("users").document(it.getString("userUID").toString()).get()
+                        Log.d("checkid", it.getString("userUID").toString())
+                        fStore.collection("users").document(it.getString("userUID").toString())
+                            .get()
                             .addOnSuccessListener { dc ->
 
                                 userDisplayName = dc.getString("name").toString()
@@ -251,12 +256,14 @@ class QuitEventActivity : AppCompatActivity() {
                                 Log.d("CHECKoutside", userProfileImageUri.toString())
 
                                 val userCommentDetails = it.toObject(CommentsArrayList::class.java)
-                                if (userCommentDetails != null){
+                                if (userCommentDetails != null) {
                                     userCommentDetails.displayName = userDisplayName.toString()
                                     userCommentDetails.userImageUri = userProfileImageUri.toString()
                                     userCommentDetails.userID = it.getString("userUID").toString()
-                                    userCommentDetails.commentDetails = it.getString("commentDetails").toString()
-                                    userCommentDetails.commentDate = it.getString("commentDate").toString()
+                                    userCommentDetails.commentDetails =
+                                        it.getString("commentDetails").toString()
+                                    userCommentDetails.commentDate =
+                                        it.getString("commentDate").toString()
                                     commentsArrayList.add(userCommentDetails)
                                 }
                             }.addOnFailureListener {
@@ -287,9 +294,10 @@ class QuitEventActivity : AppCompatActivity() {
             .document(eventID.toString())
         docRef.get()
             .addOnSuccessListener { document ->
-                Log.d("check",document.toString()
+                Log.d(
+                    "check", document.toString()
                 )
-                if ( document.get("eventUID") != null ){
+                if (document.get("eventUID") != null) {
                     fStore.collection("users").document(userID!!).collection("bookmarks")
                         .document(eventID!!)
                         .delete()
@@ -299,14 +307,14 @@ class QuitEventActivity : AppCompatActivity() {
                             Log.d("check", "CHECKDELETE")
                             bookmarkCheck = false
                         }.addOnFailureListener {
-                            Log.e("error",it.message.toString())
+                            Log.e("error", it.message.toString())
                         }
                 }
 
             }
             .addOnFailureListener { exception ->
                 bookmarkCheck = false
-                Log.e("error",exception.message.toString())
+                Log.e("error", exception.message.toString())
             }
     }
 
@@ -321,9 +329,10 @@ class QuitEventActivity : AppCompatActivity() {
             .document(eventID.toString())
         docRef.get()
             .addOnSuccessListener { document ->
-                Log.d("check",document.toString()
+                Log.d(
+                    "check", document.toString()
                 )
-                if ( document.get("eventUID") == null ){
+                if (document.get("eventUID") == null) {
 
                     val hashmapBookmark = hashMapOf(
                         "eventUID" to eventID,
@@ -339,14 +348,14 @@ class QuitEventActivity : AppCompatActivity() {
                             Log.d("check", "CHECKADD")
 
                         }.addOnFailureListener {
-                            Log.e("error",it.message.toString())
+                            Log.e("error", it.message.toString())
                         }
                 }
 
             }
             .addOnFailureListener { exception ->
                 bookmarkCheck = false
-                Log.e("error",exception.message.toString())
+                Log.e("error", exception.message.toString())
             }
         //btnBookmark.setBackgroundColor(ContextCompat.getColor(this,R.blue))
     }
@@ -357,13 +366,13 @@ class QuitEventActivity : AppCompatActivity() {
             .document(eventID.toString())
         docRef.get()
             .addOnSuccessListener { document ->
-                Log.d("check",document.toString())
-                if ( document.get("eventUID") == eventID ){
+                Log.d("check", document.toString())
+                if (document.get("eventUID") == eventID) {
                     binding.btnBookmark.visibility = View.VISIBLE
-                    Log.d("check","hey")
+                    Log.d("check", "hey")
 
-                }else if (document.get("eventUID") != eventID ) {
-                    Log.d("check","oi")
+                } else if (document.get("eventUID") != eventID) {
+                    Log.d("check", "oi")
                     binding.btnBookmark.visibility = View.INVISIBLE
                     binding.btnUnbookmark.visibility = View.VISIBLE
                 }
@@ -373,6 +382,10 @@ class QuitEventActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        readData(eventID)
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -385,13 +398,20 @@ class QuitEventActivity : AppCompatActivity() {
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    eventName =  document.getString("eventName")
+                    eventName = document.getString("eventName")
                     eventDescription = document.getString("eventDescription")
                     startDate = document.getString("startDate")
                     startTime = document.getString("startTime")
                     eventLocation = document.getString("eventLocation")
                     latitude = document.get("latitude").toString()
                     longitude = document.get("longitude").toString()
+                    currentImageURL = document.getString("eventThumbnailURL")
+
+                    GlideLoader(this)
+                        .loadUserPicture(
+                            Uri.parse(currentImageURL.toString()),
+                            binding.ivEventDetailsThumbnail
+                        )
 
                     supportActionBar?.title = eventName
                     binding.tvEventDate.text = startDate
@@ -405,20 +425,6 @@ class QuitEventActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
-
-
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
-        val localfile = File.createTempFile("tempImage","jpg")
-        sRef.getFile(localfile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.ivEventDetailsThumbnail.setImageBitmap(bitmap)
-            Log.d("CHECK", " IMAGE LOADED")
-        }.addOnFailureListener{
-            Log.d("CHECK", it.message.toString())
-            Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
-
-
-        }
     }
 }
 

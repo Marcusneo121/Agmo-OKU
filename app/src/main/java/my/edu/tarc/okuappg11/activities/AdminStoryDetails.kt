@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,7 @@ import my.edu.tarc.okuappg11.R
 import my.edu.tarc.okuappg11.databinding.ActivityAdminEventDetailsBinding
 import my.edu.tarc.okuappg11.databinding.ActivityAdminStoryDetailsBinding
 import my.edu.tarc.okuappg11.fragments.HomeFragment
+import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.io.File
 
 class AdminStoryDetails : AppCompatActivity() {
@@ -34,6 +36,8 @@ class AdminStoryDetails : AppCompatActivity() {
     private var storyId:String? = null
     private var addedBy: String? = null
     private var accessBy: String? = null
+
+    private var currentImageURI: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -217,8 +221,9 @@ class AdminStoryDetails : AppCompatActivity() {
                 if (document != null) {
                     storyTitle =  document.getString("storyTitle")
                     storyDescription = document.getString("storyDescription")
-
-
+                    currentImageURI = document.getString("storyThumbnailURL")
+                    GlideLoader(this)
+                        .loadUserPicture(Uri.parse(currentImageURI.toString()), binding.ivAdminStoryDetailsThumbnail)
                     //supportActionBar?.title = storyTitle
                     binding.tvAdminStoryTitle.text = storyTitle
                     binding.tvAdminStoryDescription.text = storyDescription
@@ -232,22 +237,15 @@ class AdminStoryDetails : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
-
-
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("STORY_THUMBNAIL${storyId}.jpg")
-        val localfile = File.createTempFile("tempImage","jpg")
-        sRef.getFile(localfile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.ivAdminStoryDetailsThumbnail.setImageBitmap(bitmap)
-            Log.d("CHECK", " IMAGE LOADED")
-        }.addOnFailureListener{
-            Log.d("CHECK", it.message.toString())
-            Log.d("CHECK", "STORY_THUMBNAIL${storyId}.jpg")
-        }
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        readData(storyId)
     }
 
     override fun onBackPressed() {

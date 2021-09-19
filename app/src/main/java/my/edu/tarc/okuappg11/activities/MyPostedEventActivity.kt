@@ -101,6 +101,7 @@ class MyPostedEventActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+
         super.onResume()
         if(postedEventArrayList.isEmpty()){
             viewStubPostedEvent.visibility = View.VISIBLE
@@ -112,6 +113,9 @@ class MyPostedEventActivity : AppCompatActivity() {
     }
 
     private fun getData(){
+
+        postedEventAdapter.notifyDataSetChanged()
+
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("users")
             .document(userID!!)
@@ -167,6 +171,7 @@ class MyPostedEventActivity : AppCompatActivity() {
                     }
                 }
             })
+        postedEventAdapter.notifyDataSetChanged()
     }
 
 }

@@ -79,6 +79,10 @@ class AdminUpdateStory : AppCompatActivity() {
             }
         }
 
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+
         binding.btnUpdateStory.setOnClickListener {
             if (validateStoryDetails()) {
                 MaterialAlertDialogBuilder(this)
@@ -181,8 +185,8 @@ class AdminUpdateStory : AppCompatActivity() {
                     binding.textFieldUpdateStoryTitle.editText!!.setError("This field cannot be empty.")
                 }
 
-                if(binding.textFieldUpdateStoryTitle.editText!!.text.isEmpty()){
-                    binding.textFieldUpdateStoryThumbnailDescription.editText!!.setError("This field cannot be empty.")
+                if(binding.textFieldUpdateStoryDescription.editText!!.text.isEmpty()){
+                    binding.textFieldUpdateStoryDescription.editText!!.setError("This field cannot be empty.")
                 }
 
                 if(binding.textFieldUpdateStoryThumbnailDescription.editText!!.text.isEmpty()){
