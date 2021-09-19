@@ -71,6 +71,7 @@ class AdminHomeFragment : Fragment() {
         recyclerView1 = binding.rvAdminEventsRecord
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
+        recyclerView.visibility = View.GONE
 
         eventsRecordList = arrayListOf()
         eventsRecordList.clear()
