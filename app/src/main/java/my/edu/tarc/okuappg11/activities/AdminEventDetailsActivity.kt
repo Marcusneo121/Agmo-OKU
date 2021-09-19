@@ -43,6 +43,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private var eventLocation: String? = null
     private var addedBy: String? = null
     private var accessBy: String? = null
+    private var updatedBy:String? = null
     private var eventId: String? = null
     private var latitude:String? = null
     private var longitude:String? = null
@@ -53,6 +54,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
     private var userProfileImageUri:String?= null
     private var pressedHideShow: Boolean = false
     private var userID:String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +69,12 @@ class AdminEventDetailsActivity : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
+
         eventId = intent.getStringExtra("EventUID")
         val eventType = intent.getStringExtra("EventType")
         addedBy = intent.getStringExtra("addedBy")
         accessBy = intent.getStringExtra("accessBy")
+        updatedBy = intent.getStringExtra("updatedBy")
 
 
         recyclerViewComment = binding.rvCommentsAdminEv
@@ -237,6 +241,8 @@ class AdminEventDetailsActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun readComment() {
         fStore = FirebaseFirestore.getInstance()
         fStore.collection("events")
@@ -356,6 +362,15 @@ class AdminEventDetailsActivity : AppCompatActivity() {
             val intent= Intent(this,ViewEventOrganizeDetailsActivity::class.java)
             intent.putExtra("EventUID", eventId)
             startActivity(intent)
+        } else if (updatedBy == "Admin"){
+            val intent= Intent(this,AdminHomeActivity::class.java)
+            intent.putExtra("EventUID", eventId)
+            startActivity(intent)
+
+        } else if (updatedBy == "Normal"){
+            val intent= Intent(this,HomeActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }

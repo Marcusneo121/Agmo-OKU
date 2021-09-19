@@ -51,6 +51,9 @@ class UpdateEvent : AppCompatActivity() {
     private var latitude:Double?= null
     private var longitude:Double?= null
     private var eventThumbnailURL:String? = null
+    private var updatedBy:String? = null
+    private var currentUserID:String? = null
+    private var userRole:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,8 @@ class UpdateEvent : AppCompatActivity() {
         eventId = intent.getStringExtra("EventUID")
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
+        updatedBy = intent.getStringExtra("addedBy").toString()
+        currentUserID = fAuth.currentUser!!.uid
 
         supportActionBar?.title = "Edit Event"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -69,7 +74,7 @@ class UpdateEvent : AppCompatActivity() {
         binding.textFieldUpdateTime.editText!!.isEnabled=false
 
         getData()
-
+        readUserRole()
 
         binding.btnSelectDate.setOnClickListener{
             if(!binding.rbUpdateSingleDay.isChecked && !binding.rbUpdateMultiday.isChecked){
@@ -195,12 +200,41 @@ class UpdateEvent : AppCompatActivity() {
                                     "Firebase Image",
                                     taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                                 )
+                                dialogAddEvent.startLoading()
 
                                 taskSnapshot.metadata!!.reference!!.downloadUrl
                                     .addOnSuccessListener { uri ->
                                         Log.e("Downloadable Image URL", uri.toString())
                                         eventThumbnailURL = uri.toString()
                                         storageCheck = true
+                                        val hashMapEvents = hashMapOf(
+                                            "eventName" to eventName,
+                                            "eventDescription" to eventDescription,
+                                            "startDate" to startDate,
+                                            "startTime" to startTime,
+                                            "eventDuration" to eventDuration,
+                                            "eventOrganizerName" to eventOrganizer,
+                                            "eventOrganizerUID" to eventOrganizerUID,
+                                            "eventLocation" to eventLocation,
+                                            "eventCreatedDate" to formattedDateNow,
+                                            "status" to "pending",
+                                            "latitude" to latitude,
+                                            "longitude" to longitude,
+                                            "eventThumbnailURL" to eventThumbnailURL
+
+                                        )
+                                        val ref: DocumentReference = fStore.collection("events").document(eventId!!)
+
+                                        ref.update(hashMapEvents as Map<String, Any>)
+                                            .addOnSuccessListener {
+                                                Toast.makeText(this,R.string.update_success,Toast.LENGTH_SHORT).show()
+                                                Log.d(ContentValues.TAG, "Added Document")
+                                                firestoreCheck=true
+
+                                            }
+                                            .addOnFailureListener {
+                                                Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
+                                            }
                                     }
                                     .addOnFailureListener { exception ->
                                         Log.e("ERROR", exception.message.toString())
@@ -208,35 +242,7 @@ class UpdateEvent : AppCompatActivity() {
                             }
                         }
 
-                        dialogAddEvent.startLoading()
-                        val hashMapEvents = hashMapOf(
-                            "eventName" to eventName,
-                            "eventDescription" to eventDescription,
-                            "startDate" to startDate,
-                            "startTime" to startTime,
-                            "eventDuration" to eventDuration,
-                            "eventOrganizerName" to eventOrganizer,
-                            "eventOrganizerUID" to eventOrganizerUID,
-                            "eventLocation" to eventLocation,
-                            "eventCreatedDate" to formattedDateNow,
-                            "status" to "pending",
-                            "latitude" to latitude,
-                            "longitude" to longitude,
-                            "eventThumbnailURL" to eventThumbnailURL
 
-                        )
-                        val ref: DocumentReference = fStore.collection("events").document(eventId!!)
-
-                        ref.update(hashMapEvents as Map<String, Any>)
-                            .addOnSuccessListener {
-                                Toast.makeText(this,R.string.update_success,Toast.LENGTH_SHORT).show()
-                                Log.d(ContentValues.TAG, "Added Document")
-                                firestoreCheck=true
-
-                            }
-                            .addOnFailureListener {
-                                Log.w(ContentValues.TAG, "Error adding document ${it.suppressedExceptions}")
-                            }
 
                         val handler = Handler()
                         handler.postDelayed(object: Runnable{
@@ -247,6 +253,7 @@ class UpdateEvent : AppCompatActivity() {
                                 // editor.apply()
                                 val intent = Intent(this@UpdateEvent, AdminEventDetailsActivity::class.java)
                                 intent.putExtra("EventUID","${eventId.toString()}")
+                                intent.putExtra("updatedBy", userRole)
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 
@@ -300,6 +307,13 @@ class UpdateEvent : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun readUserRole() {
+        fStore.collection("users").document(currentUserID!!).get()
+            .addOnSuccessListener {
+                userRole = it.getString("userType")
+            }
     }
 
     private fun getData() {

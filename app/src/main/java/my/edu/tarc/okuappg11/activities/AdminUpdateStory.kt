@@ -122,6 +122,31 @@ class AdminUpdateStory : AppCompatActivity() {
                                             Log.e("Downloadable Image URL", uri.toString())
                                             storyThumbnailURL = uri.toString()
                                             storageCheck = true
+                                            dialogAddEvent.startLoading()
+                                            val hashMapEvents = hashMapOf(
+                                                "storyTitle" to storyTitle,
+                                                "storyThumbnailDescription" to storyThumbnailDescription,
+                                                "storyDescription" to storyDescription,
+                                                "storyThumbnailURL" to storyThumbnailURL
+
+                                            )
+                                            val ref: DocumentReference =
+                                                fStore.collection("stories").document(storyId!!)
+
+                                            ref.update(hashMapEvents as Map<String, Any>)
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(this, R.string.update_success, Toast.LENGTH_SHORT)
+                                                        .show()
+                                                    Log.d(ContentValues.TAG, "Added Document")
+                                                    firestoreCheck = true
+
+                                                }
+                                                .addOnFailureListener {
+                                                    Log.w(
+                                                        ContentValues.TAG,
+                                                        "Error adding document ${it.suppressedExceptions}"
+                                                    )
+                                                }
                                         }
                                         .addOnFailureListener { exception ->
                                             Log.e("ERROR", exception.message.toString())
@@ -129,31 +154,7 @@ class AdminUpdateStory : AppCompatActivity() {
                                 }
                         }
 
-                        dialogAddEvent.startLoading()
-                        val hashMapEvents = hashMapOf(
-                            "storyTitle" to storyTitle,
-                            "storyThumbnailDescription" to storyThumbnailDescription,
-                            "storyDescription" to storyDescription,
-                            "storyThumbnailURL" to storyThumbnailURL
 
-                        )
-                        val ref: DocumentReference =
-                            fStore.collection("stories").document(storyId!!)
-
-                        ref.update(hashMapEvents as Map<String, Any>)
-                            .addOnSuccessListener {
-                                Toast.makeText(this, R.string.update_success, Toast.LENGTH_SHORT)
-                                    .show()
-                                Log.d(ContentValues.TAG, "Added Document")
-                                firestoreCheck = true
-
-                            }
-                            .addOnFailureListener {
-                                Log.w(
-                                    ContentValues.TAG,
-                                    "Error adding document ${it.suppressedExceptions}"
-                                )
-                            }
 
                         val handler = Handler()
                         handler.postDelayed(object : Runnable {
@@ -165,6 +166,7 @@ class AdminUpdateStory : AppCompatActivity() {
                                 val intent =
                                     Intent(this@AdminUpdateStory, AdminStoryDetails::class.java)
                                 intent.putExtra("StoryUID", "${storyId.toString()}")
+                                intent.putExtra("addedBy", "admin")
                                 startActivity(intent)
                                 dialogAddEvent.isDismiss()
 
