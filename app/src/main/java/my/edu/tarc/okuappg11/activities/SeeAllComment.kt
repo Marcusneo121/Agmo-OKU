@@ -16,6 +16,7 @@ import my.edu.tarc.okuappg11.databinding.ActivityEventDetailsBinding
 import my.edu.tarc.okuappg11.databinding.ActivitySeeAllCommentBinding
 import my.edu.tarc.okuappg11.recyclerview.AllCommentsAdapter
 import my.edu.tarc.okuappg11.recyclerview.AllCommentsArrayList
+import my.edu.tarc.okuappg11.recyclerview.CommentsArrayList
 
 class SeeAllComment : AppCompatActivity() {
 
@@ -43,9 +44,13 @@ class SeeAllComment : AppCompatActivity() {
         eventID = intent.getStringExtra("EventUID")
 
         recyclerViewAllComment = binding.rvSeeAllComment
-        recyclerViewAllComment.layoutManager = LinearLayoutManager(this)
+
+        val mLayoutManager = LinearLayoutManager(this)
+        recyclerViewAllComment.layoutManager = mLayoutManager
+
         recyclerViewAllComment.setHasFixedSize(true)
         recyclerViewAllComment.visibility = View.GONE
+
 
         allCommentsArrayList = arrayListOf()
         allCommentsAdapter = AllCommentsAdapter(allCommentsArrayList)
@@ -77,25 +82,26 @@ class SeeAllComment : AppCompatActivity() {
         fStore.collection("events")
             .document(eventID!!)
             .collection("comments")
-            .orderBy("commentDate", Query.Direction.ASCENDING)
+            .orderBy("commentDate", Query.Direction.DESCENDING)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error != null) {
                         Log.e("Firestore Error", error.message.toString())
                         return
                     }
-
                     allCommentsArrayList.clear()
                     value?.forEach {
                         Log.d("checkid",it.getString("userUID").toString())
                         fStore.collection("users").document(it.getString("userUID").toString()).get()
                             .addOnSuccessListener { dc ->
-
+                                allCommentsArrayList.sortByDescending{
+                                    it.commentDate
+                                }
                                 userDisplayName = dc.getString("name").toString()
                                 userProfileImageUri = dc.getString("profileImageURL").toString()
                                 Log.d("CHECKoutside", userProfileImageUri.toString())
-                                val allUserCommentDetails = it.toObject(AllCommentsArrayList::class.java)
 
+                                val allUserCommentDetails = it.toObject(AllCommentsArrayList::class.java)
                                 if (allUserCommentDetails != null){
                                     allUserCommentDetails.displayName = userDisplayName.toString()
                                     allUserCommentDetails.userImageUri = userProfileImageUri.toString()
@@ -105,14 +111,11 @@ class SeeAllComment : AppCompatActivity() {
                                     allCommentsArrayList.add(allUserCommentDetails)
 
                                     allCommentsAdapter.notifyDataSetChanged()
-
-
                                 }
                             }.addOnFailureListener {
                                 Log.e("error", it.message.toString())
                             }
                         Log.d("CHECKout", userDisplayName.toString())
-
 
                         allCommentsAdapter.notifyDataSetChanged()
 
@@ -124,7 +127,6 @@ class SeeAllComment : AppCompatActivity() {
                     }
                 }
             })
-
     }
 
     override fun onResume() {
