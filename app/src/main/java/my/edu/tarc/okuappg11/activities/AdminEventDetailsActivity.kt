@@ -71,6 +71,7 @@ class AdminEventDetailsActivity : AppCompatActivity() {
         fAuth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
+        userID = fAuth.currentUser!!.uid
 
         eventId = intent.getStringExtra("EventUID")
         val eventType = intent.getStringExtra("EventType")

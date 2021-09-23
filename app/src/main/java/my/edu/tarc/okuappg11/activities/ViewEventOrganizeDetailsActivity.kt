@@ -3,6 +3,7 @@ package my.edu.tarc.okuappg11.activities
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,18 +13,23 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.okuappg11.databinding.ActivityViewEventOrganizeDetailsBinding
 import my.edu.tarc.okuappg11.databinding.ActivityVolunteerDetailBinding
+import my.edu.tarc.okuappg11.utils.GlideLoader
 import java.io.File
 
 class ViewEventOrganizeDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewEventOrganizeDetailsBinding
     private lateinit var fAuth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
+    private var imageURL: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityViewEventOrganizeDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        fAuth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "View Event Details"
@@ -66,17 +72,9 @@ class ViewEventOrganizeDetailsActivity : AppCompatActivity() {
     }
 
     private fun getImage(eventId: String?) {
-
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child("EVENT_THUMBNAIL${eventId}.jpg")
-        val localfile = File.createTempFile("tempImage","jpg")
-        sRef.getFile(localfile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.ivEventImg.setImageBitmap(bitmap)
-            Log.d("CHECK", " IMAGE LOADED")
-        }.addOnFailureListener{
-            Log.d("CHECK", it.message.toString())
-            Log.d("CHECK", "EVENT_THUMBNAIL${eventId}.jpg")
-
+        fStore.collection("events").document(eventId!!).get().addOnSuccessListener {
+            imageURL = it.getString("eventThumbnailURL")
+            GlideLoader(this).loadUserPicture(Uri.parse(imageURL),binding.ivEventImg)
         }
     }
 }

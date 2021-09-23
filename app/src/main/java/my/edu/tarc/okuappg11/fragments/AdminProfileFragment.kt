@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import my.edu.tarc.okuappg11.R
+import my.edu.tarc.okuappg11.activities.MainActivity
 import my.edu.tarc.okuappg11.activities.MyPostedEventActivity
 import my.edu.tarc.okuappg11.databinding.FragmentAdminProfileBinding
 
@@ -70,10 +71,14 @@ class AdminProfileFragment : Fragment() {
             val editor = preferences.edit()
             editor.clear()
             editor.apply()
-
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             fAuth.signOut()
             activity?.finish()
-            findNavController().navigate(R.id.action_adminProfileFragment_to_signInFragment2)
+            val i = Intent(this.context, MainActivity::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(i)
+            //findNavController().navigate(R.id.action_adminProfileFragment_to_signInFragment2)
         }
     }
 

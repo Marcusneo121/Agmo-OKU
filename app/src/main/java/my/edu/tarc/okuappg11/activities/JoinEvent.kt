@@ -53,7 +53,7 @@ class JoinEvent : AppCompatActivity() {
 
         getDisplayName()
         binding.btnPReset.setOnClickListener(){
-            binding.etPName.setText("")
+            //binding.etPName.setText("")
             binding.etPEmail.setText("")
             binding.cBoxJoin1.isChecked = false
             binding.cBoxJoin2.isChecked = false
@@ -62,10 +62,10 @@ class JoinEvent : AppCompatActivity() {
 
         binding.btnPSubmit.setOnClickListener(){
 
-            if (pName.text.isEmpty()) {
-                pName.error = "Please enter full name."
-                return@setOnClickListener
-            }
+//            if (pName.text.isEmpty()) {
+//                pName.error = "Please enter full name."
+//                return@setOnClickListener
+//            }
             if (pEmail.text.isEmpty()) {
                 pEmail.error = "Please enter your email address."
                 return@setOnClickListener

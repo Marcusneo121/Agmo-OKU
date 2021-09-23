@@ -64,6 +64,8 @@ class QuitEventActivity : AppCompatActivity() {
 
     private var currentImageURL: String? = null
 
+    private var userRole: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuitEventBinding.inflate(layoutInflater)
@@ -394,6 +396,16 @@ class QuitEventActivity : AppCompatActivity() {
     }
 
     private fun readData(eventId: String?) {
+        //OKU volunteer validation
+        fStore.collection("users").document(userID!!).get().addOnSuccessListener { it ->
+            userRole = it.get("userType").toString()
+            if(userRole == "Normal" ){
+                binding.btnVolunteer.visibility=View.VISIBLE
+            } else {
+                binding.btnVolunteer.visibility=View.GONE
+            }
+        }
+
         val docRef = fStore.collection("events").document(eventId.toString())
         docRef.get()
             .addOnSuccessListener { document ->
