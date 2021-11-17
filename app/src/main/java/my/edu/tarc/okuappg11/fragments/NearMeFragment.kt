@@ -141,11 +141,10 @@ class NearMeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCli
                     LatLng(allEventsArrayList[i].latitude, allEventsArrayList[i].longitude)
                 googleMap.setOnInfoWindowClickListener(this)
                 googleMap.setInfoWindowAdapter(CustomInfoWindow(requireContext()))
-                googleMap.addMarker(
-                    MarkerOptions().position(latLngValue)
-                        .title(allEventsArrayList[i].eventName)
-                        .snippet(allEventsArrayList[i].eventID)
-                )
+                googleMap.addMarker(MarkerOptions()
+                    .position(latLngValue)
+                    .title(allEventsArrayList[i].eventName)
+                    .snippet(allEventsArrayList[i].eventID))
                     .setIcon(
                         bitmapDescriptorFromVector(
                             requireContext(),

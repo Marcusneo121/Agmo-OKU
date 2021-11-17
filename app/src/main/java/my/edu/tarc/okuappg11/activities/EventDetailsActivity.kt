@@ -287,7 +287,6 @@ class EventDetailsActivity : AppCompatActivity() {
                             Log.e("error",it.message.toString())
                         }
                 }
-
             }
             .addOnFailureListener { exception ->
                 bookmarkCheck = false

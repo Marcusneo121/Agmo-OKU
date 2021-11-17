@@ -164,7 +164,7 @@ class RegisterFragment : Fragment() {
                         "email" to email.text.toString(),
                         "createdAt" to strDate,
                         "userType" to userTypeName.toString(),
-                        "rand6" to getRandomNumberString().toString()
+                        //"rand6" to getRandomNumberString().toString()
                         //"userID" to userID,
                     )
 

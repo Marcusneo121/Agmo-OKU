@@ -51,8 +51,6 @@ class MapAutocompleteActivity: AppCompatActivity() {
         }
 
         binding.btnFinish.setOnClickListener{
-
-
             val newIntent:Intent = Intent()
             newIntent.putExtra("eventLocation", "${eventLocality}")
             newIntent.putExtra("latitude","${filterLatitude.toString()}")
